@@ -1,13 +1,13 @@
 import DataBadge from "./DataBadge";
 import Flag from "../Flag";
-import { pct, type FormatData } from "@/lib/cricket";
+import { metricOrPending, pct, resultLabel, type FormatData } from "@/lib/cricket";
 
 const TH = "font-mono px-3 py-2 text-left text-[10px] font-normal uppercase tracking-[0.12em] text-foreground/40";
 const TD = "px-3 py-2.5 text-sm text-foreground/80";
 
 function Table({ children }: { children: React.ReactNode }) {
   return (
-    <div className="glass-card overflow-x-auto rounded-2xl">
+    <div className="glass-card overflow-x-auto rounded-lg">
       <table className="w-full min-w-[520px] border-collapse">{children}</table>
     </div>
   );
@@ -76,23 +76,25 @@ export function Players({ rows, slug }: { rows: FormatData["players"]; slug: str
 }
 
 export function Validation({ v, hasDraw }: { v: FormatData["validation"]; hasDraw: boolean }) {
-  const labels = v.confusion_matrix.labels;
+  const labels = v?.confusion_matrix?.labels ?? [];
+  const matrix = v?.confusion_matrix?.matrix;
   const stats = [
-    ["Accuracy", pct(v.accuracy)],
-    ["Brier score", v.brier.toFixed(3)],
-    ["Log loss", v.log_loss.toFixed(3)],
-    ["Matches evaluated", String(v.n_evaluated)],
+    ["Accuracy", metricOrPending(v?.accuracy, (n) => pct(n))],
+    ["Brier score", metricOrPending(v?.brier, (n) => n.toFixed(3))],
+    ["Log loss", metricOrPending(v?.log_loss, (n) => n.toFixed(3))],
+    ["Matches evaluated", v?.n_evaluated != null ? String(v.n_evaluated) : "Evaluation pending"],
   ];
   return (
     <div className="space-y-5">
       <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
         {stats.map(([k, val]) => (
-          <div key={k} className="glass-card rounded-xl p-4 text-center">
+          <div key={k} className="glass-card rounded-lg p-4 text-center">
             <div className="font-mono text-2xl font-semibold text-foreground">{val}</div>
             <div className="mt-1 text-xs text-foreground/50">{k}</div>
           </div>
         ))}
       </div>
+      {labels.length > 0 && matrix ? (
       <Table>
         <thead><tr className="border-b border-card-border">
           <th className={TH}>Actual \ Predicted</th>
@@ -103,44 +105,76 @@ export function Validation({ v, hasDraw }: { v: FormatData["validation"]; hasDra
             <tr key={a} className="border-b border-card-border last:border-0">
               <td className={`${TD} font-mono text-xs uppercase`}>{a}</td>
               {labels.map((b) => (
-                <td key={b} className={`${TD} ${a === b ? "text-accent" : ""}`}>{v.confusion_matrix.matrix[a][b]}</td>
+                <td key={b} className={`${TD} ${a === b ? "text-accent" : ""}`}>{matrix[a]?.[b] ?? "—"}</td>
               ))}
             </tr>
           ))}
         </tbody>
       </Table>
+      ) : (
+        <p className="text-sm text-foreground/50">Confusion matrix: Evaluation pending</p>
+      )}
       <p className="font-mono text-[11px] text-foreground/40">
         Walk-forward evaluation (train on earlier matches, predict later ones).{" "}
-        {hasDraw ? "Three-class (Test)." : "Two-class (no draw outcome)."} Computed on DEMO DATA; not a claim about real-world accuracy.
+        {hasDraw ? "Three-class (Test)." : "Two-class (no draw outcome)."} Interpret together with the data-status badge on this page.
       </p>
     </div>
   );
 }
 
 export function Ledger({ rows, hasDraw }: { rows: FormatData["ledger"]; hasDraw: boolean }) {
+  const showDraw = hasDraw || rows.some((r) => r.draw_probability != null);
+  const latest = [...rows]
+    .sort((a, b) => b.prediction_timestamp.localeCompare(a.prediction_timestamp))
+    .slice(0, 12);
+
+  if (latest.length === 0) {
+    return <p className="text-sm text-foreground/50">No stored prediction records in this view.</p>;
+  }
+
   return (
     <div className="space-y-3">
-      <Table>
-        <thead><tr className="border-b border-card-border">
-          <th className={TH}>Match</th><th className={TH}>Date</th><th className={TH}>Opponent</th><th className={TH}>India</th>
-          {hasDraw && <th className={TH}>Draw</th>}<th className={TH}>Result</th><th className={TH}>Correct</th><th className={TH}>Hash</th>
-        </tr></thead>
-        <tbody>
-          {rows.slice(-10).reverse().map((r) => (
-            <tr key={r.match_id} className="border-b border-card-border last:border-0">
-              <td className={`${TD} font-mono text-xs`}>{r.match_id}</td><td className={TD}>{r.date}</td><td className={TD}>{r.opponent}</td>
-              <td className={TD}>{pct(r.india_probability)}</td>
-              {hasDraw && <td className={TD}>{pct(r.draw_probability ?? 0)}</td>}
-              <td className={TD}>{r.actual_result}</td>
-              <td className={`${TD} ${r.model_correct ? "text-accent" : "text-saffron"}`}>{r.model_correct ? "yes" : "no"}</td>
-              <td className={`${TD} font-mono text-[10px]`} title={r.hash}>{r.hash.slice(0, 10)}…</td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
+      <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+        {latest.map((r) => (
+          <article key={r.match_id} className="sports-card glass-card rounded-lg p-4 sm:p-5">
+            <div className="flex items-center justify-between gap-2">
+              <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-accent">{r.format}</span>
+              <DataBadge label={r.data_label} />
+            </div>
+            <div className="mt-3 flex items-center gap-2 text-sm font-semibold text-foreground">
+              <Flag team="India" /><span>India</span><span className="text-xs font-normal text-foreground/40">vs</span>
+              <Flag team={r.opponent} /><span className="truncate">{r.opponent}</span>
+            </div>
+            <p className="mt-1 font-mono text-[11px] text-foreground/45">{r.date}</p>
+
+            <div className="mt-4 border-t border-card-border pt-3">
+              <p className="mb-2 font-mono text-[10px] uppercase tracking-[0.12em] text-foreground/45">Stored probabilities</p>
+              <div className="space-y-1.5 text-xs">
+                <div className="flex justify-between gap-3"><span>India</span><span className="font-mono text-accent">{metricOrPending(r.india_probability, (n) => pct(n))}</span></div>
+                {showDraw && r.draw_probability != null && (
+                  <div className="flex justify-between gap-3"><span>Draw</span><span className="font-mono text-foreground/70">{metricOrPending(r.draw_probability, (n) => pct(n))}</span></div>
+                )}
+                <div className="flex justify-between gap-3"><span>{r.opponent}</span><span className="font-mono text-accent-red">{metricOrPending(r.opponent_probability, (n) => pct(n))}</span></div>
+              </div>
+            </div>
+
+            <div className="mt-4 flex flex-wrap items-center justify-between gap-x-3 gap-y-1 border-t border-card-border pt-3 text-xs">
+              <span className="text-foreground/50">Result: <span className="text-foreground/80">{resultLabel(r.actual_result)}</span></span>
+              <span className={r.model_correct ? "text-accent" : "text-accent-red"}>{r.model_correct ? "Correct" : "Incorrect"}</span>
+            </div>
+            <details className="mt-3 border-t border-card-border pt-3">
+              <summary className="cursor-pointer text-xs text-foreground/50 transition-colors hover:text-foreground">Model details</summary>
+              <dl className="mt-2 space-y-1 text-[11px] text-foreground/60">
+                <div className="flex justify-between gap-3"><dt>Model version</dt><dd className="break-all text-right">{r.model_version}</dd></div>
+                <div className="flex justify-between gap-3"><dt>Recorded</dt><dd className="text-right">{r.prediction_timestamp}</dd></div>
+                <div className="flex justify-between gap-3"><dt>Pre-match verified</dt><dd>{r.verified_pre_match ? "Yes" : "No"}</dd></div>
+              </dl>
+            </details>
+          </article>
+        ))}
+      </div>
       <p className="font-mono text-[11px] text-foreground/40">
-        DEMO DATA: these rows were generated in one batch for demonstration, so they are NOT proof of pre-match
-        prediction (verified_pre_match = false). Hashes are chained (each includes the previous), so editing a row breaks the chain.
+        Prediction details come from stored records. DEMO DATA records that were generated after a match are not verified pre-match predictions.
       </p>
     </div>
   );

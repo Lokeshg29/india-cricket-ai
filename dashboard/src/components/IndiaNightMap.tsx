@@ -50,13 +50,12 @@ const path = OUTLINE.map(([lo, la], i) => `${i ? "L" : "M"}${px(lo).toFixed(1)} 
 const hyd = CITIES[5];
 const trails = CITIES.filter((c) => ["Delhi", "Mumbai", "Kolkata", "Chennai", "Bengaluru"].includes(c.name));
 
-export default function IndiaNightMap() {
+export default function IndiaNightMap({ compact = false, className = "" }: { compact?: boolean; className?: string }) {
   return (
-    <div className="pointer-events-none absolute inset-0 flex items-center justify-center" aria-hidden="true">
+    <div className={`pointer-events-none absolute inset-0 flex items-center justify-center ${className}`} aria-hidden="true">
       <svg
         viewBox={`0 0 ${W} ${H}`}
-        className="h-[min(86vh,760px)] w-auto max-w-[96vw] opacity-90"
-        style={{ animation: "wc-drift 14s ease-in-out infinite" }}
+        className={compact ? "h-[min(55vh,480px)] w-auto max-w-full opacity-65" : "h-[min(86vh,760px)] w-auto max-w-[96vw] opacity-90"}
       >
         <defs>
           <radialGradient id="ica-land" cx="50%" cy="45%" r="65%">
@@ -81,8 +80,8 @@ export default function IndiaNightMap() {
             key={c.name}
             d={`M${px(hyd.lon)} ${py(hyd.lat)} Q${(px(hyd.lon) + px(c.lon)) / 2} ${Math.min(py(hyd.lat), py(c.lat)) - 40} ${px(c.lon)} ${py(c.lat)}`}
             fill="none"
-            stroke="#ff9933"
-            strokeOpacity="0.28"
+            stroke="#f26b78"
+            strokeOpacity="0.18"
             strokeWidth="0.8"
             strokeDasharray="4 8"
             style={{ animation: "wc-dash 12s linear infinite" }}

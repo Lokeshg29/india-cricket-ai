@@ -1,34 +1,41 @@
 import Link from "next/link";
 import SportTabs from "./SportTabs";
+import { NAV_BRAND } from "@/lib/site";
+
+const LINKS = [
+  { href: "#matches", label: "Matches" },
+  { href: "#predictions", label: "Predictions" },
+  { href: "#analytics", label: "Analytics" },
+];
 
 export default function Nav() {
   return (
-    <div
-      className="fixed inset-x-0 top-0 z-50 flex items-center justify-between gap-3 px-4 py-4 sm:px-8 sm:py-5"
-      style={{ background: "linear-gradient(180deg, rgba(9,9,9,0.9), rgba(9,9,9,0))" }}
-    >
-      <div className="flex items-center gap-4 sm:gap-6">
-        <div className="hidden font-mono text-[10px] italic tracking-wide text-secondary lg:block">
-          AN AI CRICKET PROJECT BY LOKESH GOUD
+    <header className="sticky top-0 z-50 border-b border-card-border bg-background/95">
+      <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-4 py-3 sm:px-6">
+        <div className="flex min-w-0 flex-wrap items-center gap-3 sm:gap-5">
+          <Link
+            href="/"
+            className="font-display shrink-0 text-sm font-bold tracking-[0.16em] text-foreground transition-colors hover:text-accent sm:text-[15px]"
+          >
+            {NAV_BRAND}
+          </Link>
+          <SportTabs />
         </div>
-        <SportTabs />
+        <nav className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[11px] uppercase tracking-[0.12em] text-foreground/55">
+          {LINKS.map((l) => (
+            <a key={l.href} href={l.href} className="nav-link transition-colors hover:text-foreground">
+              {l.label}
+            </a>
+          ))}
+          <Link
+            href="/admin"
+            title="Read-only internal dashboard"
+            className="nav-admin rounded border border-foreground/20 px-2.5 py-1 text-foreground/70 transition-colors hover:border-accent-red/60 hover:text-foreground"
+          >
+            Admin
+          </Link>
+        </nav>
       </div>
-      <div className="flex items-center gap-4 sm:gap-7">
-        <div className="hidden gap-7 text-xs uppercase tracking-[0.12em] text-foreground/55 md:flex">
-          <a href="#predictions" className="hover:text-foreground transition-colors">Predictions</a>
-          <a href="#results" className="hover:text-foreground transition-colors">Results</a>
-          <a href="#validation" className="hover:text-foreground transition-colors">Validation</a>
-          <a href="#proof" className="hover:text-foreground transition-colors">Proof</a>
-          <a href="#stack" className="hover:text-foreground transition-colors">Stack</a>
-        </div>
-        <Link
-          href="/admin"
-          title="Read-only internal admin dashboard"
-          className="rounded-md border border-foreground/20 px-3 py-1.5 text-[11px] uppercase tracking-[0.12em] text-foreground/70 transition-colors hover:border-foreground/50 hover:text-foreground"
-        >
-          Admin
-        </Link>
-      </div>
-    </div>
+    </header>
   );
 }

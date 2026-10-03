@@ -66,6 +66,14 @@ export const FORMATS: Record<string, FormatData> = {
 export const formatData = (slug: string) => FORMATS[slug];
 export const allFormats = () => Object.values(FORMATS);
 
+export function aggregateDataLabel(formats: FormatData[]): DataLabel {
+  if (formats.length === 0) return "DEMO DATA";
+  if (formats.every((f) => f.data_label === "LIVE DATA")) return "LIVE DATA";
+  if (formats.every((f) => f.data_label === "HISTORICAL DATA")) return "HISTORICAL DATA";
+  if (formats.some((f) => f.data_label === "DEMO DATA")) return "DEMO DATA";
+  return "HISTORICAL DATA";
+}
+
 export const modelRegistry = registryRaw as {
   format: string; version: string; stage: string; backend: string;
   accuracy: number; brier: number; log_loss: number; data_label: DataLabel;
@@ -76,3 +84,17 @@ export const drift = driftRaw as { status: string; data_label: DataLabel };
 export const training = trainingRaw as { last_trained: string; status: string; data_label: DataLabel };
 
 export const pct = (p: number, d = 1) => `${(p * 100).toFixed(d)}%`;
+
+/** Show a formatted metric, or "Evaluation pending" when the value is missing. */
+export function metricOrPending(
+  value: number | undefined | null,
+  format: (n: number) => string,
+): string {
+  if (value === undefined || value === null || Number.isNaN(Number(value))) {
+    return "Evaluation pending";
+  }
+  return format(value);
+}
+
+export const resultLabel = (result: Outcome) =>
+  result === "india" ? "India won" : result === "draw" ? "Drew" : "India lost";

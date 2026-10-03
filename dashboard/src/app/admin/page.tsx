@@ -1,11 +1,13 @@
 import Link from "next/link";
 import SectionHeading from "@/components/SectionHeading";
 import DataBadge from "@/components/cricket/DataBadge";
-import { allFormats, dataQuality, drift, modelRegistry, pct, systemHealth, training } from "@/lib/cricket";
-import { OWNER, PRODUCT_NAME } from "@/lib/site";
+import { allFormats, dataQuality, drift, metricOrPending, modelRegistry, pct, systemHealth, training } from "@/lib/cricket";
+import Nav from "@/components/Nav";
+import Footer from "@/components/Footer";
+import { PRODUCT_NAME } from "@/lib/site";
 
 const Card = ({ title, children }: { title: string; children: React.ReactNode }) => (
-  <div className="glass-card rounded-2xl p-5">
+  <div className="glass-card rounded-lg p-4">
     <div className="font-mono mb-3 text-[11px] uppercase tracking-[0.14em] text-foreground/45">{title}</div>
     {children}
   </div>
@@ -14,13 +16,15 @@ const Card = ({ title, children }: { title: string; children: React.ReactNode })
 export default function AdminPage() {
   const formats = allFormats();
   return (
-    <main className="relative mx-auto max-w-6xl px-6 py-16">
+    <main className="relative">
+      <Nav />
+      <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
       <div className="mb-10 flex flex-wrap items-center justify-between gap-3 border-b border-card-border pb-6">
         <div>
-          <div className="font-mono text-xs uppercase tracking-[0.14em] text-accent">Internal &middot; read-only</div>
-          <h1 className="mt-2 text-2xl font-bold text-foreground">{PRODUCT_NAME} admin</h1>
+          <div className="font-mono text-xs uppercase tracking-[0.14em] text-accent">Internal · read-only</div>
+          <h1 className="mt-2 text-2xl font-semibold text-foreground">{PRODUCT_NAME} admin</h1>
           <p className="mt-2 max-w-xl text-sm text-foreground/55">
-            Read-only status view by {OWNER}. No write endpoints are exposed. Everything shown is generated from DEMO DATA.
+            Read-only status view. No write endpoints are exposed. Everything shown is generated from DEMO DATA unless a badge says otherwise.
           </p>
         </div>
         <Link href="/" className="font-mono text-xs text-accent hover:underline">&larr; back to the public site</Link>
@@ -63,7 +67,7 @@ export default function AdminPage() {
                   <div className="flex justify-between"><dt>model version</dt><dd>{f.model_version}</dd></div>
                   <div className="flex justify-between"><dt>stage</dt><dd>{reg?.stage}</dd></div>
                   <div className="flex justify-between"><dt>backend</dt><dd className="text-right text-xs">{reg?.backend}</dd></div>
-                  <div className="flex justify-between"><dt>accuracy</dt><dd>{pct(f.validation.accuracy)}</dd></div>
+                  <div className="flex justify-between"><dt>accuracy</dt><dd>{metricOrPending(f.validation?.accuracy, (n) => pct(n))}</dd></div>
                   <div className="flex justify-between"><dt>predictions</dt><dd>{f.summary.predictions_generated}</dd></div>
                   <div className="flex justify-between"><dt>latest prediction</dt><dd>{latest.prediction_timestamp.slice(0, 10)}</dd></div>
                 </dl>
@@ -90,6 +94,8 @@ export default function AdminPage() {
           </Card>
         </div>
       </section>
+      </div>
+      <Footer />
     </main>
   );
 }

@@ -19,9 +19,9 @@ const plexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "INDIA CRICKET AI — Can India Win?",
+  title: "INDIA CRICKET ANALYTICS",
   description:
-    "AI-powered match prediction and analytics for the Indian men's cricket team across Test, ODI and T20I, built as an MLOps project by Lokesh Goud. Predictions are statistical estimates, not guarantees.",
+    "Match analytics and model estimates for the Indian men’s cricket team across Test, ODI and T20I. Data provenance is labelled as demo, historical, or live.",
 };
 
 export default function RootLayout({

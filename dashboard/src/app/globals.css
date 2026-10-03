@@ -17,6 +17,7 @@
   --muted: #444444;
   --accent: #4b9bff;
   --accent-hover: #2f7fe0;
+  --accent-red: #f26b78;
   --accent-warm: #14305c;
   --saffron: #ff9933;
   --accent-deep: #0b1d3a;
@@ -24,7 +25,7 @@
   --globe-b: #122244;
   --globe-c: #080d18;
   --chart-1: #4b9bff;
-  --chart-2: #4e97dc;
+  --chart-2: #f26b78;
   --chart-3: #ff9933;
   --chart-4: #2fa97d;
   --chart-5: #a379e8;
@@ -43,6 +44,7 @@
   --color-muted: var(--muted);
   --color-accent: var(--accent);
   --color-accent-hover: var(--accent-hover);
+  --color-accent-red: var(--accent-red);
   --color-accent-warm: var(--accent-warm);
   --color-accent-deep: var(--accent-deep);
   --color-saffron: var(--saffron);
@@ -58,8 +60,17 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-space-grotesk), Arial, Helvetica, sans-serif;
-  font-size: 1.0625rem;
+  font-size: 16px;
   min-height: 100vh;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5.5rem;
+}
+
+:where(section[id]) {
+  scroll-margin-top: 5.5rem;
 }
 
 ::selection {
@@ -82,6 +93,129 @@ body {
 
 .font-serif {
   font-family: var(--font-space-grotesk), sans-serif;
+}
+
+.editorial-heading {
+  font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  font-weight: 500;
+}
+
+.hero-shell {
+  background: var(--background);
+}
+
+.hero-grid {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: linear-gradient(90deg, transparent 0%, #000 40%, #000 100%);
+  opacity: 0.45;
+}
+
+.hero-wash {
+  background:
+    radial-gradient(ellipse at 77% 48%, rgba(75, 155, 255, 0.1), transparent 38%),
+    radial-gradient(ellipse at 64% 56%, rgba(242, 107, 120, 0.055), transparent 35%);
+}
+
+.hero-map {
+  z-index: 0;
+  opacity: 0.68;
+  animation: hero-map-in 1.2s ease-out both;
+}
+
+.hero-copy {
+  animation: hero-copy-in 650ms cubic-bezier(0.2, 0.75, 0.25, 1) both;
+}
+
+.hero-button-primary,
+.hero-button-secondary {
+  display: inline-flex;
+  min-height: 42px;
+  align-items: center;
+  gap: 0.65rem;
+  border-radius: 3px;
+  padding: 0.65rem 0.9rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  transition: transform 180ms ease, border-color 180ms ease, background-color 180ms ease;
+}
+
+.hero-button-primary {
+  border: 1px solid var(--accent-red);
+  background: var(--accent-red);
+  color: #090909;
+}
+
+.hero-button-secondary {
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.hero-button-primary:hover,
+.hero-button-secondary:hover {
+  transform: translateY(-2px);
+}
+
+.hero-button-secondary:hover {
+  border-color: var(--accent);
+  background: rgba(75, 155, 255, 0.08);
+}
+
+.nav-link,
+.nav-admin {
+  position: relative;
+}
+
+.nav-link::after {
+  position: absolute;
+  right: 0;
+  bottom: -0.35rem;
+  left: 0;
+  height: 1px;
+  background: var(--accent-red);
+  content: "";
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 180ms ease;
+}
+
+.nav-link:hover::after {
+  transform: scaleX(1);
+}
+
+.sports-card {
+  position: relative;
+  overflow: hidden;
+  transition: transform 220ms ease, border-color 220ms ease, background-color 220ms ease;
+}
+
+.sports-card:hover {
+  transform: translateY(-3px);
+  border-color: color-mix(in srgb, var(--accent-red) 36%, var(--card-border));
+  background-color: var(--card-alt);
+}
+
+.sports-card::before {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 2px;
+  background: linear-gradient(var(--accent-red), var(--accent));
+  content: "";
+  opacity: 0.72;
+}
+
+@keyframes hero-copy-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes hero-map-in {
+  from { opacity: 0; transform: translateX(12px); }
+  to { opacity: 0.68; transform: translateX(0); }
 }
 
 @keyframes wc-dash {
@@ -135,5 +269,16 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
   [style*="animation"] { animation: none !important; }
+  .hero-copy,
+  .hero-map,
+  .sports-card,
+  .hero-button-primary,
+  .hero-button-secondary { animation: none !important; transition: none !important; }
+}
+
+@media (max-width: 639px) {
+  .hero-map { opacity: 0.22; animation: none; }
+  .hero-grid { background-size: 40px 40px; }
 }

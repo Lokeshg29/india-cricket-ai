@@ -1,80 +1,113 @@
-import Link from "next/link";
 import Nav from "@/components/Nav";
 import Hero from "@/components/Hero";
 import Footer from "@/components/Footer";
+import Section from "@/components/Section";
 import SectionHeading from "@/components/SectionHeading";
 import StatsStrip from "@/components/StatsStrip";
-import ResultsTicker from "@/components/ResultsTicker";
+import ResultCards from "@/components/ResultCards";
 import MethodologySection from "@/components/MethodologySection";
 import TechStack from "@/components/TechStack";
 import PredictionCards from "@/components/cricket/PredictionCards";
+import ModelPerformance from "@/components/cricket/ModelPerformance";
 import DataBadge from "@/components/cricket/DataBadge";
-import { allFormats, pct } from "@/lib/cricket";
-
-const Section = ({ id, children }: { id?: string; children: React.ReactNode }) => (
-  <section id={id} className="relative z-10 mx-auto max-w-6xl px-6 py-12">{children}</section>
-);
+import { Ledger, Validation } from "@/components/cricket/Panels";
+import { CalibrationChart, FormChart } from "@/components/cricket/Charts";
+import { aggregateDataLabel, allFormats } from "@/lib/cricket";
 
 export default function Home() {
   const formats = allFormats();
+  const upcoming = formats.flatMap((f) => f.upcoming).sort((a, b) => a.date.localeCompare(b.date));
+  const results = formats.flatMap((f) =>
+    f.results.map((r) => ({ ...r, fmt: f.format })),
+  ).sort((a, b) => b.date.localeCompare(a.date)).slice(0, 6);
+  const ledger = formats
+    .flatMap((f) => f.ledger.map((row) => ({ ...row, format: f.format })))
+    .sort((a, b) => b.date.localeCompare(a.date));
+  const dataLabel = aggregateDataLabel(formats);
+
   const stats = [
-    { label: "Matches tracked", value: String(formats.reduce((a, f) => a + f.summary.matches_tracked, 0)) },
-    { label: "Predictions generated", value: String(formats.reduce((a, f) => a + f.summary.predictions_generated, 0)) },
-    { label: "Mean walk-forward accuracy (demo)", value: pct(formats.reduce((a, f) => a + f.summary.accuracy, 0) / formats.length, 0) },
-    { label: "Formats supported", value: "Test · ODI · T20I" },
+    { label: "Upcoming matches", value: String(upcoming.length) },
+    { label: "Recent results", value: String(results.length) },
+    { label: "Formats", value: "Test · ODI · T20I" },
+    { label: "Public data status", value: dataLabel },
   ];
-  const ticker = formats.flatMap((f) => f.results.slice(0, 6).map((r) => ({ ...r, fmt: f.format })));
 
   return (
     <main className="relative">
       <Nav />
-      <Hero dataLabel="DEMO DATA" />
-      <Section><StatsStrip stats={stats} /></Section>
+      <Hero dataLabel={dataLabel} />
+
+      <Section>
+        <StatsStrip stats={stats} />
+      </Section>
+
+      <Section id="matches">
+        <SectionHeading
+          eyebrow="Schedule"
+          title="Upcoming Matches"
+          subtitle="Fixtures and any available estimates come from the labelled data export. Demo entries are not an official schedule."
+        />
+        <PredictionCards matches={upcoming} />
+        <div className="mt-10">
+          <SectionHeading eyebrow="Results" title="Recent Matches" subtitle="Completed matches from the available export." />
+          <ResultCards results={results} />
+        </div>
+      </Section>
 
       <Section id="predictions">
-        <SectionHeading eyebrow="India Prediction Board" title="Pick A Format"
-          subtitle="Test, ODI and T20I are modelled separately. Test has a draw outcome; ODI and T20I do not." />
-        <div className="mb-8 grid gap-4 sm:grid-cols-3">
+        <SectionHeading
+          eyebrow="Predictions"
+          title="Prediction History"
+          subtitle="Stored estimates and outcomes. DEMO DATA rows were generated after matches and are not verified pre-match predictions."
+        />
+        <Ledger rows={ledger} hasDraw />
+      </Section>
+
+      <Section id="analytics">
+        <SectionHeading
+          eyebrow="Analytics"
+          title="Team Performance & Format Insights"
+          subtitle="Explore India’s form by format. Use TEST, ODI or T20I above for player, venue and head-to-head detail."
+        />
+        <div className="grid gap-4 lg:grid-cols-3">
           {formats.map((f) => (
-            <Link key={f.slug} href={`/${f.slug}`} className="glass-card rounded-2xl p-5 transition-colors hover:border-accent/60">
-              <div className="font-display text-3xl font-extrabold uppercase text-foreground">{f.format}</div>
-              <div className="font-mono mt-2 text-[11px] text-foreground/50">
-                {f.has_draw ? "India / Draw / Opponent" : "India / Opponent"} &middot; {f.upcoming.length} fixtures
-              </div>
-              <div className="mt-3 flex items-center justify-between">
+            <article key={f.slug} className="glass-card rounded-lg p-4">
+              <div className="mb-3 flex items-center justify-between">
+                <h3 className="font-display text-lg font-semibold uppercase">{f.format}</h3>
                 <DataBadge label={f.data_label} />
-                <span className="font-mono text-xs text-accent">Open &rarr;</span>
               </div>
-            </Link>
+              <p className="mb-3 text-xs text-foreground/50">
+                {f.has_draw ? "Outcomes: India / Draw / Opponent" : "Outcomes: India / Opponent"}
+              </p>
+              <FormChart form={f.form.slice(-12)} />
+            </article>
           ))}
         </div>
-        <PredictionCards matches={formats.map((f) => f.upcoming[0])} />
-      </Section>
-
-      <Section id="results">
-        <SectionHeading eyebrow="Just Finished" title="Recent Results" subtitle="DEMO DATA across all three formats." />
-        <ResultsTicker results={ticker} />
-      </Section>
-
-      <Section id="validation">
-        <SectionHeading eyebrow="Model Validation" title="Per-Format Scorecard"
-          subtitle="Walk-forward metrics on demo data. Real numbers appear once a real dataset is loaded." />
-        <div className="grid gap-4 sm:grid-cols-3">
+        <div className="mt-12">
+          <SectionHeading eyebrow="Model Performance" title="Model Performance" subtitle="Metrics from the stored evaluation export. Missing values are shown as Evaluation pending." />
+          <ModelPerformance formats={formats} />
+        </div>
+        <div className="mt-12">
+          <SectionHeading eyebrow="Model Details" title="Model Evaluation" subtitle="Evaluation summaries and calibration are available when recorded for a format." />
           {formats.map((f) => (
-            <div key={f.slug} className="glass-card rounded-2xl p-5">
-              <div className="font-display text-xl font-bold uppercase text-foreground">{f.format}</div>
-              <dl className="font-mono mt-3 space-y-1 text-sm text-foreground/70">
-                <div className="flex justify-between"><dt>Accuracy</dt><dd className="text-foreground">{pct(f.validation.accuracy)}</dd></div>
-                <div className="flex justify-between"><dt>Brier</dt><dd className="text-foreground">{f.validation.brier.toFixed(3)}</dd></div>
-                <div className="flex justify-between"><dt>Log loss</dt><dd className="text-foreground">{f.validation.log_loss.toFixed(3)}</dd></div>
-              </dl>
+            <div key={f.slug} className="mb-8 space-y-4">
+              <h3 className="text-sm font-semibold text-foreground/75">{f.format}</h3>
+              <Validation v={f.validation} hasDraw={f.has_draw} />
+              {f.validation?.calibration?.length ? (
+                <CalibrationChart calibration={f.validation.calibration} />
+              ) : null}
             </div>
           ))}
         </div>
+        <div className="mt-12">
+          <SectionHeading eyebrow="Model Details" title="How the Model Works" subtitle="Project methods and implementation details for readers who want more depth." />
+          <MethodologySection />
+          <div className="mt-8">
+            <SectionHeading eyebrow="Implementation" title="Technology" />
+            <TechStack />
+          </div>
+        </div>
       </Section>
-
-      <Section><SectionHeading eyebrow="Under the Hood" title="How It Works" /><MethodologySection /></Section>
-      <Section id="stack"><SectionHeading eyebrow="Behind The Scenes" title="What Powers This Site" /><TechStack /></Section>
       <Footer />
     </main>
   );

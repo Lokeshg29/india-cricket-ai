@@ -9,7 +9,7 @@ const TT = { background: "#111", border: "1px solid rgba(255,255,255,0.12)", bor
 
 export function FormChart({ form }: { form: FormatData["form"] }) {
   return (
-    <div className="glass-card h-64 rounded-2xl p-4">
+    <div className="glass-card h-56 rounded-lg p-3">
       <ResponsiveContainer width="100%" height="100%">
         <LineChart data={form}>
           <CartesianGrid stroke="rgba(255,255,255,0.06)" />
@@ -35,7 +35,7 @@ export function TrendChart({ trend }: { trend: FormatData["trend"] }) {
     return row;
   });
   return (
-    <div className="glass-card h-72 rounded-2xl p-4">
+    <div className="glass-card h-64 rounded-lg p-3">
       <ResponsiveContainer width="100%" height="100%">
         <LineChart data={rows}>
           <CartesianGrid stroke="rgba(255,255,255,0.06)" />
@@ -59,7 +59,7 @@ export function CalibrationChart({ calibration }: { calibration: FormatData["val
     accuracy: Number((c.accuracy * 100).toFixed(1)),
   }));
   return (
-    <div className="glass-card h-64 rounded-2xl p-4">
+    <div className="glass-card h-56 rounded-lg p-3">
       <ResponsiveContainer width="100%" height="100%">
         <LineChart data={rows}>
           <CartesianGrid stroke="rgba(255,255,255,0.06)" />
@@ -67,7 +67,7 @@ export function CalibrationChart({ calibration }: { calibration: FormatData["val
           <YAxis domain={[0, 100]} tick={AX} width={36} unit="%" />
           <Tooltip contentStyle={TT} />
           <Legend wrapperStyle={{ fontSize: 11 }} />
-          <Line dataKey="confidence" name="Mean confidence" stroke="var(--chart-1)" strokeWidth={2} />
+          <Line dataKey="confidence" name="Mean predicted %" stroke="var(--chart-1)" strokeWidth={2} />
           <Line dataKey="accuracy" name="Observed accuracy" stroke="var(--chart-3)" strokeWidth={2} />
         </LineChart>
       </ResponsiveContainer>
