@@ -1,0 +1,21 @@
+{
+ "checks": [
+  {
+   "name": "schema",
+   "status": "pass"
+  },
+  {
+   "name": "result labels",
+   "status": "pass"
+  },
+  {
+   "name": "chronological order",
+   "status": "pass"
+  },
+  {
+   "name": "real data source",
+   "status": "missing"
+  }
+ ],
+ "data_label": "DEMO DATA"
+}

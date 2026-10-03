@@ -1,0 +1,13 @@
+.env
+__pycache__/
+*.pyc
+.venv/
+venv/
+.ipynb_checkpoints/
+.DS_Store
+data/live/*
+!data/live/.gitkeep
+!data/live/results_log.csv
+data/monitoring/*.html
+.vercel
+reports/preview/

@@ -1,0 +1,1057 @@
+{
+ "format": "T20I",
+ "slug": "t20i",
+ "has_draw": false,
+ "outcomes": [
+  "india",
+  "opponent"
+ ],
+ "data_label": "DEMO DATA",
+ "model_version": "cricket-demo-0.1.0",
+ "generated_at": "2026-10-01T11:55:50.852290+00:00",
+ "features": [
+  "elo_diff",
+  "form_diff",
+  "h2h_win_rate",
+  "home_flag",
+  "neutral_flag",
+  "toss_won",
+  "run_rate_diff",
+  "economy_diff",
+  "powerplay_diff",
+  "death_overs_diff"
+ ],
+ "summary": {
+  "matches_tracked": 160,
+  "predictions_generated": 24,
+  "accuracy": 0.7167,
+  "holdout_accuracy": 0.65
+ },
+ "upcoming": [
+  {
+   "match_id": "t20i-up-01",
+   "opponent": "England",
+   "venue": "Ahmedabad",
+   "venue_type": "home",
+   "date": "2026-11-15",
+   "format": "T20I",
+   "probabilities": {
+    "india": 0.5596,
+    "opponent": 0.4404
+   },
+   "confidence": "MEDIUM",
+   "explanation": [
+    {
+     "feature": "run_rate_diff",
+     "contribution": 1.106
+    },
+    {
+     "feature": "powerplay_diff",
+     "contribution": 0.721
+    },
+    {
+     "feature": "economy_diff",
+     "contribution": -0.706
+    },
+    {
+     "feature": "home_flag",
+     "contribution": -0.646
+    },
+    {
+     "feature": "death_overs_diff",
+     "contribution": 0.485
+    }
+   ],
+   "explanation_method": "logistic-coefficient surrogate (not SHAP)",
+   "data_label": "DEMO DATA"
+  },
+  {
+   "match_id": "t20i-up-02",
+   "opponent": "Bangladesh",
+   "venue": "Dhaka",
+   "venue_type": "away",
+   "date": "2026-12-09",
+   "format": "T20I",
+   "probabilities": {
+    "india": 0.3781,
+    "opponent": 0.6219
+   },
+   "confidence": "MEDIUM",
+   "explanation": [
+    {
+     "feature": "run_rate_diff",
+     "contribution": 1.106
+    },
+    {
+     "feature": "powerplay_diff",
+     "contribution": 0.721
+    },
+    {
+     "feature": "economy_diff",
+     "contribution": -0.706
+    },
+    {
+     "feature": "home_flag",
+     "contribution": 0.57
+    },
+    {
+     "feature": "death_overs_diff",
+     "contribution": 0.485
+    }
+   ],
+   "explanation_method": "logistic-coefficient surrogate (not SHAP)",
+   "data_label": "DEMO DATA"
+  },
+  {
+   "match_id": "t20i-up-03",
+   "opponent": "West Indies",
+   "venue": "Bridgetown",
+   "venue_type": "away",
+   "date": "2027-01-18",
+   "format": "T20I",
+   "probabilities": {
+    "india": 0.3674,
+    "opponent": 0.6326
+   },
+   "confidence": "MEDIUM",
+   "explanation": [
+    {
+     "feature": "run_rate_diff",
+     "contribution": 1.106
+    },
+    {
+     "feature": "powerplay_diff",
+     "contribution": 0.721
+    },
+    {
+     "feature": "economy_diff",
+     "contribution": -0.706
+    },
+    {
+     "feature": "home_flag",
+     "contribution": 0.57
+    },
+    {
+     "feature": "death_overs_diff",
+     "contribution": 0.485
+    }
+   ],
+   "explanation_method": "logistic-coefficient surrogate (not SHAP)",
+   "data_label": "DEMO DATA"
+  },
+  {
+   "match_id": "t20i-up-04",
+   "opponent": "Afghanistan",
+   "venue": "Chennai",
+   "venue_type": "home",
+   "date": "2027-02-10",
+   "format": "T20I",
+   "probabilities": {
+    "india": 0.5828,
+    "opponent": 0.4172
+   },
+   "confidence": "MEDIUM",
+   "explanation": [
+    {
+     "feature": "run_rate_diff",
+     "contribution": 1.106
+    },
+    {
+     "feature": "powerplay_diff",
+     "contribution": 0.721
+    },
+    {
+     "feature": "economy_diff",
+     "contribution": -0.706
+    },
+    {
+     "feature": "home_flag",
+     "contribution": -0.646
+    },
+    {
+     "feature": "death_overs_diff",
+     "contribution": 0.485
+    }
+   ],
+   "explanation_method": "logistic-coefficient surrogate (not SHAP)",
+   "data_label": "DEMO DATA"
+  }
+ ],
+ "results": [
+  {
+   "date": "2024-09-15",
+   "opponent": "Pakistan",
+   "venue": "Delhi",
+   "result": "opponent",
+   "data_label": "DEMO DATA"
+  },
+  {
+   "date": "2024-08-26",
+   "opponent": "Bangladesh",
+   "venue": "Ahmedabad",
+   "result": "india",
+   "data_label": "DEMO DATA"
+  },
+  {
+   "date": "2024-08-06",
+   "opponent": "South Africa",
+   "venue": "Johannesburg",
+   "result": "opponent",
+   "data_label": "DEMO DATA"
+  },
+  {
+   "date": "2024-07-17",
+   "opponent": "Afghanistan",
+   "venue": "Dubai",
+   "result": "india",
+   "data_label": "DEMO DATA"
+  },
+  {
+   "date": "2024-06-27",
+   "opponent": "West Indies",
+   "venue": "Delhi",
+   "result": "india",
+   "data_label": "DEMO DATA"
+  },
+  {
+   "date": "2024-06-07",
+   "opponent": "Sri Lanka",
+   "venue": "Colombo",
+   "result": "opponent",
+   "data_label": "DEMO DATA"
+  },
+  {
+   "date": "2024-05-18",
+   "opponent": "Australia",
+   "venue": "Ahmedabad",
+   "result": "india",
+   "data_label": "DEMO DATA"
+  },
+  {
+   "date": "2024-04-28",
+   "opponent": "Sri Lanka",
+   "venue": "Kolkata",
+   "result": "india",
+   "data_label": "DEMO DATA"
+  },
+  {
+   "date": "2024-04-08",
+   "opponent": "New Zealand",
+   "venue": "Dubai",
+   "result": "opponent",
+   "data_label": "DEMO DATA"
+  },
+  {
+   "date": "2024-03-19",
+   "opponent": "Bangladesh",
+   "venue": "Kolkata",
+   "result": "opponent",
+   "data_label": "DEMO DATA"
+  }
+ ],
+ "h2h": [
+  {
+   "opponent": "Australia",
+   "played": 12,
+   "india_wins": 6,
+   "opponent_wins": 6,
+   "draws": 0
+  },
+  {
+   "opponent": "England",
+   "played": 14,
+   "india_wins": 7,
+   "opponent_wins": 7,
+   "draws": 0
+  },
+  {
+   "opponent": "South Africa",
+   "played": 20,
+   "india_wins": 11,
+   "opponent_wins": 9,
+   "draws": 0
+  },
+  {
+   "opponent": "New Zealand",
+   "played": 19,
+   "india_wins": 11,
+   "opponent_wins": 8,
+   "draws": 0
+  },
+  {
+   "opponent": "Pakistan",
+   "played": 12,
+   "india_wins": 7,
+   "opponent_wins": 5,
+   "draws": 0
+  },
+  {
+   "opponent": "Sri Lanka",
+   "played": 29,
+   "india_wins": 20,
+   "opponent_wins": 9,
+   "draws": 0
+  },
+  {
+   "opponent": "West Indies",
+   "played": 19,
+   "india_wins": 15,
+   "opponent_wins": 4,
+   "draws": 0
+  },
+  {
+   "opponent": "Bangladesh",
+   "played": 18,
+   "india_wins": 16,
+   "opponent_wins": 2,
+   "draws": 0
+  },
+  {
+   "opponent": "Afghanistan",
+   "played": 17,
+   "india_wins": 14,
+   "opponent_wins": 3,
+   "draws": 0
+  }
+ ],
+ "venues": [
+  {
+   "venue": "Home",
+   "played": 75,
+   "win_rate": 0.7867
+  },
+  {
+   "venue": "Away",
+   "played": 63,
+   "win_rate": 0.5397
+  },
+  {
+   "venue": "Neutral",
+   "played": 22,
+   "win_rate": 0.6364
+  },
+  {
+   "venue": "Ahmedabad",
+   "played": 10,
+   "win_rate": 0.8
+  },
+  {
+   "venue": "Bengaluru",
+   "played": 13,
+   "win_rate": 1.0
+  },
+  {
+   "venue": "Bridgetown",
+   "played": 7,
+   "win_rate": 0.5714
+  },
+  {
+   "venue": "Chennai",
+   "played": 9,
+   "win_rate": 0.7778
+  },
+  {
+   "venue": "Colombo",
+   "played": 11,
+   "win_rate": 0.6364
+  },
+  {
+   "venue": "Delhi",
+   "played": 14,
+   "win_rate": 0.7857
+  },
+  {
+   "venue": "Dhaka",
+   "played": 9,
+   "win_rate": 0.8889
+  },
+  {
+   "venue": "Dubai",
+   "played": 22,
+   "win_rate": 0.6364
+  },
+  {
+   "venue": "Hyderabad",
+   "played": 7,
+   "win_rate": 0.7143
+  },
+  {
+   "venue": "Johannesburg",
+   "played": 9,
+   "win_rate": 0.5556
+  },
+  {
+   "venue": "Kolkata",
+   "played": 15,
+   "win_rate": 0.6
+  },
+  {
+   "venue": "London",
+   "played": 6,
+   "win_rate": 0.3333
+  },
+  {
+   "venue": "Melbourne",
+   "played": 6,
+   "win_rate": 0.0
+  },
+  {
+   "venue": "Mumbai",
+   "played": 7,
+   "win_rate": 0.8571
+  },
+  {
+   "venue": "Sharjah",
+   "played": 6,
+   "win_rate": 0.8333
+  },
+  {
+   "venue": "Wellington",
+   "played": 8,
+   "win_rate": 0.375
+  }
+ ],
+ "form": [
+  {
+   "date": "2023-06-13",
+   "form": 0.5
+  },
+  {
+   "date": "2023-07-03",
+   "form": 0.5
+  },
+  {
+   "date": "2023-07-23",
+   "form": 0.4
+  },
+  {
+   "date": "2023-08-12",
+   "form": 0.5
+  },
+  {
+   "date": "2023-09-01",
+   "form": 0.5
+  },
+  {
+   "date": "2023-09-21",
+   "form": 0.5
+  },
+  {
+   "date": "2023-10-11",
+   "form": 0.5
+  },
+  {
+   "date": "2023-10-31",
+   "form": 0.5
+  },
+  {
+   "date": "2023-11-20",
+   "form": 0.6
+  },
+  {
+   "date": "2023-12-10",
+   "form": 0.5
+  },
+  {
+   "date": "2023-12-30",
+   "form": 0.6
+  },
+  {
+   "date": "2024-01-19",
+   "form": 0.6
+  },
+  {
+   "date": "2024-02-08",
+   "form": 0.7
+  },
+  {
+   "date": "2024-02-28",
+   "form": 0.6
+  },
+  {
+   "date": "2024-03-19",
+   "form": 0.6
+  },
+  {
+   "date": "2024-04-08",
+   "form": 0.5
+  },
+  {
+   "date": "2024-04-28",
+   "form": 0.6
+  },
+  {
+   "date": "2024-05-18",
+   "form": 0.6
+  },
+  {
+   "date": "2024-06-07",
+   "form": 0.5
+  },
+  {
+   "date": "2024-06-27",
+   "form": 0.6
+  },
+  {
+   "date": "2024-07-17",
+   "form": 0.6
+  },
+  {
+   "date": "2024-08-06",
+   "form": 0.5
+  },
+  {
+   "date": "2024-08-26",
+   "form": 0.5
+  },
+  {
+   "date": "2024-09-15",
+   "form": 0.5
+  }
+ ],
+ "trend": [
+  {
+   "match_id": "t20i-up-01",
+   "step": 1,
+   "india": 0.6006
+  },
+  {
+   "match_id": "t20i-up-01",
+   "step": 2,
+   "india": 0.5934
+  },
+  {
+   "match_id": "t20i-up-01",
+   "step": 3,
+   "india": 0.6148
+  },
+  {
+   "match_id": "t20i-up-01",
+   "step": 4,
+   "india": 0.6319
+  },
+  {
+   "match_id": "t20i-up-01",
+   "step": 5,
+   "india": 0.5999
+  },
+  {
+   "match_id": "t20i-up-01",
+   "step": 6,
+   "india": 0.6061
+  },
+  {
+   "match_id": "t20i-up-02",
+   "step": 1,
+   "india": 0.6006
+  },
+  {
+   "match_id": "t20i-up-02",
+   "step": 2,
+   "india": 0.5934
+  },
+  {
+   "match_id": "t20i-up-02",
+   "step": 3,
+   "india": 0.6148
+  },
+  {
+   "match_id": "t20i-up-02",
+   "step": 4,
+   "india": 0.6319
+  },
+  {
+   "match_id": "t20i-up-02",
+   "step": 5,
+   "india": 0.5999
+  },
+  {
+   "match_id": "t20i-up-02",
+   "step": 6,
+   "india": 0.6061
+  },
+  {
+   "match_id": "t20i-up-03",
+   "step": 1,
+   "india": 0.6006
+  },
+  {
+   "match_id": "t20i-up-03",
+   "step": 2,
+   "india": 0.5934
+  },
+  {
+   "match_id": "t20i-up-03",
+   "step": 3,
+   "india": 0.6148
+  },
+  {
+   "match_id": "t20i-up-03",
+   "step": 4,
+   "india": 0.6319
+  },
+  {
+   "match_id": "t20i-up-03",
+   "step": 5,
+   "india": 0.5999
+  },
+  {
+   "match_id": "t20i-up-03",
+   "step": 6,
+   "india": 0.6061
+  },
+  {
+   "match_id": "t20i-up-04",
+   "step": 1,
+   "india": 0.6006
+  },
+  {
+   "match_id": "t20i-up-04",
+   "step": 2,
+   "india": 0.5934
+  },
+  {
+   "match_id": "t20i-up-04",
+   "step": 3,
+   "india": 0.6148
+  },
+  {
+   "match_id": "t20i-up-04",
+   "step": 4,
+   "india": 0.6319
+  },
+  {
+   "match_id": "t20i-up-04",
+   "step": 5,
+   "india": 0.5999
+  },
+  {
+   "match_id": "t20i-up-04",
+   "step": 6,
+   "india": 0.6061
+  }
+ ],
+ "players": [
+  {
+   "player": "Demo Player 1",
+   "role": "Opener",
+   "recent_matches": 6,
+   "runs": 403,
+   "average": 54.9,
+   "strike_rate": 135.4,
+   "wickets": 2,
+   "economy": null,
+   "data_label": "DEMO DATA"
+  },
+  {
+   "player": "Demo Player 2",
+   "role": "Top-order batter",
+   "recent_matches": 6,
+   "runs": 370,
+   "average": 37.0,
+   "strike_rate": 141.8,
+   "wickets": 0,
+   "economy": null,
+   "data_label": "DEMO DATA"
+  },
+  {
+   "player": "Demo Player 3",
+   "role": "Middle-order batter",
+   "recent_matches": 6,
+   "runs": 393,
+   "average": 52.6,
+   "strike_rate": 136.8,
+   "wickets": 0,
+   "economy": null,
+   "data_label": "DEMO DATA"
+  },
+  {
+   "player": "Demo Player 4",
+   "role": "Wicketkeeper-batter",
+   "recent_matches": 6,
+   "runs": 155,
+   "average": 37.1,
+   "strike_rate": 103.1,
+   "wickets": 1,
+   "economy": null,
+   "data_label": "DEMO DATA"
+  },
+  {
+   "player": "Demo Player 5",
+   "role": "All-rounder",
+   "recent_matches": 6,
+   "runs": 335,
+   "average": 41.4,
+   "strike_rate": 117.8,
+   "wickets": 1,
+   "economy": 6.9,
+   "data_label": "DEMO DATA"
+  },
+  {
+   "player": "Demo Player 6",
+   "role": "Fast bowler",
+   "recent_matches": 6,
+   "runs": 45,
+   "average": 17.5,
+   "strike_rate": null,
+   "wickets": 23,
+   "economy": 7.16,
+   "data_label": "DEMO DATA"
+  },
+  {
+   "player": "Demo Player 7",
+   "role": "Spinner",
+   "recent_matches": 6,
+   "runs": 33,
+   "average": 10.6,
+   "strike_rate": null,
+   "wickets": 23,
+   "economy": 5.41,
+   "data_label": "DEMO DATA"
+  }
+ ],
+ "validation": {
+  "n_evaluated": 120,
+  "accuracy": 0.7166666666666667,
+  "brier": 0.3738307013150762,
+  "log_loss": 0.5547392111853562,
+  "confusion_matrix": {
+   "labels": [
+    "india",
+    "opponent"
+   ],
+   "matrix": {
+    "india": {
+     "india": 78,
+     "opponent": 6
+    },
+    "opponent": {
+     "india": 28,
+     "opponent": 8
+    }
+   }
+  },
+  "calibration": [
+   {
+    "bin": "0.4-0.6",
+    "n": 28,
+    "mean_confidence": 0.5499471139807389,
+    "accuracy": 0.5
+   },
+   {
+    "bin": "0.6-0.8",
+    "n": 63,
+    "mean_confidence": 0.7165884486463489,
+    "accuracy": 0.7777777777777778
+   },
+   {
+    "bin": "0.8-1.0",
+    "n": 29,
+    "mean_confidence": 0.8540597620090785,
+    "accuracy": 0.7931034482758621
+   }
+  ]
+ },
+ "ledger": [
+  {
+   "match_id": "t20i-demo-001",
+   "format": "T20I",
+   "date": "2023-09-01",
+   "opponent": "Australia",
+   "prediction_timestamp": "2023-08-31T00:00:00Z",
+   "model_version": "cricket-demo-0.1.0",
+   "india_probability": 0.4934,
+   "opponent_probability": 0.5066,
+   "actual_result": "opponent",
+   "model_correct": true,
+   "hash": "49c3cbca56b0008132aa579984ca76aa8b5863753749a884e39337a5bdb14f7c",
+   "verified_pre_match": false,
+   "data_label": "DEMO DATA"
+  },
+  {
+   "match_id": "t20i-demo-002",
+   "format": "T20I",
+   "date": "2023-09-21",
+   "opponent": "Afghanistan",
+   "prediction_timestamp": "2023-09-20T00:00:00Z",
+   "model_version": "cricket-demo-0.1.0",
+   "india_probability": 0.6633,
+   "opponent_probability": 0.3367,
+   "actual_result": "india",
+   "model_correct": true,
+   "hash": "8d5caa3af1beb15f3a8f1a42733e13b236f0db23bb487107e69bf690107ea261",
+   "verified_pre_match": false,
+   "data_label": "DEMO DATA"
+  },
+  {
+   "match_id": "t20i-demo-003",
+   "format": "T20I",
+   "date": "2023-10-11",
+   "opponent": "South Africa",
+   "prediction_timestamp": "2023-10-10T00:00:00Z",
+   "model_version": "cricket-demo-0.1.0",
+   "india_probability": 0.7148,
+   "opponent_probability": 0.2852,
+   "actual_result": "opponent",
+   "model_correct": false,
+   "hash": "bcea2572f385c1fcbd6f4f4492d8457302554c684207c9687be07bc2516d97ee",
+   "verified_pre_match": false,
+   "data_label": "DEMO DATA"
+  },
+  {
+   "match_id": "t20i-demo-004",
+   "format": "T20I",
+   "date": "2023-10-31",
+   "opponent": "Sri Lanka",
+   "prediction_timestamp": "2023-10-30T00:00:00Z",
+   "model_version": "cricket-demo-0.1.0",
+   "india_probability": 0.7794,
+   "opponent_probability": 0.2206,
+   "actual_result": "india",
+   "model_correct": true,
+   "hash": "4ad713e8f0e2a16ff0c6e69865ab2bbdf534b50fc27c1eab0ba23a7b44a098d1",
+   "verified_pre_match": false,
+   "data_label": "DEMO DATA"
+  },
+  {
+   "match_id": "t20i-demo-005",
+   "format": "T20I",
+   "date": "2023-11-20",
+   "opponent": "Bangladesh",
+   "prediction_timestamp": "2023-11-19T00:00:00Z",
+   "model_version": "cricket-demo-0.1.0",
+   "india_probability": 0.6493,
+   "opponent_probability": 0.3507,
+   "actual_result": "india",
+   "model_correct": true,
+   "hash": "d13957ea630fec26e33691e966e53514c4c180f3fd4f3bd5d4ae99dc3f2a6d07",
+   "verified_pre_match": false,
+   "data_label": "DEMO DATA"
+  },
+  {
+   "match_id": "t20i-demo-006",
+   "format": "T20I",
+   "date": "2023-12-10",
+   "opponent": "Bangladesh",
+   "prediction_timestamp": "2023-12-09T00:00:00Z",
+   "model_version": "cricket-demo-0.1.0",
+   "india_probability": 0.5815,
+   "opponent_probability": 0.4185,
+   "actual_result": "opponent",
+   "model_correct": false,
+   "hash": "8a48ecb6ccf06795b026abb161831a4119c2b2633eb312ab7631731805cf4a83",
+   "verified_pre_match": false,
+   "data_label": "DEMO DATA"
+  },
+  {
+   "match_id": "t20i-demo-007",
+   "format": "T20I",
+   "date": "2023-12-30",
+   "opponent": "Australia",
+   "prediction_timestamp": "2023-12-29T00:00:00Z",
+   "model_version": "cricket-demo-0.1.0",
+   "india_probability": 0.7209,
+   "opponent_probability": 0.2791,
+   "actual_result": "india",
+   "model_correct": true,
+   "hash": "ffcd449e96e25293e40dce00c46ce249125520d761874878e1334ef180e0472b",
+   "verified_pre_match": false,
+   "data_label": "DEMO DATA"
+  },
+  {
+   "match_id": "t20i-demo-008",
+   "format": "T20I",
+   "date": "2024-01-19",
+   "opponent": "South Africa",
+   "prediction_timestamp": "2024-01-18T00:00:00Z",
+   "model_version": "cricket-demo-0.1.0",
+   "india_probability": 0.6207,
+   "opponent_probability": 0.3793,
+   "actual_result": "india",
+   "model_correct": true,
+   "hash": "07f0d42910432d01e5b733df68e184cbc44b977b7e079907e4937a4f99fea7f7",
+   "verified_pre_match": false,
+   "data_label": "DEMO DATA"
+  },
+  {
+   "match_id": "t20i-demo-009",
+   "format": "T20I",
+   "date": "2024-02-08",
+   "opponent": "South Africa",
+   "prediction_timestamp": "2024-02-07T00:00:00Z",
+   "model_version": "cricket-demo-0.1.0",
+   "india_probability": 0.5649,
+   "opponent_probability": 0.4351,
+   "actual_result": "india",
+   "model_correct": true,
+   "hash": "f1d1ab630c5e2f19f856b3a1e964ee2ff55ef9b4fed8eaab959b260b426d9a76",
+   "verified_pre_match": false,
+   "data_label": "DEMO DATA"
+  },
+  {
+   "match_id": "t20i-demo-010",
+   "format": "T20I",
+   "date": "2024-02-28",
+   "opponent": "Sri Lanka",
+   "prediction_timestamp": "2024-02-27T00:00:00Z",
+   "model_version": "cricket-demo-0.1.0",
+   "india_probability": 0.5704,
+   "opponent_probability": 0.4296,
+   "actual_result": "opponent",
+   "model_correct": false,
+   "hash": "15a072e73e3a86c7d76a7c91d0340f4108c8fb8578de41a2fc84f67a1a27cb39",
+   "verified_pre_match": false,
+   "data_label": "DEMO DATA"
+  },
+  {
+   "match_id": "t20i-demo-011",
+   "format": "T20I",
+   "date": "2024-03-19",
+   "opponent": "Bangladesh",
+   "prediction_timestamp": "2024-03-18T00:00:00Z",
+   "model_version": "cricket-demo-0.1.0",
+   "india_probability": 0.5952,
+   "opponent_probability": 0.4048,
+   "actual_result": "opponent",
+   "model_correct": false,
+   "hash": "80120542f1fca32700367298f21b04562760129a198934e7e647a5fb9c02a282",
+   "verified_pre_match": false,
+   "data_label": "DEMO DATA"
+  },
+  {
+   "match_id": "t20i-demo-012",
+   "format": "T20I",
+   "date": "2024-04-08",
+   "opponent": "New Zealand",
+   "prediction_timestamp": "2024-04-07T00:00:00Z",
+   "model_version": "cricket-demo-0.1.0",
+   "india_probability": 0.7051,
+   "opponent_probability": 0.2949,
+   "actual_result": "opponent",
+   "model_correct": false,
+   "hash": "0e3147214f082baaddf6e467ebb730dd4e90e7c9e156b779a154630ea25acefe",
+   "verified_pre_match": false,
+   "data_label": "DEMO DATA"
+  },
+  {
+   "match_id": "t20i-demo-013",
+   "format": "T20I",
+   "date": "2024-04-28",
+   "opponent": "Sri Lanka",
+   "prediction_timestamp": "2024-04-27T00:00:00Z",
+   "model_version": "cricket-demo-0.1.0",
+   "india_probability": 0.894,
+   "opponent_probability": 0.106,
+   "actual_result": "india",
+   "model_correct": true,
+   "hash": "b5782d448a99f96393bbf4bbe7cea22015c5922fb59c32e3ff9dd2f1cca35bbc",
+   "verified_pre_match": false,
+   "data_label": "DEMO DATA"
+  },
+  {
+   "match_id": "t20i-demo-014",
+   "format": "T20I",
+   "date": "2024-05-18",
+   "opponent": "Australia",
+   "prediction_timestamp": "2024-05-17T00:00:00Z",
+   "model_version": "cricket-demo-0.1.0",
+   "india_probability": 0.6949,
+   "opponent_probability": 0.3051,
+   "actual_result": "india",
+   "model_correct": true,
+   "hash": "1871e9e4514ede6bbbe67b2109ace358d6b4b0be133fd1fbde1f79ca468dcec5",
+   "verified_pre_match": false,
+   "data_label": "DEMO DATA"
+  },
+  {
+   "match_id": "t20i-demo-015",
+   "format": "T20I",
+   "date": "2024-06-07",
+   "opponent": "Sri Lanka",
+   "prediction_timestamp": "2024-06-06T00:00:00Z",
+   "model_version": "cricket-demo-0.1.0",
+   "india_probability": 0.5742,
+   "opponent_probability": 0.4258,
+   "actual_result": "opponent",
+   "model_correct": false,
+   "hash": "8065f733598a6097562da045adedf7372c61252ffccda285ba34dc0ed47af1f3",
+   "verified_pre_match": false,
+   "data_label": "DEMO DATA"
+  },
+  {
+   "match_id": "t20i-demo-016",
+   "format": "T20I",
+   "date": "2024-06-27",
+   "opponent": "West Indies",
+   "prediction_timestamp": "2024-06-26T00:00:00Z",
+   "model_version": "cricket-demo-0.1.0",
+   "india_probability": 0.7301,
+   "opponent_probability": 0.2699,
+   "actual_result": "india",
+   "model_correct": true,
+   "hash": "0a7a64fd5ee13aa6f7dd72448ec37129429824b2d03d57a692b07dc5b81b1fb0",
+   "verified_pre_match": false,
+   "data_label": "DEMO DATA"
+  },
+  {
+   "match_id": "t20i-demo-017",
+   "format": "T20I",
+   "date": "2024-07-17",
+   "opponent": "Afghanistan",
+   "prediction_timestamp": "2024-07-16T00:00:00Z",
+   "model_version": "cricket-demo-0.1.0",
+   "india_probability": 0.8395,
+   "opponent_probability": 0.1605,
+   "actual_result": "india",
+   "model_correct": true,
+   "hash": "f41afcc8d1eeb80b88c17b387c6bc4fc8e4f31a957e33859740599387ac5a8fb",
+   "verified_pre_match": false,
+   "data_label": "DEMO DATA"
+  },
+  {
+   "match_id": "t20i-demo-018",
+   "format": "T20I",
+   "date": "2024-08-06",
+   "opponent": "South Africa",
+   "prediction_timestamp": "2024-08-05T00:00:00Z",
+   "model_version": "cricket-demo-0.1.0",
+   "india_probability": 0.3759,
+   "opponent_probability": 0.6241,
+   "actual_result": "opponent",
+   "model_correct": true,
+   "hash": "e63101ffb98cd8f692a35f7783be725f948cd5115a1a25f733e0c8d3bb9fe0b3",
+   "verified_pre_match": false,
+   "data_label": "DEMO DATA"
+  },
+  {
+   "match_id": "t20i-demo-019",
+   "format": "T20I",
+   "date": "2024-08-26",
+   "opponent": "Bangladesh",
+   "prediction_timestamp": "2024-08-25T00:00:00Z",
+   "model_version": "cricket-demo-0.1.0",
+   "india_probability": 0.8381,
+   "opponent_probability": 0.1619,
+   "actual_result": "india",
+   "model_correct": true,
+   "hash": "7a9a6c7a2e026b3128b1757c975936e7b1f9c3141ebfd8dd3f7e346d7774e987",
+   "verified_pre_match": false,
+   "data_label": "DEMO DATA"
+  },
+  {
+   "match_id": "t20i-demo-020",
+   "format": "T20I",
+   "date": "2024-09-15",
+   "opponent": "Pakistan",
+   "prediction_timestamp": "2024-09-14T00:00:00Z",
+   "model_version": "cricket-demo-0.1.0",
+   "india_probability": 0.6319,
+   "opponent_probability": 0.3681,
+   "actual_result": "opponent",
+   "model_correct": false,
+   "hash": "6a8260ec193f3cc855768dc2bc788627b719c8e34d66067bc861bab1a94c6d88",
+   "verified_pre_match": false,
+   "data_label": "DEMO DATA"
+  }
+ ]
+}

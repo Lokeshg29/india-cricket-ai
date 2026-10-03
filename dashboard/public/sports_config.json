@@ -1,0 +1,8 @@
+{
+  "sports": [
+    { "id": "india_all", "name": "India Cricket - All Formats", "short": "ALL", "path": "/", "is_active": true, "is_live": false },
+    { "id": "india_test", "name": "India - Test", "short": "TEST", "path": "/test", "is_active": true, "is_live": false },
+    { "id": "india_odi", "name": "India - ODI", "short": "ODI", "path": "/odi", "is_active": true, "is_live": false },
+    { "id": "india_t20i", "name": "India - T20I", "short": "T20I", "path": "/t20i", "is_active": true, "is_live": false }
+  ]
+}

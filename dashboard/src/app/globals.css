@@ -1,0 +1,139 @@
+@import "tailwindcss";
+
+/* Design tokens — the single source of truth for the site's palette.
+   Components must reference these (via Tailwind utilities or var(--…)),
+   never hardcode hex values. Chart series colors were validated with the
+   dataviz skill's validate_palette.js against the #111111 card surface
+   (lightness band, chroma floor, CVD separation, contrast: all PASS). */
+:root {
+  --background: #090909;
+  --background-raised: #0f0f0f;
+  --background-deep: #050505;
+  --card: #111111;
+  --card-alt: #141414;
+  --card-border: rgba(255, 255, 255, 0.08);
+  --foreground: #ffffff;
+  --secondary: #888888;
+  --muted: #444444;
+  --accent: #4b9bff;
+  --accent-hover: #2f7fe0;
+  --accent-warm: #14305c;
+  --saffron: #ff9933;
+  --accent-deep: #0b1d3a;
+  --globe-a: #0b1426;
+  --globe-b: #122244;
+  --globe-c: #080d18;
+  --chart-1: #4b9bff;
+  --chart-2: #4e97dc;
+  --chart-3: #ff9933;
+  --chart-4: #2fa97d;
+  --chart-5: #a379e8;
+  --chart-6: #7e8b3e;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-background-raised: var(--background-raised);
+  --color-background-deep: var(--background-deep);
+  --color-card: var(--card);
+  --color-card-alt: var(--card-alt);
+  --color-card-border: var(--card-border);
+  --color-foreground: var(--foreground);
+  --color-secondary: var(--secondary);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-warm: var(--accent-warm);
+  --color-accent-deep: var(--accent-deep);
+  --color-saffron: var(--saffron);
+  --color-text-secondary: var(--secondary);
+  --color-text-muted: var(--muted);
+  --font-sans: var(--font-space-grotesk);
+  --font-display: var(--font-space-grotesk);
+  --font-mono: var(--font-plex-mono);
+  --font-serif: var(--font-space-grotesk);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-space-grotesk), Arial, Helvetica, sans-serif;
+  font-size: 1.0625rem;
+  min-height: 100vh;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--background);
+}
+
+/* Whole site set in Space Grotesk (2026-07-14): display + serif classes
+   now resolve to Space Grotesk, so headlines and body prose read in the
+   same face as everything else. Mono stays IBM Plex Mono -- it's a
+   functional monospace for tabular numbers and technical labels, not a
+   brand-type choice. */
+.font-display {
+  font-family: var(--font-space-grotesk), sans-serif;
+}
+
+.font-mono {
+  font-family: var(--font-plex-mono), monospace;
+}
+
+.font-serif {
+  font-family: var(--font-space-grotesk), sans-serif;
+}
+
+@keyframes wc-dash {
+  to { stroke-dashoffset: -400; }
+}
+
+@keyframes wc-drift {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-10px, -14px); }
+}
+
+@keyframes wc-pulse {
+  0%, 100% { opacity: 0.45; }
+  50% { opacity: 1; }
+}
+
+@keyframes wc-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@keyframes wc-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.glass-card {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+}
+
+.glass-card-alt {
+  background: var(--card-alt);
+  border: 1px solid var(--card-border);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--accent) 25%, transparent);
+  border-radius: 9999px;
+}
+
+@keyframes ica-twinkle {
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [style*="animation"] { animation: none !important; }
+}
