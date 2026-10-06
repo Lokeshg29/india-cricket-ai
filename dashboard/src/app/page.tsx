@@ -35,7 +35,7 @@ export default function Home() {
   return (
     <main className="relative">
       <Nav />
-      <Hero dataLabel={dataLabel} />
+      <Hero dataLabel={dataLabel} minimal />
 
       <Section>
         <StatsStrip stats={stats} />
