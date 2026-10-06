@@ -1,3 +1,5 @@
+import pytest
+
 from src.verification import proof_tracker
 
 
@@ -44,7 +46,7 @@ def test_grade_match_correct_pick_with_bookmaker():
     assert card["actual_outcome"] == "home_win"
     assert card["model_predicted_outcome"] == "home_win"
     assert card["model_correct"] is True
-    assert card["model_brier"] == (0.61 - 1) ** 2 + 0.24**2 + 0.15**2
+    assert card["model_brier"] == pytest.approx((0.61 - 1) ** 2 + 0.24**2 + 0.15**2)
     assert card["bookmaker_correct"] is True
 
 

@@ -8,12 +8,17 @@ Adapted from an existing full-stack MLOps sports-prediction platform (original f
 
 ## Data status (read this first)
 
-No real cricket dataset ships in this repo. All numbers on the site are **DEMO DATA**: a seeded synthetic history
+The repo includes a Cricsheet-derived historical match dataset for India men's internationals at
+`data/processed/cricket/india_internationals.csv`, with raw source archive and provenance manifest. It is not used by
+the dashboard or current model pipeline. All numbers on the site are still **DEMO DATA**: a seeded synthetic history
 (`src/sports/cricket/demo_data.py`) run through the real feature/model/evaluation code. Fixtures are placeholders,
 players are `Demo Player N`, and the prediction ledger is **not** proof of pre-match prediction
 (`verified_pre_match = false`). Labels used everywhere: `LIVE DATA`, `HISTORICAL DATA`, `DEMO DATA`.
-To go real, replace `make_history` with a loader (e.g. Cricsheet ball-by-ball, check its licence) that returns the
-same columns; nothing downstream changes. No API keys are needed to run locally.
+The historical table preserves unresolved limited-overs ties and no-results with explicit statuses and null result
+labels. It is not a compatible input to the current feature builder yet: venue/home-away enrichment and an explicit
+target/feature adapter are future work. Rebuild it from `data/raw/cricsheet/india_male_json.zip` with
+`python scripts/ingest_cricsheet.py`. See `data/raw/cricsheet/README.md` and `docs/PROJECT_LEARNING.md` for provenance
+and schema details. No API keys are needed to run locally.
 
 ## Run
 
@@ -32,6 +37,8 @@ calibration; XGBoost optional), `evaluation.py` (walk-forward accuracy, Brier, l
 Explainability is a logistic-coefficient surrogate, **not SHAP** yet.
 
 Tests: `python -m pytest tests/test_cricket.py`.
+
+Historical data validation: `python -m pytest tests/test_cricket_data.py`.
 
 ## Inherited football-era code
 

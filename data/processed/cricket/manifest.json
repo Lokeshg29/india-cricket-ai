@@ -1,0 +1,45 @@
+{
+  "dataset": "India men's international cricket match history",
+  "data_status": "HISTORICAL_DATA",
+  "source": "Cricsheet",
+  "source_url": "https://cricsheet.org/downloads/india_male_json.zip",
+  "format_documentation": "https://cricsheet.org/format/json/",
+  "source_archive": "india_male_json.zip",
+  "source_archive_sha256": "c6011a88842d0326fa8915723b7d0f4cea257ac51852f60cbf4080f2b66a44cd",
+  "source_data_format": "Cricsheet JSON; match-level normalization",
+  "date_range": {
+    "from": "2001-12-19",
+    "to": "2026-08-23"
+  },
+  "processed_file": "india_internationals.csv",
+  "archive": "india_male_json.zip",
+  "source_json_matches": 1021,
+  "included_matches": 1021,
+  "formats": {
+    "ODI": 526,
+    "T20I": 276,
+    "TEST": 219
+  },
+  "results_and_statuses": {
+    "ODI:INDIA_WIN": 313,
+    "ODI:NO_RESULT": 23,
+    "ODI:OPPONENT_WIN": 184,
+    "ODI:TIED": 6,
+    "T20I:INDIA_WIN": 188,
+    "T20I:NO_RESULT": 6,
+    "T20I:OPPONENT_WIN": 81,
+    "T20I:TIED": 1,
+    "TEST:DRAW": 54,
+    "TEST:INDIA_WIN": 105,
+    "TEST:OPPONENT_WIN": 60
+  },
+  "source_match_types": {
+    "ODI": 526,
+    "T20": 276,
+    "Test": 219
+  },
+  "source_data_versions": {
+    "1.2.0": 1021
+  },
+  "excluded": {}
+}
