@@ -1,0 +1,980 @@
+{
+  "generated_at": "2026-10-07T11:26:54.791548+00:00",
+  "source": "Cricsheet",
+  "data_label": "HISTORICAL BACKTEST",
+  "formats": {
+    "test": {
+      "format": "Test",
+      "slug": "test",
+      "status": "EVALUATED",
+      "data_label": "HISTORICAL BACKTEST",
+      "model_version": "cricket-history-logreg-sigmoid-v1-test",
+      "model_type": "StandardScaler + LogisticRegression + sigmoid calibration",
+      "feature_version": "cricsheet-pre-match-v1",
+      "n_evaluated": 159,
+      "training_data_range": {
+        "from": "2001-12-19",
+        "to": "2026-08-23"
+      },
+      "metrics": {
+        "accuracy": 0.44025157232704404,
+        "precision": null,
+        "recall": null,
+        "f1": null,
+        "macro_f1": 0.3049725851340231,
+        "log_loss": 1.2160168794395319,
+        "brier": 0.6418633770087571
+      },
+      "confusion_matrix": {
+        "labels": [
+          "india",
+          "draw",
+          "opponent"
+        ],
+        "matrix": {
+          "india": {
+            "india": 61,
+            "draw": 13,
+            "opponent": 6
+          },
+          "draw": {
+            "india": 18,
+            "draw": 8,
+            "opponent": 3
+          },
+          "opponent": {
+            "india": 38,
+            "draw": 11,
+            "opponent": 1
+          }
+        }
+      },
+      "calibration": [
+        {
+          "bin": "0.2-0.4",
+          "n": 38,
+          "mean_confidence": 0.3770039997170023,
+          "accuracy": 0.3684210526315789
+        },
+        {
+          "bin": "0.4-0.6",
+          "n": 121,
+          "mean_confidence": 0.4497502337555698,
+          "accuracy": 0.4628099173553719
+        }
+      ],
+      "evaluation_timestamp": "2026-10-07T11:26:54.828547+00:00",
+      "features": [
+        "india_elo_pre",
+        "opponent_elo_pre",
+        "elo_diff",
+        "india_recent_win_rate",
+        "h2h_india_win_rate",
+        "h2h_matches_before",
+        "india_batting_average",
+        "opponent_batting_average",
+        "india_bowling_average",
+        "opponent_bowling_average",
+        "india_first_innings_runs",
+        "opponent_first_innings_runs",
+        "draw_tendency"
+      ],
+      "evaluation_method": "Expanding walk-forward; min_train=60; step=20; no shuffling.",
+      "training_matches": 219,
+      "validation": {
+        "n_evaluated": 159,
+        "accuracy": 0.44025157232704404,
+        "precision": null,
+        "recall": null,
+        "f1": null,
+        "macro_f1": 0.3049725851340231,
+        "log_loss": 1.2160168794395319,
+        "brier": 0.6418633770087571,
+        "confusion_matrix": {
+          "labels": [
+            "india",
+            "draw",
+            "opponent"
+          ],
+          "matrix": {
+            "india": {
+              "india": 61,
+              "draw": 13,
+              "opponent": 6
+            },
+            "draw": {
+              "india": 18,
+              "draw": 8,
+              "opponent": 3
+            },
+            "opponent": {
+              "india": 38,
+              "draw": 11,
+              "opponent": 1
+            }
+          }
+        },
+        "calibration": [
+          {
+            "bin": "0.2-0.4",
+            "n": 38,
+            "mean_confidence": 0.3770039997170023,
+            "accuracy": 0.3684210526315789
+          },
+          {
+            "bin": "0.4-0.6",
+            "n": 121,
+            "mean_confidence": 0.4497502337555698,
+            "accuracy": 0.4628099173553719
+          }
+        ]
+      },
+      "ledger": [
+        {
+          "match_id": "1426559",
+          "format": "Test",
+          "date": "2025-01-03",
+          "opponent": "Australia",
+          "prediction_timestamp": null,
+          "evaluation_timestamp": "2026-10-07T11:26:54.828547+00:00",
+          "model_version": "cricket-history-logreg-sigmoid-v1-test",
+          "india_probability": 0.4637803360077049,
+          "opponent_probability": 0.3769234001406083,
+          "draw_probability": 0.15929626385168685,
+          "actual_result": "opponent",
+          "predicted_result": "india",
+          "model_correct": false,
+          "verified_pre_match": false,
+          "data_label": "HISTORICAL BACKTEST"
+        },
+        {
+          "match_id": "1448349",
+          "format": "Test",
+          "date": "2025-06-20",
+          "opponent": "England",
+          "prediction_timestamp": null,
+          "evaluation_timestamp": "2026-10-07T11:26:54.828547+00:00",
+          "model_version": "cricket-history-logreg-sigmoid-v1-test",
+          "india_probability": 0.4455056948056719,
+          "opponent_probability": 0.3838577383739346,
+          "draw_probability": 0.1706365668203934,
+          "actual_result": "opponent",
+          "predicted_result": "india",
+          "model_correct": false,
+          "verified_pre_match": false,
+          "data_label": "HISTORICAL BACKTEST"
+        },
+        {
+          "match_id": "1448350",
+          "format": "Test",
+          "date": "2025-07-02",
+          "opponent": "England",
+          "prediction_timestamp": null,
+          "evaluation_timestamp": "2026-10-07T11:26:54.828547+00:00",
+          "model_version": "cricket-history-logreg-sigmoid-v1-test",
+          "india_probability": 0.44415441885073736,
+          "opponent_probability": 0.38255887482434775,
+          "draw_probability": 0.17328670632491494,
+          "actual_result": "india",
+          "predicted_result": "india",
+          "model_correct": true,
+          "verified_pre_match": false,
+          "data_label": "HISTORICAL BACKTEST"
+        },
+        {
+          "match_id": "1448351",
+          "format": "Test",
+          "date": "2025-07-10",
+          "opponent": "England",
+          "prediction_timestamp": null,
+          "evaluation_timestamp": "2026-10-07T11:26:54.828547+00:00",
+          "model_version": "cricket-history-logreg-sigmoid-v1-test",
+          "india_probability": 0.4516465763033523,
+          "opponent_probability": 0.3754955374443667,
+          "draw_probability": 0.17285788625228093,
+          "actual_result": "opponent",
+          "predicted_result": "india",
+          "model_correct": false,
+          "verified_pre_match": false,
+          "data_label": "HISTORICAL BACKTEST"
+        },
+        {
+          "match_id": "1448352",
+          "format": "Test",
+          "date": "2025-07-23",
+          "opponent": "England",
+          "prediction_timestamp": null,
+          "evaluation_timestamp": "2026-10-07T11:26:54.828547+00:00",
+          "model_version": "cricket-history-logreg-sigmoid-v1-test",
+          "india_probability": 0.46892518305596936,
+          "opponent_probability": 0.36884691707412104,
+          "draw_probability": 0.16222789986990963,
+          "actual_result": "draw",
+          "predicted_result": "india",
+          "model_correct": false,
+          "verified_pre_match": false,
+          "data_label": "HISTORICAL BACKTEST"
+        },
+        {
+          "match_id": "1448353",
+          "format": "Test",
+          "date": "2025-07-31",
+          "opponent": "England",
+          "prediction_timestamp": null,
+          "evaluation_timestamp": "2026-10-07T11:26:54.828547+00:00",
+          "model_version": "cricket-history-logreg-sigmoid-v1-test",
+          "india_probability": 0.4530044224640007,
+          "opponent_probability": 0.38733086417546975,
+          "draw_probability": 0.15966471336052962,
+          "actual_result": "india",
+          "predicted_result": "india",
+          "model_correct": true,
+          "verified_pre_match": false,
+          "data_label": "HISTORICAL BACKTEST"
+        },
+        {
+          "match_id": "1479569",
+          "format": "Test",
+          "date": "2025-10-02",
+          "opponent": "West Indies",
+          "prediction_timestamp": null,
+          "evaluation_timestamp": "2026-10-07T11:26:54.828547+00:00",
+          "model_version": "cricket-history-logreg-sigmoid-v1-test",
+          "india_probability": 0.47001456911476996,
+          "opponent_probability": 0.27829987182249455,
+          "draw_probability": 0.25168555906273543,
+          "actual_result": "india",
+          "predicted_result": "india",
+          "model_correct": true,
+          "verified_pre_match": false,
+          "data_label": "HISTORICAL BACKTEST"
+        },
+        {
+          "match_id": "1479570",
+          "format": "Test",
+          "date": "2025-10-10",
+          "opponent": "West Indies",
+          "prediction_timestamp": null,
+          "evaluation_timestamp": "2026-10-07T11:26:54.828547+00:00",
+          "model_version": "cricket-history-logreg-sigmoid-v1-test",
+          "india_probability": 0.4608359892548523,
+          "opponent_probability": 0.2799989222932052,
+          "draw_probability": 0.25916508845194247,
+          "actual_result": "india",
+          "predicted_result": "india",
+          "model_correct": true,
+          "verified_pre_match": false,
+          "data_label": "HISTORICAL BACKTEST"
+        },
+        {
+          "match_id": "1479571",
+          "format": "Test",
+          "date": "2025-11-14",
+          "opponent": "South Africa",
+          "prediction_timestamp": null,
+          "evaluation_timestamp": "2026-10-07T11:26:54.828547+00:00",
+          "model_version": "cricket-history-logreg-sigmoid-v1-test",
+          "india_probability": 0.4607737217356111,
+          "opponent_probability": 0.2881796010760955,
+          "draw_probability": 0.2510466771882935,
+          "actual_result": "opponent",
+          "predicted_result": "india",
+          "model_correct": false,
+          "verified_pre_match": false,
+          "data_label": "HISTORICAL BACKTEST"
+        },
+        {
+          "match_id": "1479572",
+          "format": "Test",
+          "date": "2025-11-22",
+          "opponent": "South Africa",
+          "prediction_timestamp": null,
+          "evaluation_timestamp": "2026-10-07T11:26:54.828547+00:00",
+          "model_version": "cricket-history-logreg-sigmoid-v1-test",
+          "india_probability": 0.4756392179601945,
+          "opponent_probability": 0.2756736560701946,
+          "draw_probability": 0.24868712596961084,
+          "actual_result": "opponent",
+          "predicted_result": "india",
+          "model_correct": false,
+          "verified_pre_match": false,
+          "data_label": "HISTORICAL BACKTEST"
+        },
+        {
+          "match_id": "1544001",
+          "format": "Test",
+          "date": "2026-08-15",
+          "opponent": "Sri Lanka",
+          "prediction_timestamp": null,
+          "evaluation_timestamp": "2026-10-07T11:26:54.828547+00:00",
+          "model_version": "cricket-history-logreg-sigmoid-v1-test",
+          "india_probability": 0.5114821402226093,
+          "opponent_probability": 0.24129026202513834,
+          "draw_probability": 0.24722759775225228,
+          "actual_result": "india",
+          "predicted_result": "india",
+          "model_correct": true,
+          "verified_pre_match": false,
+          "data_label": "HISTORICAL BACKTEST"
+        },
+        {
+          "match_id": "1544002",
+          "format": "Test",
+          "date": "2026-08-23",
+          "opponent": "Sri Lanka",
+          "prediction_timestamp": null,
+          "evaluation_timestamp": "2026-10-07T11:26:54.828547+00:00",
+          "model_version": "cricket-history-logreg-sigmoid-v1-test",
+          "india_probability": 0.5110669243731946,
+          "opponent_probability": 0.24773005601112308,
+          "draw_probability": 0.24120301961568247,
+          "actual_result": "draw",
+          "predicted_result": "india",
+          "model_correct": false,
+          "verified_pre_match": false,
+          "data_label": "HISTORICAL BACKTEST"
+        }
+      ]
+    },
+    "odi": {
+      "format": "ODI",
+      "slug": "odi",
+      "status": "EVALUATED",
+      "data_label": "HISTORICAL BACKTEST",
+      "model_version": "cricket-history-logreg-sigmoid-v1-odi",
+      "model_type": "StandardScaler + LogisticRegression + sigmoid calibration",
+      "feature_version": "cricsheet-pre-match-v1",
+      "n_evaluated": 437,
+      "training_data_range": {
+        "from": "2002-06-29",
+        "to": "2026-07-19"
+      },
+      "metrics": {
+        "accuracy": 0.6338672768878718,
+        "precision": 0.6492537313432836,
+        "recall": 0.9321428571428572,
+        "f1": 0.7653958944281525,
+        "macro_f1": 0.46603128054740955,
+        "log_loss": 0.6634163518765595,
+        "brier": 0.47041795071104436
+      },
+      "confusion_matrix": {
+        "labels": [
+          "india",
+          "opponent"
+        ],
+        "matrix": {
+          "india": {
+            "india": 261,
+            "opponent": 19
+          },
+          "opponent": {
+            "india": 141,
+            "opponent": 16
+          }
+        }
+      },
+      "calibration": [
+        {
+          "bin": "0.4-0.6",
+          "n": 222,
+          "mean_confidence": 0.557808938265365,
+          "accuracy": 0.6531531531531531
+        },
+        {
+          "bin": "0.6-0.8",
+          "n": 215,
+          "mean_confidence": 0.6353866188737441,
+          "accuracy": 0.6139534883720931
+        }
+      ],
+      "evaluation_timestamp": "2026-10-07T11:26:55.134850+00:00",
+      "features": [
+        "india_elo_pre",
+        "opponent_elo_pre",
+        "elo_diff",
+        "india_recent_win_rate",
+        "h2h_india_win_rate",
+        "h2h_matches_before",
+        "india_run_rate",
+        "opponent_run_rate",
+        "india_batting_average",
+        "opponent_batting_average",
+        "india_bowling_economy",
+        "opponent_bowling_economy",
+        "india_wickets_lost",
+        "opponent_wickets_lost",
+        "india_bowling_wickets",
+        "opponent_bowling_wickets"
+      ],
+      "evaluation_method": "Expanding walk-forward; min_train=60; step=20; no shuffling.",
+      "training_matches": 497,
+      "validation": {
+        "n_evaluated": 437,
+        "accuracy": 0.6338672768878718,
+        "precision": 0.6492537313432836,
+        "recall": 0.9321428571428572,
+        "f1": 0.7653958944281525,
+        "macro_f1": 0.46603128054740955,
+        "log_loss": 0.6634163518765595,
+        "brier": 0.47041795071104436,
+        "confusion_matrix": {
+          "labels": [
+            "india",
+            "opponent"
+          ],
+          "matrix": {
+            "india": {
+              "india": 261,
+              "opponent": 19
+            },
+            "opponent": {
+              "india": 141,
+              "opponent": 16
+            }
+          }
+        },
+        "calibration": [
+          {
+            "bin": "0.4-0.6",
+            "n": 222,
+            "mean_confidence": 0.557808938265365,
+            "accuracy": 0.6531531531531531
+          },
+          {
+            "bin": "0.6-0.8",
+            "n": 215,
+            "mean_confidence": 0.6353866188737441,
+            "accuracy": 0.6139534883720931
+          }
+        ]
+      },
+      "ledger": [
+        {
+          "match_id": "1478904",
+          "format": "ODI",
+          "date": "2025-10-19",
+          "opponent": "Australia",
+          "prediction_timestamp": null,
+          "evaluation_timestamp": "2026-10-07T11:26:55.134850+00:00",
+          "model_version": "cricket-history-logreg-sigmoid-v1-odi",
+          "india_probability": 0.6587866984274335,
+          "opponent_probability": 0.34121330157256646,
+          "draw_probability": null,
+          "actual_result": "opponent",
+          "predicted_result": "india",
+          "model_correct": false,
+          "verified_pre_match": false,
+          "data_label": "HISTORICAL BACKTEST"
+        },
+        {
+          "match_id": "1478905",
+          "format": "ODI",
+          "date": "2025-10-23",
+          "opponent": "Australia",
+          "prediction_timestamp": null,
+          "evaluation_timestamp": "2026-10-07T11:26:55.134850+00:00",
+          "model_version": "cricket-history-logreg-sigmoid-v1-odi",
+          "india_probability": 0.658297666172504,
+          "opponent_probability": 0.34170233382749604,
+          "draw_probability": null,
+          "actual_result": "opponent",
+          "predicted_result": "india",
+          "model_correct": false,
+          "verified_pre_match": false,
+          "data_label": "HISTORICAL BACKTEST"
+        },
+        {
+          "match_id": "1478906",
+          "format": "ODI",
+          "date": "2025-10-25",
+          "opponent": "Australia",
+          "prediction_timestamp": null,
+          "evaluation_timestamp": "2026-10-07T11:26:55.134850+00:00",
+          "model_version": "cricket-history-logreg-sigmoid-v1-odi",
+          "india_probability": 0.6578065078229532,
+          "opponent_probability": 0.3421934921770467,
+          "draw_probability": null,
+          "actual_result": "india",
+          "predicted_result": "india",
+          "model_correct": true,
+          "verified_pre_match": false,
+          "data_label": "HISTORICAL BACKTEST"
+        },
+        {
+          "match_id": "1479573",
+          "format": "ODI",
+          "date": "2025-11-30",
+          "opponent": "South Africa",
+          "prediction_timestamp": null,
+          "evaluation_timestamp": "2026-10-07T11:26:55.134850+00:00",
+          "model_version": "cricket-history-logreg-sigmoid-v1-odi",
+          "india_probability": 0.6357732714361012,
+          "opponent_probability": 0.36422672856389887,
+          "draw_probability": null,
+          "actual_result": "india",
+          "predicted_result": "india",
+          "model_correct": true,
+          "verified_pre_match": false,
+          "data_label": "HISTORICAL BACKTEST"
+        },
+        {
+          "match_id": "1479574",
+          "format": "ODI",
+          "date": "2025-12-03",
+          "opponent": "South Africa",
+          "prediction_timestamp": null,
+          "evaluation_timestamp": "2026-10-07T11:26:55.134850+00:00",
+          "model_version": "cricket-history-logreg-sigmoid-v1-odi",
+          "india_probability": 0.6317272017716122,
+          "opponent_probability": 0.36827279822838777,
+          "draw_probability": null,
+          "actual_result": "opponent",
+          "predicted_result": "india",
+          "model_correct": false,
+          "verified_pre_match": false,
+          "data_label": "HISTORICAL BACKTEST"
+        },
+        {
+          "match_id": "1479575",
+          "format": "ODI",
+          "date": "2025-12-06",
+          "opponent": "South Africa",
+          "prediction_timestamp": null,
+          "evaluation_timestamp": "2026-10-07T11:26:55.134850+00:00",
+          "model_version": "cricket-history-logreg-sigmoid-v1-odi",
+          "india_probability": 0.6245987798614697,
+          "opponent_probability": 0.3754012201385302,
+          "draw_probability": null,
+          "actual_result": "india",
+          "predicted_result": "india",
+          "model_correct": true,
+          "verified_pre_match": false,
+          "data_label": "HISTORICAL BACKTEST"
+        },
+        {
+          "match_id": "1490231",
+          "format": "ODI",
+          "date": "2026-01-11",
+          "opponent": "New Zealand",
+          "prediction_timestamp": null,
+          "evaluation_timestamp": "2026-10-07T11:26:55.134850+00:00",
+          "model_version": "cricket-history-logreg-sigmoid-v1-odi",
+          "india_probability": 0.6475645764437878,
+          "opponent_probability": 0.35243542355621216,
+          "draw_probability": null,
+          "actual_result": "india",
+          "predicted_result": "india",
+          "model_correct": true,
+          "verified_pre_match": false,
+          "data_label": "HISTORICAL BACKTEST"
+        },
+        {
+          "match_id": "1490232",
+          "format": "ODI",
+          "date": "2026-01-14",
+          "opponent": "New Zealand",
+          "prediction_timestamp": null,
+          "evaluation_timestamp": "2026-10-07T11:26:55.134850+00:00",
+          "model_version": "cricket-history-logreg-sigmoid-v1-odi",
+          "india_probability": 0.6444513013120524,
+          "opponent_probability": 0.35554869868794764,
+          "draw_probability": null,
+          "actual_result": "opponent",
+          "predicted_result": "india",
+          "model_correct": false,
+          "verified_pre_match": false,
+          "data_label": "HISTORICAL BACKTEST"
+        },
+        {
+          "match_id": "1490233",
+          "format": "ODI",
+          "date": "2026-01-18",
+          "opponent": "New Zealand",
+          "prediction_timestamp": null,
+          "evaluation_timestamp": "2026-10-07T11:26:55.134850+00:00",
+          "model_version": "cricket-history-logreg-sigmoid-v1-odi",
+          "india_probability": 0.6362198860585605,
+          "opponent_probability": 0.36378011394143955,
+          "draw_probability": null,
+          "actual_result": "opponent",
+          "predicted_result": "india",
+          "model_correct": false,
+          "verified_pre_match": false,
+          "data_label": "HISTORICAL BACKTEST"
+        },
+        {
+          "match_id": "1496579",
+          "format": "ODI",
+          "date": "2026-07-14",
+          "opponent": "England",
+          "prediction_timestamp": null,
+          "evaluation_timestamp": "2026-10-07T11:26:55.134850+00:00",
+          "model_version": "cricket-history-logreg-sigmoid-v1-odi",
+          "india_probability": 0.6393902728942294,
+          "opponent_probability": 0.3606097271057706,
+          "draw_probability": null,
+          "actual_result": "india",
+          "predicted_result": "india",
+          "model_correct": true,
+          "verified_pre_match": false,
+          "data_label": "HISTORICAL BACKTEST"
+        },
+        {
+          "match_id": "1496580",
+          "format": "ODI",
+          "date": "2026-07-16",
+          "opponent": "England",
+          "prediction_timestamp": null,
+          "evaluation_timestamp": "2026-10-07T11:26:55.134850+00:00",
+          "model_version": "cricket-history-logreg-sigmoid-v1-odi",
+          "india_probability": 0.6376813576601138,
+          "opponent_probability": 0.36231864233988614,
+          "draw_probability": null,
+          "actual_result": "opponent",
+          "predicted_result": "india",
+          "model_correct": false,
+          "verified_pre_match": false,
+          "data_label": "HISTORICAL BACKTEST"
+        },
+        {
+          "match_id": "1496581",
+          "format": "ODI",
+          "date": "2026-07-19",
+          "opponent": "England",
+          "prediction_timestamp": null,
+          "evaluation_timestamp": "2026-10-07T11:26:55.134850+00:00",
+          "model_version": "cricket-history-logreg-sigmoid-v1-odi",
+          "india_probability": 0.6499007192337366,
+          "opponent_probability": 0.35009928076626345,
+          "draw_probability": null,
+          "actual_result": "opponent",
+          "predicted_result": "india",
+          "model_correct": false,
+          "verified_pre_match": false,
+          "data_label": "HISTORICAL BACKTEST"
+        }
+      ]
+    },
+    "t20i": {
+      "format": "T20I",
+      "slug": "t20i",
+      "status": "EVALUATED",
+      "data_label": "HISTORICAL BACKTEST",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "model_type": "StandardScaler + LogisticRegression + sigmoid calibration",
+      "feature_version": "cricsheet-pre-match-v1",
+      "n_evaluated": 209,
+      "training_data_range": {
+        "from": "2006-12-01",
+        "to": "2026-07-26"
+      },
+      "metrics": {
+        "accuracy": 0.722488038277512,
+        "precision": 0.736318407960199,
+        "recall": 0.9673202614379085,
+        "f1": 0.8361581920903954,
+        "macro_f1": 0.4649540960451977,
+        "log_loss": 0.6156491024484437,
+        "brier": 0.42353179374592764
+      },
+      "confusion_matrix": {
+        "labels": [
+          "india",
+          "opponent"
+        ],
+        "matrix": {
+          "india": {
+            "india": 148,
+            "opponent": 5
+          },
+          "opponent": {
+            "india": 53,
+            "opponent": 3
+          }
+        }
+      },
+      "calibration": [
+        {
+          "bin": "0.4-0.6",
+          "n": 58,
+          "mean_confidence": 0.5479926887567925,
+          "accuracy": 0.7241379310344828
+        },
+        {
+          "bin": "0.6-0.8",
+          "n": 151,
+          "mean_confidence": 0.6887253556322822,
+          "accuracy": 0.7218543046357616
+        }
+      ],
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "features": [
+        "india_elo_pre",
+        "opponent_elo_pre",
+        "elo_diff",
+        "india_recent_win_rate",
+        "h2h_india_win_rate",
+        "h2h_matches_before",
+        "india_run_rate",
+        "opponent_run_rate",
+        "india_batting_average",
+        "opponent_batting_average",
+        "india_bowling_economy",
+        "opponent_bowling_economy",
+        "india_wickets_lost",
+        "opponent_wickets_lost",
+        "india_bowling_wickets",
+        "opponent_bowling_wickets"
+      ],
+      "evaluation_method": "Expanding walk-forward; min_train=60; step=20; no shuffling.",
+      "training_matches": 269,
+      "validation": {
+        "n_evaluated": 209,
+        "accuracy": 0.722488038277512,
+        "precision": 0.736318407960199,
+        "recall": 0.9673202614379085,
+        "f1": 0.8361581920903954,
+        "macro_f1": 0.4649540960451977,
+        "log_loss": 0.6156491024484437,
+        "brier": 0.42353179374592764,
+        "confusion_matrix": {
+          "labels": [
+            "india",
+            "opponent"
+          ],
+          "matrix": {
+            "india": {
+              "india": 148,
+              "opponent": 5
+            },
+            "opponent": {
+              "india": 53,
+              "opponent": 3
+            }
+          }
+        },
+        "calibration": [
+          {
+            "bin": "0.4-0.6",
+            "n": 58,
+            "mean_confidence": 0.5479926887567925,
+            "accuracy": 0.7241379310344828
+          },
+          {
+            "bin": "0.6-0.8",
+            "n": 151,
+            "mean_confidence": 0.6887253556322822,
+            "accuracy": 0.7218543046357616
+          }
+        ]
+      },
+      "ledger": [
+        {
+          "match_id": "1512770",
+          "format": "T20I",
+          "date": "2026-03-01",
+          "opponent": "West Indies",
+          "prediction_timestamp": null,
+          "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+          "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+          "india_probability": 0.7192131857707361,
+          "opponent_probability": 0.2807868142292638,
+          "draw_probability": null,
+          "actual_result": "india",
+          "predicted_result": "india",
+          "model_correct": true,
+          "verified_pre_match": false,
+          "data_label": "HISTORICAL BACKTEST"
+        },
+        {
+          "match_id": "1512772",
+          "format": "T20I",
+          "date": "2026-03-05",
+          "opponent": "England",
+          "prediction_timestamp": null,
+          "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+          "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+          "india_probability": 0.7195184005449744,
+          "opponent_probability": 0.2804815994550256,
+          "draw_probability": null,
+          "actual_result": "india",
+          "predicted_result": "india",
+          "model_correct": true,
+          "verified_pre_match": false,
+          "data_label": "HISTORICAL BACKTEST"
+        },
+        {
+          "match_id": "1512773",
+          "format": "T20I",
+          "date": "2026-03-08",
+          "opponent": "New Zealand",
+          "prediction_timestamp": null,
+          "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+          "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+          "india_probability": 0.7427031057171262,
+          "opponent_probability": 0.2572968942828739,
+          "draw_probability": null,
+          "actual_result": "india",
+          "predicted_result": "india",
+          "model_correct": true,
+          "verified_pre_match": false,
+          "data_label": "HISTORICAL BACKTEST"
+        },
+        {
+          "match_id": "1528548",
+          "format": "T20I",
+          "date": "2026-06-26",
+          "opponent": "Ireland",
+          "prediction_timestamp": null,
+          "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+          "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+          "india_probability": 0.7220753300293737,
+          "opponent_probability": 0.2779246699706263,
+          "draw_probability": null,
+          "actual_result": "opponent",
+          "predicted_result": "india",
+          "model_correct": false,
+          "verified_pre_match": false,
+          "data_label": "HISTORICAL BACKTEST"
+        },
+        {
+          "match_id": "1528549",
+          "format": "T20I",
+          "date": "2026-06-28",
+          "opponent": "Ireland",
+          "prediction_timestamp": null,
+          "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+          "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+          "india_probability": 0.7180889595043386,
+          "opponent_probability": 0.2819110404956614,
+          "draw_probability": null,
+          "actual_result": "opponent",
+          "predicted_result": "india",
+          "model_correct": false,
+          "verified_pre_match": false,
+          "data_label": "HISTORICAL BACKTEST"
+        },
+        {
+          "match_id": "1496575",
+          "format": "T20I",
+          "date": "2026-07-04",
+          "opponent": "England",
+          "prediction_timestamp": null,
+          "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+          "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+          "india_probability": 0.7416456872355792,
+          "opponent_probability": 0.2583543127644208,
+          "draw_probability": null,
+          "actual_result": "opponent",
+          "predicted_result": "india",
+          "model_correct": false,
+          "verified_pre_match": false,
+          "data_label": "HISTORICAL BACKTEST"
+        },
+        {
+          "match_id": "1496576",
+          "format": "T20I",
+          "date": "2026-07-07",
+          "opponent": "England",
+          "prediction_timestamp": null,
+          "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+          "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+          "india_probability": 0.7512661741227826,
+          "opponent_probability": 0.24873382587721735,
+          "draw_probability": null,
+          "actual_result": "opponent",
+          "predicted_result": "india",
+          "model_correct": false,
+          "verified_pre_match": false,
+          "data_label": "HISTORICAL BACKTEST"
+        },
+        {
+          "match_id": "1496577",
+          "format": "T20I",
+          "date": "2026-07-09",
+          "opponent": "England",
+          "prediction_timestamp": null,
+          "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+          "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+          "india_probability": 0.7360352583560644,
+          "opponent_probability": 0.2639647416439355,
+          "draw_probability": null,
+          "actual_result": "opponent",
+          "predicted_result": "india",
+          "model_correct": false,
+          "verified_pre_match": false,
+          "data_label": "HISTORICAL BACKTEST"
+        },
+        {
+          "match_id": "1496578",
+          "format": "T20I",
+          "date": "2026-07-11",
+          "opponent": "England",
+          "prediction_timestamp": null,
+          "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+          "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+          "india_probability": 0.7572867273555016,
+          "opponent_probability": 0.2427132726444984,
+          "draw_probability": null,
+          "actual_result": "opponent",
+          "predicted_result": "india",
+          "model_correct": false,
+          "verified_pre_match": false,
+          "data_label": "HISTORICAL BACKTEST"
+        },
+        {
+          "match_id": "1530060",
+          "format": "T20I",
+          "date": "2026-07-23",
+          "opponent": "Zimbabwe",
+          "prediction_timestamp": null,
+          "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+          "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+          "india_probability": 0.7353115733476494,
+          "opponent_probability": 0.26468842665235065,
+          "draw_probability": null,
+          "actual_result": "india",
+          "predicted_result": "india",
+          "model_correct": true,
+          "verified_pre_match": false,
+          "data_label": "HISTORICAL BACKTEST"
+        },
+        {
+          "match_id": "1530061",
+          "format": "T20I",
+          "date": "2026-07-25",
+          "opponent": "Zimbabwe",
+          "prediction_timestamp": null,
+          "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+          "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+          "india_probability": 0.7306623466066364,
+          "opponent_probability": 0.26933765339336363,
+          "draw_probability": null,
+          "actual_result": "india",
+          "predicted_result": "india",
+          "model_correct": true,
+          "verified_pre_match": false,
+          "data_label": "HISTORICAL BACKTEST"
+        },
+        {
+          "match_id": "1530062",
+          "format": "T20I",
+          "date": "2026-07-26",
+          "opponent": "Zimbabwe",
+          "prediction_timestamp": null,
+          "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+          "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+          "india_probability": 0.7172503309403752,
+          "opponent_probability": 0.2827496690596249,
+          "draw_probability": null,
+          "actual_result": "india",
+          "predicted_result": "india",
+          "model_correct": true,
+          "verified_pre_match": false,
+          "data_label": "HISTORICAL BACKTEST"
+        }
+      ]
+    }
+  }
+}

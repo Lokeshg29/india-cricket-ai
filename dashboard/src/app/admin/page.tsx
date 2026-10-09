@@ -24,7 +24,7 @@ export default function AdminPage() {
           <div className="font-mono text-xs uppercase tracking-[0.14em] text-accent">Internal · read-only</div>
           <h1 className="mt-2 text-2xl font-semibold text-foreground">{PRODUCT_NAME} admin</h1>
           <p className="mt-2 max-w-xl text-sm text-foreground/55">
-            Read-only status view. No write endpoints are exposed. Everything shown is generated from DEMO DATA unless a badge says otherwise.
+            Read-only status view. No write endpoints are exposed. Cricsheet history and walk-forward metrics are labelled separately from unavailable feeds.
           </p>
         </div>
         <Link href="/" className="font-mono text-xs text-accent hover:underline">&larr; back to the public site</Link>
@@ -69,7 +69,7 @@ export default function AdminPage() {
                   <div className="flex justify-between"><dt>backend</dt><dd className="text-right text-xs">{reg?.backend}</dd></div>
                   <div className="flex justify-between"><dt>accuracy</dt><dd>{metricOrPending(f.validation?.accuracy, (n) => pct(n))}</dd></div>
                   <div className="flex justify-between"><dt>predictions</dt><dd>{f.summary.predictions_generated}</dd></div>
-                  <div className="flex justify-between"><dt>latest prediction</dt><dd>{latest.prediction_timestamp.slice(0, 10)}</dd></div>
+                  <div className="flex justify-between"><dt>latest prediction</dt><dd>{latest?.prediction_timestamp?.slice(0, 10) ?? "Unavailable (date-only source)"}</dd></div>
                 </dl>
                 <div className="mt-3"><DataBadge label={f.data_label} /></div>
               </Card>
@@ -83,7 +83,7 @@ export default function AdminPage() {
         <div className="grid gap-4 md:grid-cols-2">
           <Card title="Training">
             <div className="font-mono text-sm text-foreground/75">
-              status: {training.status}<br />last trained: {training.last_trained.slice(0, 19)}Z
+              status: {training.status}<br />last trained: {training.last_trained?.slice(0, 19) ?? "Unavailable"}
             </div>
           </Card>
           <Card title="Data drift">

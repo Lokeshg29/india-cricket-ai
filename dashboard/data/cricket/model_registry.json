@@ -1,32 +1,32 @@
 [
- {
-  "format": "TEST",
-  "version": "cricket-demo-0.1.0",
-  "stage": "demo",
-  "backend": "logistic regression + sigmoid calibration",
-  "accuracy": 0.52,
-  "brier": 0.6324,
-  "log_loss": 1.0482,
-  "data_label": "DEMO DATA"
- },
- {
-  "format": "ODI",
-  "version": "cricket-demo-0.1.0",
-  "stage": "demo",
-  "backend": "logistic regression + sigmoid calibration",
-  "accuracy": 0.65,
-  "brier": 0.4243,
-  "log_loss": 0.6079,
-  "data_label": "DEMO DATA"
- },
- {
-  "format": "T20I",
-  "version": "cricket-demo-0.1.0",
-  "stage": "demo",
-  "backend": "logistic regression + sigmoid calibration",
-  "accuracy": 0.7167,
-  "brier": 0.3738,
-  "log_loss": 0.5547,
-  "data_label": "DEMO DATA"
- }
+  {
+    "format": "TEST",
+    "version": "cricket-history-logreg-sigmoid-v1-test",
+    "stage": "evaluated",
+    "backend": "StandardScaler + LogisticRegression + sigmoid calibration",
+    "accuracy": 0.44025157232704404,
+    "brier": 0.6418633770087571,
+    "log_loss": 1.2160168794395319,
+    "data_label": "HISTORICAL BACKTEST"
+  },
+  {
+    "format": "ODI",
+    "version": "cricket-history-logreg-sigmoid-v1-odi",
+    "stage": "evaluated",
+    "backend": "StandardScaler + LogisticRegression + sigmoid calibration",
+    "accuracy": 0.6338672768878718,
+    "brier": 0.47041795071104436,
+    "log_loss": 0.6634163518765595,
+    "data_label": "HISTORICAL BACKTEST"
+  },
+  {
+    "format": "T20I",
+    "version": "cricket-history-logreg-sigmoid-v1-t20i",
+    "stage": "evaluated",
+    "backend": "StandardScaler + LogisticRegression + sigmoid calibration",
+    "accuracy": 0.722488038277512,
+    "brier": 0.42353179374592764,
+    "log_loss": 0.6156491024484437,
+    "data_label": "HISTORICAL BACKTEST"
+  }
 ]

@@ -1,5 +1,5 @@
 {
- "last_trained": "2026-10-01T11:55:50.852290+00:00",
- "status": "demo run",
- "data_label": "DEMO DATA"
+  "last_trained": "2026-10-07T11:26:54.791548+00:00",
+  "status": "walk-forward evaluation available",
+  "data_label": "HISTORICAL BACKTEST"
 }

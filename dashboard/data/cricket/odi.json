@@ -1,1051 +1,857 @@
 {
- "format": "ODI",
- "slug": "odi",
- "has_draw": false,
- "outcomes": [
-  "india",
-  "opponent"
- ],
- "data_label": "DEMO DATA",
- "model_version": "cricket-demo-0.1.0",
- "generated_at": "2026-10-01T11:55:50.852290+00:00",
- "features": [
-  "elo_diff",
-  "form_diff",
-  "h2h_win_rate",
-  "home_flag",
-  "neutral_flag",
-  "toss_won",
-  "run_rate_diff",
-  "economy_diff",
-  "bowling_depth_diff"
- ],
- "summary": {
-  "matches_tracked": 140,
-  "predictions_generated": 24,
-  "accuracy": 0.65,
-  "holdout_accuracy": 0.6
- },
- "upcoming": [
-  {
-   "match_id": "odi-up-01",
-   "opponent": "New Zealand",
-   "venue": "Mumbai",
-   "venue_type": "home",
-   "date": "2026-11-08",
-   "format": "ODI",
-   "probabilities": {
-    "india": 0.7718,
-    "opponent": 0.2282
-   },
-   "confidence": "HIGH",
-   "explanation": [
-    {
-     "feature": "run_rate_diff",
-     "contribution": -1.083
-    },
-    {
-     "feature": "bowling_depth_diff",
-     "contribution": 0.121
-    },
-    {
-     "feature": "toss_won",
-     "contribution": -0.106
-    },
-    {
-     "feature": "home_flag",
-     "contribution": 0.074
-    },
-    {
-     "feature": "neutral_flag",
-     "contribution": -0.06
-    }
-   ],
-   "explanation_method": "logistic-coefficient surrogate (not SHAP)",
-   "data_label": "DEMO DATA"
-  },
-  {
-   "match_id": "odi-up-02",
-   "opponent": "Pakistan",
-   "venue": "Dubai",
-   "venue_type": "neutral",
-   "date": "2026-12-02",
-   "format": "ODI",
-   "probabilities": {
-    "india": 0.7577,
-    "opponent": 0.2423
-   },
-   "confidence": "HIGH",
-   "explanation": [
-    {
-     "feature": "run_rate_diff",
-     "contribution": -1.083
-    },
-    {
-     "feature": "neutral_flag",
-     "contribution": 0.264
-    },
-    {
-     "feature": "bowling_depth_diff",
-     "contribution": 0.121
-    },
-    {
-     "feature": "toss_won",
-     "contribution": -0.106
-    },
-    {
-     "feature": "home_flag",
-     "contribution": -0.052
-    }
-   ],
-   "explanation_method": "logistic-coefficient surrogate (not SHAP)",
-   "data_label": "DEMO DATA"
-  },
-  {
-   "match_id": "odi-up-03",
-   "opponent": "Sri Lanka",
-   "venue": "Colombo",
-   "venue_type": "away",
-   "date": "2027-01-11",
-   "format": "ODI",
-   "probabilities": {
-    "india": 0.8039,
-    "opponent": 0.1961
-   },
-   "confidence": "HIGH",
-   "explanation": [
-    {
-     "feature": "run_rate_diff",
-     "contribution": -1.083
-    },
-    {
-     "feature": "bowling_depth_diff",
-     "contribution": 0.121
-    },
-    {
-     "feature": "toss_won",
-     "contribution": -0.106
-    },
-    {
-     "feature": "elo_diff",
-     "contribution": -0.072
-    },
-    {
-     "feature": "neutral_flag",
-     "contribution": -0.06
-    }
-   ],
-   "explanation_method": "logistic-coefficient surrogate (not SHAP)",
-   "data_label": "DEMO DATA"
-  },
-  {
-   "match_id": "odi-up-04",
-   "opponent": "Australia",
-   "venue": "Delhi",
-   "venue_type": "home",
-   "date": "2027-02-02",
-   "format": "ODI",
-   "probabilities": {
-    "india": 0.781,
-    "opponent": 0.219
-   },
-   "confidence": "HIGH",
-   "explanation": [
-    {
-     "feature": "run_rate_diff",
-     "contribution": -1.083
-    },
-    {
-     "feature": "bowling_depth_diff",
-     "contribution": 0.121
-    },
-    {
-     "feature": "toss_won",
-     "contribution": -0.106
-    },
-    {
-     "feature": "home_flag",
-     "contribution": 0.074
-    },
-    {
-     "feature": "neutral_flag",
-     "contribution": -0.06
-    }
-   ],
-   "explanation_method": "logistic-coefficient surrogate (not SHAP)",
-   "data_label": "DEMO DATA"
-  }
- ],
- "results": [
-  {
-   "date": "2025-11-23",
-   "opponent": "England",
-   "venue": "London",
-   "result": "opponent",
-   "data_label": "DEMO DATA"
-  },
-  {
-   "date": "2025-10-28",
-   "opponent": "New Zealand",
-   "venue": "Dubai",
-   "result": "india",
-   "data_label": "DEMO DATA"
-  },
-  {
-   "date": "2025-10-02",
-   "opponent": "New Zealand",
-   "venue": "Ahmedabad",
-   "result": "opponent",
-   "data_label": "DEMO DATA"
-  },
-  {
-   "date": "2025-09-06",
-   "opponent": "West Indies",
-   "venue": "Bridgetown",
-   "result": "opponent",
-   "data_label": "DEMO DATA"
-  },
-  {
-   "date": "2025-08-11",
-   "opponent": "New Zealand",
-   "venue": "Delhi",
-   "result": "india",
-   "data_label": "DEMO DATA"
-  },
-  {
-   "date": "2025-07-16",
-   "opponent": "Sri Lanka",
-   "venue": "Hyderabad",
-   "result": "opponent",
-   "data_label": "DEMO DATA"
-  },
-  {
-   "date": "2025-06-20",
-   "opponent": "Australia",
-   "venue": "Mumbai",
-   "result": "india",
-   "data_label": "DEMO DATA"
-  },
-  {
-   "date": "2025-05-25",
-   "opponent": "England",
-   "venue": "Dubai",
-   "result": "india",
-   "data_label": "DEMO DATA"
-  },
-  {
-   "date": "2025-04-29",
-   "opponent": "Sri Lanka",
-   "venue": "Colombo",
-   "result": "india",
-   "data_label": "DEMO DATA"
-  },
-  {
-   "date": "2025-04-03",
-   "opponent": "New Zealand",
-   "venue": "Delhi",
-   "result": "india",
-   "data_label": "DEMO DATA"
-  }
- ],
- "h2h": [
-  {
-   "opponent": "Australia",
-   "played": 15,
-   "india_wins": 8,
-   "opponent_wins": 7,
-   "draws": 0
-  },
-  {
-   "opponent": "England",
-   "played": 10,
-   "india_wins": 5,
-   "opponent_wins": 5,
-   "draws": 0
-  },
-  {
-   "opponent": "South Africa",
-   "played": 14,
-   "india_wins": 6,
-   "opponent_wins": 8,
-   "draws": 0
-  },
-  {
-   "opponent": "New Zealand",
-   "played": 14,
-   "india_wins": 9,
-   "opponent_wins": 5,
-   "draws": 0
-  },
-  {
-   "opponent": "Pakistan",
-   "played": 13,
-   "india_wins": 7,
-   "opponent_wins": 6,
-   "draws": 0
-  },
-  {
-   "opponent": "Sri Lanka",
-   "played": 19,
-   "india_wins": 10,
-   "opponent_wins": 9,
-   "draws": 0
-  },
-  {
-   "opponent": "West Indies",
-   "played": 21,
-   "india_wins": 14,
-   "opponent_wins": 7,
-   "draws": 0
-  },
-  {
-   "opponent": "Bangladesh",
-   "played": 11,
-   "india_wins": 4,
-   "opponent_wins": 7,
-   "draws": 0
-  },
-  {
-   "opponent": "Afghanistan",
-   "played": 23,
-   "india_wins": 19,
-   "opponent_wins": 4,
-   "draws": 0
-  }
- ],
- "venues": [
-  {
-   "venue": "Home",
-   "played": 58,
-   "win_rate": 0.6207
-  },
-  {
-   "venue": "Away",
-   "played": 56,
-   "win_rate": 0.6071
-  },
-  {
-   "venue": "Neutral",
-   "played": 26,
-   "win_rate": 0.4615
-  },
-  {
-   "venue": "Ahmedabad",
-   "played": 10,
-   "win_rate": 0.5
-  },
-  {
-   "venue": "Bengaluru",
-   "played": 7,
-   "win_rate": 0.4286
-  },
-  {
-   "venue": "Bridgetown",
-   "played": 9,
-   "win_rate": 0.5556
-  },
-  {
-   "venue": "Chennai",
-   "played": 6,
-   "win_rate": 0.5
-  },
-  {
-   "venue": "Colombo",
-   "played": 8,
-   "win_rate": 0.75
-  },
-  {
-   "venue": "Delhi",
-   "played": 8,
-   "win_rate": 0.875
-  },
-  {
-   "venue": "Dhaka",
-   "played": 6,
-   "win_rate": 0.3333
-  },
-  {
-   "venue": "Dubai",
-   "played": 26,
-   "win_rate": 0.4615
-  },
-  {
-   "venue": "Hyderabad",
-   "played": 11,
-   "win_rate": 0.5455
-  },
-  {
-   "venue": "Kolkata",
-   "played": 7,
-   "win_rate": 0.7143
-  },
-  {
-   "venue": "Lahore",
-   "played": 5,
-   "win_rate": 0.6
-  },
-  {
-   "venue": "London",
-   "played": 6,
-   "win_rate": 0.3333
-  },
-  {
-   "venue": "Mumbai",
-   "played": 9,
-   "win_rate": 0.7778
-  },
-  {
-   "venue": "Sharjah",
-   "played": 9,
-   "win_rate": 0.8889
-  },
-  {
-   "venue": "Wellington",
-   "played": 5,
-   "win_rate": 0.6
-  }
- ],
- "form": [
-  {
-   "date": "2024-04-04",
-   "form": 0.7
-  },
-  {
-   "date": "2024-04-30",
-   "form": 0.7
-  },
-  {
-   "date": "2024-05-26",
-   "form": 0.7
-  },
-  {
-   "date": "2024-06-21",
-   "form": 0.8
-  },
-  {
-   "date": "2024-07-17",
-   "form": 0.7
-  },
-  {
-   "date": "2024-08-12",
-   "form": 0.6
-  },
-  {
-   "date": "2024-09-07",
-   "form": 0.5
-  },
-  {
-   "date": "2024-10-03",
-   "form": 0.5
-  },
-  {
-   "date": "2024-10-29",
-   "form": 0.4
-  },
-  {
-   "date": "2024-11-24",
-   "form": 0.3
-  },
-  {
-   "date": "2024-12-20",
-   "form": 0.3
-  },
-  {
-   "date": "2025-01-15",
-   "form": 0.2
-  },
-  {
-   "date": "2025-02-10",
-   "form": 0.2
-  },
-  {
-   "date": "2025-03-08",
-   "form": 0.2
-  },
-  {
-   "date": "2025-04-03",
-   "form": 0.3
-  },
-  {
-   "date": "2025-04-29",
-   "form": 0.4
-  },
-  {
-   "date": "2025-05-25",
-   "form": 0.5
-  },
-  {
-   "date": "2025-06-20",
-   "form": 0.5
-  },
-  {
-   "date": "2025-07-16",
-   "form": 0.5
-  },
-  {
-   "date": "2025-08-11",
-   "form": 0.6
-  },
-  {
-   "date": "2025-09-06",
-   "form": 0.6
-  },
-  {
-   "date": "2025-10-02",
-   "form": 0.6
-  },
-  {
-   "date": "2025-10-28",
-   "form": 0.7
-  },
-  {
-   "date": "2025-11-23",
-   "form": 0.6
-  }
- ],
- "trend": [
-  {
-   "match_id": "odi-up-01",
-   "step": 1,
-   "india": 0.7974
-  },
-  {
-   "match_id": "odi-up-01",
-   "step": 2,
-   "india": 0.7909
-  },
-  {
-   "match_id": "odi-up-01",
-   "step": 3,
-   "india": 0.8106
-  },
-  {
-   "match_id": "odi-up-01",
-   "step": 4,
-   "india": 0.7607
-  },
-  {
-   "match_id": "odi-up-01",
-   "step": 5,
-   "india": 0.7963
-  },
-  {
-   "match_id": "odi-up-01",
-   "step": 6,
-   "india": 0.8283
-  },
-  {
-   "match_id": "odi-up-02",
-   "step": 1,
-   "india": 0.7974
-  },
-  {
-   "match_id": "odi-up-02",
-   "step": 2,
-   "india": 0.7909
-  },
-  {
-   "match_id": "odi-up-02",
-   "step": 3,
-   "india": 0.8106
-  },
-  {
-   "match_id": "odi-up-02",
-   "step": 4,
-   "india": 0.7607
-  },
-  {
-   "match_id": "odi-up-02",
-   "step": 5,
-   "india": 0.7963
-  },
-  {
-   "match_id": "odi-up-02",
-   "step": 6,
-   "india": 0.8283
-  },
-  {
-   "match_id": "odi-up-03",
-   "step": 1,
-   "india": 0.7974
-  },
-  {
-   "match_id": "odi-up-03",
-   "step": 2,
-   "india": 0.7909
-  },
-  {
-   "match_id": "odi-up-03",
-   "step": 3,
-   "india": 0.8106
-  },
-  {
-   "match_id": "odi-up-03",
-   "step": 4,
-   "india": 0.7607
-  },
-  {
-   "match_id": "odi-up-03",
-   "step": 5,
-   "india": 0.7963
-  },
-  {
-   "match_id": "odi-up-03",
-   "step": 6,
-   "india": 0.8283
-  },
-  {
-   "match_id": "odi-up-04",
-   "step": 1,
-   "india": 0.7974
-  },
-  {
-   "match_id": "odi-up-04",
-   "step": 2,
-   "india": 0.7909
-  },
-  {
-   "match_id": "odi-up-04",
-   "step": 3,
-   "india": 0.8106
-  },
-  {
-   "match_id": "odi-up-04",
-   "step": 4,
-   "india": 0.7607
-  },
-  {
-   "match_id": "odi-up-04",
-   "step": 5,
-   "india": 0.7963
-  },
-  {
-   "match_id": "odi-up-04",
-   "step": 6,
-   "india": 0.8283
-  }
- ],
- "players": [
-  {
-   "player": "Demo Player 1",
-   "role": "Opener",
-   "recent_matches": 6,
-   "runs": 403,
-   "average": 54.9,
-   "strike_rate": 135.4,
-   "wickets": 2,
-   "economy": null,
-   "data_label": "DEMO DATA"
-  },
-  {
-   "player": "Demo Player 2",
-   "role": "Top-order batter",
-   "recent_matches": 6,
-   "runs": 370,
-   "average": 37.0,
-   "strike_rate": 141.8,
-   "wickets": 0,
-   "economy": null,
-   "data_label": "DEMO DATA"
-  },
-  {
-   "player": "Demo Player 3",
-   "role": "Middle-order batter",
-   "recent_matches": 6,
-   "runs": 393,
-   "average": 52.6,
-   "strike_rate": 136.8,
-   "wickets": 0,
-   "economy": null,
-   "data_label": "DEMO DATA"
-  },
-  {
-   "player": "Demo Player 4",
-   "role": "Wicketkeeper-batter",
-   "recent_matches": 6,
-   "runs": 155,
-   "average": 37.1,
-   "strike_rate": 103.1,
-   "wickets": 1,
-   "economy": null,
-   "data_label": "DEMO DATA"
-  },
-  {
-   "player": "Demo Player 5",
-   "role": "All-rounder",
-   "recent_matches": 6,
-   "runs": 335,
-   "average": 41.4,
-   "strike_rate": 117.8,
-   "wickets": 1,
-   "economy": 6.9,
-   "data_label": "DEMO DATA"
-  },
-  {
-   "player": "Demo Player 6",
-   "role": "Fast bowler",
-   "recent_matches": 6,
-   "runs": 45,
-   "average": 17.5,
-   "strike_rate": null,
-   "wickets": 23,
-   "economy": 7.16,
-   "data_label": "DEMO DATA"
-  },
-  {
-   "player": "Demo Player 7",
-   "role": "Spinner",
-   "recent_matches": 6,
-   "runs": 33,
-   "average": 10.6,
-   "strike_rate": null,
-   "wickets": 23,
-   "economy": 5.41,
-   "data_label": "DEMO DATA"
-  }
- ],
- "validation": {
-  "n_evaluated": 100,
-  "accuracy": 0.65,
-  "brier": 0.42433310109226235,
-  "log_loss": 0.6079216321617604,
-  "confusion_matrix": {
-   "labels": [
+  "format": "ODI",
+  "slug": "odi",
+  "has_draw": false,
+  "outcomes": [
     "india",
     "opponent"
-   ],
-   "matrix": {
-    "india": {
-     "india": 47,
-     "opponent": 13
+  ],
+  "data_label": "HISTORICAL DATA",
+  "data_source": "Cricsheet",
+  "model_version": "cricket-history-logreg-sigmoid-v1-odi",
+  "generated_at": "2026-10-09T20:23:29.596816+00:00",
+  "features": [
+    "india_elo_pre",
+    "opponent_elo_pre",
+    "elo_diff",
+    "india_recent_win_rate",
+    "h2h_india_win_rate",
+    "h2h_matches_before",
+    "india_run_rate",
+    "opponent_run_rate",
+    "india_batting_average",
+    "opponent_batting_average",
+    "india_bowling_economy",
+    "opponent_bowling_economy",
+    "india_wickets_lost",
+    "opponent_wickets_lost",
+    "india_bowling_wickets",
+    "opponent_bowling_wickets"
+  ],
+  "summary": {
+    "matches_tracked": 526,
+    "predictions_generated": 437,
+    "accuracy": 0.6338672768878718,
+    "holdout_accuracy": 0.6338672768878718
+  },
+  "data_sources": {
+    "matches": {
+      "status": "HISTORICAL DATA",
+      "source": "Cricsheet"
     },
-    "opponent": {
-     "india": 22,
-     "opponent": 18
+    "results": {
+      "status": "HISTORICAL DATA",
+      "source": "Cricsheet",
+      "note": "Resolved match outcomes only."
+    },
+    "form": {
+      "status": "HISTORICAL DATA",
+      "source": "Cricsheet",
+      "note": "Rolling points use resolved results in this format."
+    },
+    "head_to_head": {
+      "status": "HISTORICAL DATA",
+      "source": "Cricsheet",
+      "note": "Counts include resolved matches only."
+    },
+    "venues": {
+      "status": "HISTORICAL DATA",
+      "source": "Cricsheet",
+      "note": "Known stadiums with at least five resolved matches; no home/away classification is inferred."
+    },
+    "players": {
+      "status": "UNAVAILABLE",
+      "source": null,
+      "note": "The normalized match table has no player-level scorecards."
+    },
+    "fixtures": {
+      "status": "UNAVAILABLE",
+      "source": null,
+      "note": "No verified upcoming international fixture feed is configured."
+    },
+    "prediction_trend": {
+      "status": "UNAVAILABLE",
+      "source": null,
+      "note": "No future-match trend is generated without verified fixtures."
+    },
+    "evaluation": {
+      "status": "HISTORICAL BACKTEST",
+      "source": "Cricsheet"
     }
-   }
   },
-  "calibration": [
-   {
-    "bin": "0.4-0.6",
-    "n": 41,
-    "mean_confidence": 0.5529414853368609,
-    "accuracy": 0.5609756097560976
-   },
-   {
-    "bin": "0.6-0.8",
-    "n": 48,
-    "mean_confidence": 0.6907032760074007,
-    "accuracy": 0.6666666666666666
-   },
-   {
-    "bin": "0.8-1.0",
-    "n": 11,
-    "mean_confidence": 0.8506361183325332,
-    "accuracy": 0.9090909090909091
-   }
-  ]
- },
- "ledger": [
-  {
-   "match_id": "odi-demo-001",
-   "format": "ODI",
-   "date": "2024-07-17",
-   "opponent": "Bangladesh",
-   "prediction_timestamp": "2024-07-16T00:00:00Z",
-   "model_version": "cricket-demo-0.1.0",
-   "india_probability": 0.4302,
-   "opponent_probability": 0.5698,
-   "actual_result": "opponent",
-   "model_correct": true,
-   "hash": "23ab2d8368199abd01d0185a158a5e2068ccc6dd3ff2d85b19f9e4e50cf00307",
-   "verified_pre_match": false,
-   "data_label": "DEMO DATA"
+  "upcoming": [],
+  "results": [
+    {
+      "match_id": "1496581",
+      "date": "2026-07-19",
+      "opponent": "England",
+      "venue": "Lord's, London",
+      "result": "opponent",
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "match_id": "1496580",
+      "date": "2026-07-16",
+      "opponent": "England",
+      "venue": "Sophia Gardens, Cardiff",
+      "result": "opponent",
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "match_id": "1496579",
+      "date": "2026-07-14",
+      "opponent": "England",
+      "venue": "Edgbaston, Birmingham",
+      "result": "india",
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "match_id": "1490233",
+      "date": "2026-01-18",
+      "opponent": "New Zealand",
+      "venue": "Holkar Cricket Stadium, Indore",
+      "result": "opponent",
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "match_id": "1490232",
+      "date": "2026-01-14",
+      "opponent": "New Zealand",
+      "venue": "Niranjan Shah Stadium, Rajkot",
+      "result": "opponent",
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "match_id": "1490231",
+      "date": "2026-01-11",
+      "opponent": "New Zealand",
+      "venue": "Kotambi Stadium, Vadodara",
+      "result": "india",
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "match_id": "1479575",
+      "date": "2025-12-06",
+      "opponent": "South Africa",
+      "venue": "Dr. Y.S. Rajasekhara Reddy ACA-VDCA Cricket Stadium, Visakhapatnam",
+      "result": "india",
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "match_id": "1479574",
+      "date": "2025-12-03",
+      "opponent": "South Africa",
+      "venue": "Shaheed Veer Narayan Singh International Stadium, Raipur",
+      "result": "opponent",
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "match_id": "1479573",
+      "date": "2025-11-30",
+      "opponent": "South Africa",
+      "venue": "JSCA International Stadium Complex, Ranchi",
+      "result": "india",
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "match_id": "1478906",
+      "date": "2025-10-25",
+      "opponent": "Australia",
+      "venue": "Sydney Cricket Ground",
+      "result": "india",
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    }
+  ],
+  "h2h": [
+    {
+      "opponent": "Australia",
+      "played": 79,
+      "india_wins": 34,
+      "opponent_wins": 45,
+      "draws": 0,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "opponent": "Bangladesh",
+      "played": 29,
+      "india_wins": 22,
+      "opponent_wins": 7,
+      "draws": 0,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "opponent": "Bermuda",
+      "played": 1,
+      "india_wins": 1,
+      "opponent_wins": 0,
+      "draws": 0,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "opponent": "England",
+      "played": 63,
+      "india_wins": 40,
+      "opponent_wins": 23,
+      "draws": 0,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "opponent": "Hong Kong",
+      "played": 2,
+      "india_wins": 2,
+      "opponent_wins": 0,
+      "draws": 0,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "opponent": "Ireland",
+      "played": 3,
+      "india_wins": 3,
+      "opponent_wins": 0,
+      "draws": 0,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "opponent": "Kenya",
+      "played": 3,
+      "india_wins": 3,
+      "opponent_wins": 0,
+      "draws": 0,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "opponent": "Namibia",
+      "played": 1,
+      "india_wins": 1,
+      "opponent_wins": 0,
+      "draws": 0,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "opponent": "Nepal",
+      "played": 1,
+      "india_wins": 1,
+      "opponent_wins": 0,
+      "draws": 0,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "opponent": "Netherlands",
+      "played": 3,
+      "india_wins": 3,
+      "opponent_wins": 0,
+      "draws": 0,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "opponent": "New Zealand",
+      "played": 53,
+      "india_wins": 30,
+      "opponent_wins": 23,
+      "draws": 0,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "opponent": "Pakistan",
+      "played": 45,
+      "india_wins": 27,
+      "opponent_wins": 18,
+      "draws": 0,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "opponent": "Scotland",
+      "played": 1,
+      "india_wins": 1,
+      "opponent_wins": 0,
+      "draws": 0,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "opponent": "South Africa",
+      "played": 48,
+      "india_wins": 25,
+      "opponent_wins": 23,
+      "draws": 0,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "opponent": "Sri Lanka",
+      "played": 84,
+      "india_wins": 59,
+      "opponent_wins": 25,
+      "draws": 0,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "opponent": "United Arab Emirates",
+      "played": 1,
+      "india_wins": 1,
+      "opponent_wins": 0,
+      "draws": 0,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "opponent": "West Indies",
+      "played": 58,
+      "india_wins": 40,
+      "opponent_wins": 18,
+      "draws": 0,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "opponent": "Zimbabwe",
+      "played": 22,
+      "india_wins": 20,
+      "opponent_wins": 2,
+      "draws": 0,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    }
+  ],
+  "venues": [
+    {
+      "venue": "Adelaide Oval",
+      "played": 6,
+      "win_rate": 0.6667,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "venue": "Barabati Stadium",
+      "played": 6,
+      "win_rate": 1.0,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "venue": "Brisbane Cricket Ground, Woolloongabba",
+      "played": 5,
+      "win_rate": 0.2,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "venue": "Dr. Y.S. Rajasekhara Reddy ACA-VDCA Cricket Stadium",
+      "played": 7,
+      "win_rate": 0.8571,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "venue": "Dubai International Cricket Stadium",
+      "played": 10,
+      "win_rate": 1.0,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "venue": "Eden Gardens",
+      "played": 6,
+      "win_rate": 0.6667,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "venue": "Edgbaston",
+      "played": 9,
+      "win_rate": 0.6667,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "venue": "Feroz Shah Kotla",
+      "played": 7,
+      "win_rate": 0.8571,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "venue": "Green Park",
+      "played": 6,
+      "win_rate": 0.6667,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "venue": "Harare Sports Club",
+      "played": 18,
+      "win_rate": 0.8333,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "venue": "Kennington Oval",
+      "played": 8,
+      "win_rate": 0.5,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "venue": "MA Chidambaram Stadium, Chepauk",
+      "played": 8,
+      "win_rate": 0.625,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "venue": "Maharashtra Cricket Association Stadium",
+      "played": 7,
+      "win_rate": 0.5714,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "venue": "Melbourne Cricket Ground",
+      "played": 9,
+      "win_rate": 0.4444,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "venue": "Narendra Modi Stadium, Ahmedabad",
+      "played": 6,
+      "win_rate": 0.8333,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "venue": "National Stadium",
+      "played": 7,
+      "win_rate": 0.7143,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "venue": "Nehru Stadium",
+      "played": 8,
+      "win_rate": 0.625,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "venue": "Punjab Cricket Association Stadium, Mohali",
+      "played": 8,
+      "win_rate": 0.5,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "venue": "Queen's Park Oval, Port of Spain",
+      "played": 11,
+      "win_rate": 0.6364,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "venue": "R Premadasa Stadium",
+      "played": 12,
+      "win_rate": 0.75,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "venue": "R Premadasa Stadium, Colombo",
+      "played": 9,
+      "win_rate": 0.5556,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "venue": "Rajiv Gandhi International Stadium, Uppal",
+      "played": 6,
+      "win_rate": 0.5,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "venue": "Rangiri Dambulla International Stadium",
+      "played": 14,
+      "win_rate": 0.6429,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "venue": "Sabina Park, Kingston",
+      "played": 7,
+      "win_rate": 0.2857,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "venue": "Sardar Patel Stadium, Motera",
+      "played": 5,
+      "win_rate": 0.4,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "venue": "Sawai Mansingh Stadium",
+      "played": 5,
+      "win_rate": 0.8,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "venue": "Seddon Park",
+      "played": 6,
+      "win_rate": 0.3333,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "venue": "Shere Bangla National Stadium",
+      "played": 20,
+      "win_rate": 0.65,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "venue": "SuperSport Park",
+      "played": 5,
+      "win_rate": 0.4,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "venue": "Sydney Cricket Ground",
+      "played": 11,
+      "win_rate": 0.2727,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "venue": "Vidarbha Cricket Association Stadium, Jamtha",
+      "played": 6,
+      "win_rate": 0.6667,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "venue": "Wankhede Stadium",
+      "played": 7,
+      "win_rate": 0.5714,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "venue": "Western Australia Cricket Association Ground",
+      "played": 5,
+      "win_rate": 0.6,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    }
+  ],
+  "form": [
+    {
+      "date": "2023-09-15",
+      "form": 0.6,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "date": "2023-09-17",
+      "form": 0.6,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "date": "2023-09-22",
+      "form": 0.7,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "date": "2023-09-24",
+      "form": 0.8,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "date": "2023-09-27",
+      "form": 0.7,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "date": "2023-10-08",
+      "form": 0.8,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "date": "2023-10-14",
+      "form": 0.8,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "date": "2023-10-19",
+      "form": 0.8,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "date": "2023-10-22",
+      "form": 0.8,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "date": "2023-10-29",
+      "form": 0.8,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "date": "2023-11-02",
+      "form": 0.9,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "date": "2023-11-05",
+      "form": 0.9,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "date": "2023-11-12",
+      "form": 0.9,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "date": "2023-11-15",
+      "form": 0.9,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "date": "2023-11-19",
+      "form": 0.9,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "date": "2023-12-17",
+      "form": 0.9,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "date": "2023-12-19",
+      "form": 0.8,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "date": "2023-12-21",
+      "form": 0.8,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "date": "2024-08-04",
+      "form": 0.7,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "date": "2024-08-07",
+      "form": 0.6,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "date": "2025-02-06",
+      "form": 0.6,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "date": "2025-02-09",
+      "form": 0.6,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "date": "2025-02-12",
+      "form": 0.6,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "date": "2025-02-20",
+      "form": 0.6,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "date": "2025-02-23",
+      "form": 0.7,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "date": "2025-03-02",
+      "form": 0.7,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "date": "2025-03-04",
+      "form": 0.8,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "date": "2025-03-09",
+      "form": 0.8,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "date": "2025-10-19",
+      "form": 0.8,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "date": "2025-10-23",
+      "form": 0.8,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "date": "2025-10-25",
+      "form": 0.8,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "date": "2025-11-30",
+      "form": 0.8,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "date": "2025-12-03",
+      "form": 0.7,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "date": "2025-12-06",
+      "form": 0.7,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "date": "2026-01-11",
+      "form": 0.7,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "date": "2026-01-14",
+      "form": 0.6,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "date": "2026-01-18",
+      "form": 0.5,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "date": "2026-07-14",
+      "form": 0.5,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "date": "2026-07-16",
+      "form": 0.5,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    },
+    {
+      "date": "2026-07-19",
+      "form": 0.5,
+      "data_label": "HISTORICAL DATA",
+      "source": "Cricsheet"
+    }
+  ],
+  "trend": [],
+  "players": [],
+  "validation": {
+    "n_evaluated": 437,
+    "accuracy": 0.6338672768878718,
+    "precision": 0.6492537313432836,
+    "recall": 0.9321428571428572,
+    "f1": 0.7653958944281525,
+    "macro_f1": 0.46603128054740955,
+    "log_loss": 0.6634163518765595,
+    "brier": 0.47041795071104436,
+    "confusion_matrix": {
+      "labels": [
+        "india",
+        "opponent"
+      ],
+      "matrix": {
+        "india": {
+          "india": 261,
+          "opponent": 19
+        },
+        "opponent": {
+          "india": 141,
+          "opponent": 16
+        }
+      }
+    },
+    "calibration": [
+      {
+        "bin": "0.4-0.6",
+        "n": 222,
+        "mean_confidence": 0.557808938265365,
+        "accuracy": 0.6531531531531531
+      },
+      {
+        "bin": "0.6-0.8",
+        "n": 215,
+        "mean_confidence": 0.6353866188737441,
+        "accuracy": 0.6139534883720931
+      }
+    ]
   },
-  {
-   "match_id": "odi-demo-002",
-   "format": "ODI",
-   "date": "2024-08-12",
-   "opponent": "Sri Lanka",
-   "prediction_timestamp": "2024-08-11T00:00:00Z",
-   "model_version": "cricket-demo-0.1.0",
-   "india_probability": 0.462,
-   "opponent_probability": 0.538,
-   "actual_result": "opponent",
-   "model_correct": true,
-   "hash": "2979ed10f29850927538d9f73c0370ecf64449456794e94e74af1e2f48dd8f62",
-   "verified_pre_match": false,
-   "data_label": "DEMO DATA"
-  },
-  {
-   "match_id": "odi-demo-003",
-   "format": "ODI",
-   "date": "2024-09-07",
-   "opponent": "Bangladesh",
-   "prediction_timestamp": "2024-09-06T00:00:00Z",
-   "model_version": "cricket-demo-0.1.0",
-   "india_probability": 0.5883,
-   "opponent_probability": 0.4117,
-   "actual_result": "opponent",
-   "model_correct": false,
-   "hash": "fee736b596cc9bfa9151c05a7771805828f913db0e4cab689f0e7d5ae2c5b310",
-   "verified_pre_match": false,
-   "data_label": "DEMO DATA"
-  },
-  {
-   "match_id": "odi-demo-004",
-   "format": "ODI",
-   "date": "2024-10-03",
-   "opponent": "West Indies",
-   "prediction_timestamp": "2024-10-02T00:00:00Z",
-   "model_version": "cricket-demo-0.1.0",
-   "india_probability": 0.7917,
-   "opponent_probability": 0.2083,
-   "actual_result": "india",
-   "model_correct": true,
-   "hash": "76967900c0d9c13f7ff4ea706b72e3bb06bff629420e8e70e23d52dc38f42220",
-   "verified_pre_match": false,
-   "data_label": "DEMO DATA"
-  },
-  {
-   "match_id": "odi-demo-005",
-   "format": "ODI",
-   "date": "2024-10-29",
-   "opponent": "Sri Lanka",
-   "prediction_timestamp": "2024-10-28T00:00:00Z",
-   "model_version": "cricket-demo-0.1.0",
-   "india_probability": 0.5174,
-   "opponent_probability": 0.4826,
-   "actual_result": "opponent",
-   "model_correct": false,
-   "hash": "6899eeb26ae69d75bb302de3594accccf9e3ffdc00b1e2548d60820beec9ad02",
-   "verified_pre_match": false,
-   "data_label": "DEMO DATA"
-  },
-  {
-   "match_id": "odi-demo-006",
-   "format": "ODI",
-   "date": "2024-11-24",
-   "opponent": "Pakistan",
-   "prediction_timestamp": "2024-11-23T00:00:00Z",
-   "model_version": "cricket-demo-0.1.0",
-   "india_probability": 0.3215,
-   "opponent_probability": 0.6785,
-   "actual_result": "opponent",
-   "model_correct": true,
-   "hash": "84c6cb1b8fd808a6cf9c2b0f02e72fd0984cd7aaca6be81a3ea3fa50a512720c",
-   "verified_pre_match": false,
-   "data_label": "DEMO DATA"
-  },
-  {
-   "match_id": "odi-demo-007",
-   "format": "ODI",
-   "date": "2024-12-20",
-   "opponent": "Afghanistan",
-   "prediction_timestamp": "2024-12-19T00:00:00Z",
-   "model_version": "cricket-demo-0.1.0",
-   "india_probability": 0.5263,
-   "opponent_probability": 0.4737,
-   "actual_result": "opponent",
-   "model_correct": false,
-   "hash": "559bdaa1ea75f3d8cb7197ae86a4d06fb64954291f664f5956f00a46208999c3",
-   "verified_pre_match": false,
-   "data_label": "DEMO DATA"
-  },
-  {
-   "match_id": "odi-demo-008",
-   "format": "ODI",
-   "date": "2025-01-15",
-   "opponent": "New Zealand",
-   "prediction_timestamp": "2025-01-14T00:00:00Z",
-   "model_version": "cricket-demo-0.1.0",
-   "india_probability": 0.527,
-   "opponent_probability": 0.473,
-   "actual_result": "opponent",
-   "model_correct": false,
-   "hash": "e175f075a05dca5ec945b8badaee6257bcb1311fade89454f9d36d07de4f3c45",
-   "verified_pre_match": false,
-   "data_label": "DEMO DATA"
-  },
-  {
-   "match_id": "odi-demo-009",
-   "format": "ODI",
-   "date": "2025-02-10",
-   "opponent": "South Africa",
-   "prediction_timestamp": "2025-02-09T00:00:00Z",
-   "model_version": "cricket-demo-0.1.0",
-   "india_probability": 0.563,
-   "opponent_probability": 0.437,
-   "actual_result": "opponent",
-   "model_correct": false,
-   "hash": "26a9b2c1123ca78738cbef60355a9cd60b096109eb4667bcb27774666027a84c",
-   "verified_pre_match": false,
-   "data_label": "DEMO DATA"
-  },
-  {
-   "match_id": "odi-demo-010",
-   "format": "ODI",
-   "date": "2025-03-08",
-   "opponent": "Sri Lanka",
-   "prediction_timestamp": "2025-03-07T00:00:00Z",
-   "model_version": "cricket-demo-0.1.0",
-   "india_probability": 0.8454,
-   "opponent_probability": 0.1546,
-   "actual_result": "india",
-   "model_correct": true,
-   "hash": "a29ede5c29fb23c5fbb638718a7ef6a5305a73fbebbeaaa4100e32c15bc6b72c",
-   "verified_pre_match": false,
-   "data_label": "DEMO DATA"
-  },
-  {
-   "match_id": "odi-demo-011",
-   "format": "ODI",
-   "date": "2025-04-03",
-   "opponent": "New Zealand",
-   "prediction_timestamp": "2025-04-02T00:00:00Z",
-   "model_version": "cricket-demo-0.1.0",
-   "india_probability": 0.8784,
-   "opponent_probability": 0.1216,
-   "actual_result": "india",
-   "model_correct": true,
-   "hash": "fb0901adbae5cbbbed7482bd95c2ddd04a57a9955adafca33055d9e3d2e03b1c",
-   "verified_pre_match": false,
-   "data_label": "DEMO DATA"
-  },
-  {
-   "match_id": "odi-demo-012",
-   "format": "ODI",
-   "date": "2025-04-29",
-   "opponent": "Sri Lanka",
-   "prediction_timestamp": "2025-04-28T00:00:00Z",
-   "model_version": "cricket-demo-0.1.0",
-   "india_probability": 0.7721,
-   "opponent_probability": 0.2279,
-   "actual_result": "india",
-   "model_correct": true,
-   "hash": "feed8c20ad0660822b85ff809ca58cc92c874eaf088ed71ea7062872cf5e4def",
-   "verified_pre_match": false,
-   "data_label": "DEMO DATA"
-  },
-  {
-   "match_id": "odi-demo-013",
-   "format": "ODI",
-   "date": "2025-05-25",
-   "opponent": "England",
-   "prediction_timestamp": "2025-05-24T00:00:00Z",
-   "model_version": "cricket-demo-0.1.0",
-   "india_probability": 0.5738,
-   "opponent_probability": 0.4262,
-   "actual_result": "india",
-   "model_correct": true,
-   "hash": "afa3dcb10caaf33c713f8a0eb214c0fcbca25bf218506b5f8cf5e16fe3423194",
-   "verified_pre_match": false,
-   "data_label": "DEMO DATA"
-  },
-  {
-   "match_id": "odi-demo-014",
-   "format": "ODI",
-   "date": "2025-06-20",
-   "opponent": "Australia",
-   "prediction_timestamp": "2025-06-19T00:00:00Z",
-   "model_version": "cricket-demo-0.1.0",
-   "india_probability": 0.5634,
-   "opponent_probability": 0.4366,
-   "actual_result": "india",
-   "model_correct": true,
-   "hash": "ba5cbd6d0fc6641cb2bf4bc386731007afe36ab4866169c0c9d40f092dccb360",
-   "verified_pre_match": false,
-   "data_label": "DEMO DATA"
-  },
-  {
-   "match_id": "odi-demo-015",
-   "format": "ODI",
-   "date": "2025-07-16",
-   "opponent": "Sri Lanka",
-   "prediction_timestamp": "2025-07-15T00:00:00Z",
-   "model_version": "cricket-demo-0.1.0",
-   "india_probability": 0.4906,
-   "opponent_probability": 0.5094,
-   "actual_result": "opponent",
-   "model_correct": true,
-   "hash": "40445b3f6694f3f9bda76328639324f50e58d0ef62e343aea118a79487fa659f",
-   "verified_pre_match": false,
-   "data_label": "DEMO DATA"
-  },
-  {
-   "match_id": "odi-demo-016",
-   "format": "ODI",
-   "date": "2025-08-11",
-   "opponent": "New Zealand",
-   "prediction_timestamp": "2025-08-10T00:00:00Z",
-   "model_version": "cricket-demo-0.1.0",
-   "india_probability": 0.6967,
-   "opponent_probability": 0.3033,
-   "actual_result": "india",
-   "model_correct": true,
-   "hash": "53340bdc25ff4e0de3d3eeeac87832a119cf56c75175ac4dc7aeccf6dcad3132",
-   "verified_pre_match": false,
-   "data_label": "DEMO DATA"
-  },
-  {
-   "match_id": "odi-demo-017",
-   "format": "ODI",
-   "date": "2025-09-06",
-   "opponent": "West Indies",
-   "prediction_timestamp": "2025-09-05T00:00:00Z",
-   "model_version": "cricket-demo-0.1.0",
-   "india_probability": 0.6413,
-   "opponent_probability": 0.3587,
-   "actual_result": "opponent",
-   "model_correct": false,
-   "hash": "43290e7a82885e3d28591a27c4981cebf47d566fe8e3465c1e9a9463919eda88",
-   "verified_pre_match": false,
-   "data_label": "DEMO DATA"
-  },
-  {
-   "match_id": "odi-demo-018",
-   "format": "ODI",
-   "date": "2025-10-02",
-   "opponent": "New Zealand",
-   "prediction_timestamp": "2025-10-01T00:00:00Z",
-   "model_version": "cricket-demo-0.1.0",
-   "india_probability": 0.3158,
-   "opponent_probability": 0.6842,
-   "actual_result": "opponent",
-   "model_correct": true,
-   "hash": "3198a195114eeffacb0f977afe643849c87701839681f3d70d80a2db7c31dfc3",
-   "verified_pre_match": false,
-   "data_label": "DEMO DATA"
-  },
-  {
-   "match_id": "odi-demo-019",
-   "format": "ODI",
-   "date": "2025-10-28",
-   "opponent": "New Zealand",
-   "prediction_timestamp": "2025-10-27T00:00:00Z",
-   "model_version": "cricket-demo-0.1.0",
-   "india_probability": 0.4488,
-   "opponent_probability": 0.5512,
-   "actual_result": "india",
-   "model_correct": false,
-   "hash": "80b274e17c1c8c162e0a8645e6285a9e7fa6c9dda2f9a47fa48835bc2a0d6038",
-   "verified_pre_match": false,
-   "data_label": "DEMO DATA"
-  },
-  {
-   "match_id": "odi-demo-020",
-   "format": "ODI",
-   "date": "2025-11-23",
-   "opponent": "England",
-   "prediction_timestamp": "2025-11-22T00:00:00Z",
-   "model_version": "cricket-demo-0.1.0",
-   "india_probability": 0.7607,
-   "opponent_probability": 0.2393,
-   "actual_result": "opponent",
-   "model_correct": false,
-   "hash": "722abd642481fefcb0a29ed19ad28f569619f9d577f001ae3bc2b4499961fb74",
-   "verified_pre_match": false,
-   "data_label": "DEMO DATA"
-  }
- ]
+  "ledger": []
 }

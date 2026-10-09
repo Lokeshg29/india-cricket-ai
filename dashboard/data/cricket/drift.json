@@ -1,4 +1,4 @@
 {
- "status": "not monitored (demo data has no live feed)",
- "data_label": "DEMO DATA"
+  "status": "unavailable (no live feed)",
+  "data_label": "UNAVAILABLE"
 }

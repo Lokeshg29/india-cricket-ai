@@ -9,5 +9,7 @@ data/live/*
 !data/live/.gitkeep
 !data/live/results_log.csv
 data/monitoring/*.html
+/models/cricket/*.joblib
+/models/cricket/*.metadata.json
 .vercel
 reports/preview/

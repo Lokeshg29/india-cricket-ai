@@ -1,6 +1,6 @@
 import DataBadge from "./DataBadge";
 import Flag from "../Flag";
-import { metricOrPending, pct, resultLabel, type FormatData } from "@/lib/cricket";
+import { metricOrPending, pct, resultLabel, type FormatData, type HistoricalFormatEvaluation } from "@/lib/cricket";
 
 const TH = "font-mono px-3 py-2 text-left text-[10px] font-normal uppercase tracking-[0.12em] text-foreground/40";
 const TD = "px-3 py-2.5 text-sm text-foreground/80";
@@ -14,6 +14,9 @@ function Table({ children }: { children: React.ReactNode }) {
 }
 
 export function H2H({ rows }: { rows: FormatData["h2h"] }) {
+  if (rows.length === 0) {
+    return <p className="text-sm text-foreground/50">No resolved Cricsheet head-to-head records are available.</p>;
+  }
   return (
     <Table>
       <thead><tr className="border-b border-card-border">
@@ -35,6 +38,9 @@ export function H2H({ rows }: { rows: FormatData["h2h"] }) {
 }
 
 export function Venues({ rows }: { rows: FormatData["venues"] }) {
+  if (rows.length === 0) {
+    return <p className="text-sm text-foreground/50">Venue aggregates are unavailable because no resolved matches have a recorded venue.</p>;
+  }
   return (
     <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
       {rows.map((v) => (
@@ -52,6 +58,9 @@ export function Venues({ rows }: { rows: FormatData["venues"] }) {
 }
 
 export function Players({ rows, slug }: { rows: FormatData["players"]; slug: string }) {
+  if (rows.length === 0) {
+    return <p className="text-sm text-foreground/50">Unavailable — the normalized Cricsheet match table does not include player-level scorecards.</p>;
+  }
   const test = slug === "test";
   return (
     <Table>
@@ -75,7 +84,10 @@ export function Players({ rows, slug }: { rows: FormatData["players"]; slug: str
   );
 }
 
-export function Validation({ v, hasDraw }: { v: FormatData["validation"]; hasDraw: boolean }) {
+export function Validation({ v, hasDraw }: {
+  v: FormatData["validation"] | HistoricalFormatEvaluation["validation"];
+  hasDraw: boolean;
+}) {
   const labels = v?.confusion_matrix?.labels ?? [];
   const matrix = v?.confusion_matrix?.matrix;
   const stats = [
@@ -125,7 +137,7 @@ export function Validation({ v, hasDraw }: { v: FormatData["validation"]; hasDra
 export function Ledger({ rows, hasDraw }: { rows: FormatData["ledger"]; hasDraw: boolean }) {
   const showDraw = hasDraw || rows.some((r) => r.draw_probability != null);
   const latest = [...rows]
-    .sort((a, b) => b.prediction_timestamp.localeCompare(a.prediction_timestamp))
+    .sort((a, b) => b.date.localeCompare(a.date))
     .slice(0, 12);
 
   if (latest.length === 0) {
@@ -166,7 +178,8 @@ export function Ledger({ rows, hasDraw }: { rows: FormatData["ledger"]; hasDraw:
               <summary className="cursor-pointer text-xs text-foreground/50 transition-colors hover:text-foreground">Model details</summary>
               <dl className="mt-2 space-y-1 text-[11px] text-foreground/60">
                 <div className="flex justify-between gap-3"><dt>Model version</dt><dd className="break-all text-right">{r.model_version}</dd></div>
-                <div className="flex justify-between gap-3"><dt>Recorded</dt><dd className="text-right">{r.prediction_timestamp}</dd></div>
+                <div className="flex justify-between gap-3"><dt>Prediction timestamp</dt><dd className="text-right">{r.prediction_timestamp ?? "Unavailable (source has date only)"}</dd></div>
+                {r.evaluation_timestamp && <div className="flex justify-between gap-3"><dt>Evaluation run</dt><dd className="text-right">{r.evaluation_timestamp}</dd></div>}
                 <div className="flex justify-between gap-3"><dt>Pre-match verified</dt><dd>{r.verified_pre_match ? "Yes" : "No"}</dd></div>
               </dl>
             </details>
@@ -174,7 +187,7 @@ export function Ledger({ rows, hasDraw }: { rows: FormatData["ledger"]; hasDraw:
         ))}
       </div>
       <p className="font-mono text-[11px] text-foreground/40">
-        Prediction details come from stored records. DEMO DATA records that were generated after a match are not verified pre-match predictions.
+        Historical backtests are chronological holdout results, not archived pre-match predictions. Demo estimates are synthetic and are not verified pre-match predictions.
       </p>
     </div>
   );

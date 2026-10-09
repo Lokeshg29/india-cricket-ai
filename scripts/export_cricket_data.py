@@ -1,201 +1,221 @@
-"""Export dashboard data for India Cricket AI.
+"""Export dashboard cricket analytics from normalized Cricsheet history.
 
-Runs the real pipeline (features -> format model -> calibration ->
-walk-forward evaluation -> ledger) on DEMO DATA by default, because no real
-historical dataset ships in the repo. Every output file carries a
-`data_label` so the UI can never present demo numbers as real.
+Player-level statistics and upcoming fixtures remain unavailable because the
+match-level normalized source does not provide those data reliably.
 
     python scripts/export_cricket_data.py
 """
 from __future__ import annotations
 
-import hashlib
 import json
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
-import numpy as np
-import pandas as pd
-from sklearn.linear_model import LogisticRegression
-from sklearn.preprocessing import StandardScaler
-
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
 from src.sports.cricket.config import FORMATS, get_format  # noqa: E402
-from src.sports.cricket.demo_data import OPPONENTS, make_history  # noqa: E402
-from src.sports.cricket.evaluation import walk_forward  # noqa: E402
-from src.sports.cricket.features import build_features  # noqa: E402
-from src.sports.cricket.models import CricketModel  # noqa: E402
+from src.sports.cricket.features import HISTORY_DATA, load_historical_matches  # noqa: E402
 
 OUT = ROOT / "dashboard" / "data" / "cricket"
-LABEL = "DEMO DATA"
-MODEL_VERSION = "cricket-demo-0.1.0"
-NOW = datetime.now(timezone.utc)
-FIXTURES = {  # DEMO fixtures -- not the real schedule
-    "test": [("Australia", "Melbourne", "away", "2026-12-26"), ("England", "Hyderabad", "home", "2027-01-20"),
-             ("South Africa", "Kolkata", "home", "2027-02-14")],
-    "odi": [("New Zealand", "Mumbai", "home", "2026-11-08"), ("Pakistan", "Dubai", "neutral", "2026-12-02"),
-            ("Sri Lanka", "Colombo", "away", "2027-01-11"), ("Australia", "Delhi", "home", "2027-02-02")],
-    "t20i": [("England", "Ahmedabad", "home", "2026-11-15"), ("Bangladesh", "Dhaka", "away", "2026-12-09"),
-             ("West Indies", "Bridgetown", "away", "2027-01-18"), ("Afghanistan", "Chennai", "home", "2027-02-10")],
-}
-ROLES = ["Opener", "Top-order batter", "Middle-order batter", "Wicketkeeper-batter", "All-rounder",
-         "Fast bowler", "Spinner"]
+EVALUATION_EXPORT = OUT / "historical_evaluation.json"
+SOURCE = "Cricsheet"
+HISTORICAL = "HISTORICAL DATA"
+SOURCE_TYPE = "HISTORICAL_DATA"
+BACKTEST = "HISTORICAL BACKTEST"
+UNAVAILABLE = "UNAVAILABLE"
 
 
-def _r(x, n=4):
-    return round(float(x), n)
+def _round(value: float, digits: int = 4) -> float:
+    return round(float(value), digits)
 
 
-def conf_label(p: float) -> str:
-    return "HIGH" if p >= 0.65 else "MEDIUM" if p >= 0.52 else "LOW"
-
-
-def explain(feats: pd.DataFrame, row: pd.DataFrame, cfg) -> list[dict]:
-    """Logistic-coefficient contributions on a surrogate model.
-    NOT SHAP -- labelled as such in the output."""
-    X = feats[list(cfg.features)].to_numpy(float)
-    sc = StandardScaler().fit(X)
-    lr = LogisticRegression(max_iter=500, C=0.5).fit(sc.transform(X), feats["result"])
-    idx = list(lr.classes_).index("india")
-    z = sc.transform(row[list(cfg.features)].to_numpy(float))[0]
-    contrib = lr.coef_[idx] * z
-    order = np.argsort(-np.abs(contrib))[:5]
-    return [{"feature": cfg.features[i], "contribution": _r(contrib[i], 3)} for i in order]
-
-
-def ledger_hash(prev: str, rec: dict) -> str:
-    return hashlib.sha256((prev + json.dumps(rec, sort_keys=True, default=str)).encode()).hexdigest()
-
-
-def build_format(fmt: str) -> dict:
-    cfg = get_format(fmt)
-    hist = make_history(fmt)
-    feats = build_features(hist, fmt)
-    ev = walk_forward(feats, fmt)
-
-    holdout = 20
-    model = CricketModel(fmt).fit(feats.iloc[:-holdout])
-    P = model.predict_proba(feats.iloc[-holdout:])
-
-    # prediction ledger (DEMO: generated in a batch, NOT a real pre-match proof)
-    ledger, prev = [], "GENESIS"
-    for i in range(holdout):
-        h = hist.iloc[-holdout + i]
-        rec = {
-            "match_id": f"{fmt}-demo-{i + 1:03d}", "format": fmt.upper(), "date": str(h["date"].date()),
-            "opponent": h["opponent"],
-            "prediction_timestamp": str((h["date"] - pd.Timedelta(days=1)).date()) + "T00:00:00Z",
-            "model_version": MODEL_VERSION,
-            "india_probability": _r(P.iloc[i]["india"]),
-            "opponent_probability": _r(P.iloc[i]["opponent"]),
-            "actual_result": h["result"],
-            "model_correct": bool(P.iloc[i].idxmax() == h["result"]),
+def _validation(slug: str) -> dict:
+    """Use the actual walk-forward export, or return an explicit pending shape."""
+    try:
+        exported = json.loads(EVALUATION_EXPORT.read_text(encoding="utf-8"))
+        value = exported["formats"][slug]["validation"]
+        return {**value, "data_label": BACKTEST}
+    except (OSError, KeyError, TypeError, json.JSONDecodeError):
+        return {
+            "n_evaluated": 0,
+            "accuracy": None,
+            "precision": None,
+            "recall": None,
+            "f1": None,
+            "macro_f1": None,
+            "brier": None,
+            "log_loss": None,
+            "confusion_matrix": {"labels": [], "matrix": {}},
+            "calibration": [],
+            "data_label": UNAVAILABLE,
         }
-        if cfg.has_draw:
-            rec["draw_probability"] = _r(P.iloc[i]["draw"])
-        prev = ledger_hash(prev, rec)
-        ledger.append({**rec, "hash": prev, "verified_pre_match": False, "data_label": LABEL})
 
-    full_model = CricketModel(fmt).fit(feats)
-    upcoming = []
-    for k, (opp, venue, vt, date) in enumerate(FIXTURES[fmt]):
-        extra = pd.DataFrame([{**hist.iloc[-1].to_dict(), "date": pd.Timestamp(date), "opponent": opp,
-                               "venue_type": vt, "toss_won": 0, "result": "india"}])
-        row = build_features(pd.concat([hist, extra], ignore_index=True), fmt).iloc[[-1]]
-        p = full_model.predict_proba(row).iloc[0]
-        probs = {"india": _r(p["india"]), "opponent": _r(p["opponent"])}
-        if cfg.has_draw:
-            probs["draw"] = _r(p["draw"])
-        upcoming.append({
-            "match_id": f"{fmt}-up-{k + 1:02d}", "opponent": opp, "venue": venue, "venue_type": vt,
-            "date": date, "format": cfg.display, "probabilities": probs,
-            "confidence": conf_label(max(probs.values())),
-            "explanation": explain(feats, row, cfg), "explanation_method": "logistic-coefficient surrogate (not SHAP)",
-            "data_label": LABEL,
-        })
 
-    recent = hist.tail(10).iloc[::-1]
-    results = [{"date": str(r["date"].date()), "opponent": r["opponent"], "venue": r["venue"],
-                "result": r["result"], "data_label": LABEL} for _, r in recent.iterrows()]
+def _format_export(slug: str, matches, evaluation: dict) -> dict:
+    cfg = get_format(slug)
+    code = cfg.display.upper()
+    rows = matches[matches["format"].eq(code)].sort_values(["date", "match_id"], kind="stable")
+    resolved = rows[rows["result"].isin(cfg.outcomes)].copy()
+    resolved["result_label"] = resolved["result"]
+    resolved["outcome_points"] = resolved["result"].map({"india": 1.0, "draw": 0.5, "opponent": 0.0})
+
+    recent = resolved.tail(10).iloc[::-1]
+    results = [
+        {
+            "match_id": str(row.match_id),
+            "date": row.date.isoformat(),
+            "opponent": str(row.india_opponent),
+            "venue": row.venue or "Venue unavailable",
+            "result": str(row.result),
+            "data_label": HISTORICAL,
+            "source": SOURCE,
+        }
+        for row in recent.itertuples()
+    ]
 
     h2h = []
-    for opp in OPPONENTS:
-        s = hist[hist["opponent"] == opp]
-        if len(s):
-            h2h.append({"opponent": opp, "played": int(len(s)), "india_wins": int((s.result == "india").sum()),
-                        "opponent_wins": int((s.result == "opponent").sum()), "draws": int((s.result == "draw").sum())})
-    venues = []
-    for vt in ["home", "away", "neutral"]:
-        s = hist[hist["venue_type"] == vt]
-        venues.append({"venue": vt.title(), "played": int(len(s)),
-                       "win_rate": _r((s.result == "india").mean()) if len(s) else 0.0})
-    for v, s in hist.groupby("venue"):
-        if len(s) >= 5:
-            venues.append({"venue": v, "played": int(len(s)), "win_rate": _r((s.result == "india").mean())})
-
-    pts = hist["result"].map({"india": 1, "draw": 0.5, "opponent": 0}).to_numpy()
-    form = [{"date": str(d.date()), "form": _r(pts[max(0, i - cfg.form_window + 1): i + 1].mean())}
-            for i, d in enumerate(hist["date"]) if i >= len(hist) - 24]
-
-    trend = []
-    for u in upcoming:
-        for w in range(6):  # DEMO trend: model re-fit on progressively more history
-            m = CricketModel(fmt).fit(feats.iloc[: len(feats) - 5 * (5 - w) - holdout // 2])
-            trend.append({"match_id": u["match_id"], "step": w + 1, "india": _r(m.predict_proba(feats.iloc[[-1]])["india"].iloc[0])})
-
-    rng = np.random.default_rng(7)
-    players = []
-    for i, role in enumerate(ROLES):
-        bat = role not in ("Fast bowler", "Spinner")
-        players.append({
-            "player": f"Demo Player {i + 1}", "role": role, "recent_matches": 6,
-            "runs": int(rng.integers(120, 420)) if bat else int(rng.integers(10, 80)),
-            "average": _r(rng.uniform(28, 58) if bat else rng.uniform(8, 20), 1),
-            "strike_rate": _r(rng.uniform(70, 95) if fmt == "test" else rng.uniform(85, 150), 1) if bat else None,
-            "wickets": int(rng.integers(0, 4)) if bat else int(rng.integers(8, 24)),
-            "economy": _r(rng.uniform(2.6, 3.4) if fmt == "test" else rng.uniform(4.8, 8.6), 2) if not bat or role == "All-rounder" else None,
-            "data_label": LABEL,
+    for opponent, group in resolved.groupby("india_opponent", sort=True):
+        h2h.append({
+            "opponent": str(opponent),
+            "played": int(len(group)),
+            "india_wins": int(group["result"].eq("india").sum()),
+            "opponent_wins": int(group["result"].eq("opponent").sum()),
+            "draws": int(group["result"].eq("draw").sum()),
+            "data_label": HISTORICAL,
+            "source": SOURCE,
         })
 
-    test_acc = float((P.idxmax(axis=1).reset_index(drop=True) == hist["result"].tail(holdout).reset_index(drop=True)).mean())
+    venues = []
+    venue_rows = resolved[resolved["venue"].fillna("").str.strip().ne("")]
+    for venue, group in venue_rows.groupby("venue", sort=True):
+        if len(group) < 5:
+            continue
+        venues.append({
+            "venue": str(venue),
+            "played": int(len(group)),
+            "win_rate": _round(group["result"].eq("india").mean()),
+            "data_label": HISTORICAL,
+            "source": SOURCE,
+        })
+
+    rolling = resolved[["date", "outcome_points"]].copy()
+    rolling["form"] = rolling["outcome_points"].rolling(cfg.form_window, min_periods=1).mean()
+    form = [
+        {"date": row.date.isoformat(), "form": _round(row.form), "data_label": HISTORICAL, "source": SOURCE}
+        for row in rolling.tail(40).itertuples()
+    ]
+
+    validation = evaluation.get("validation") or _validation(slug)
+    model_version = evaluation.get("model_version") or "unavailable"
+    evaluation_status = evaluation.get("status") == "EVALUATED"
     return {
-        "format": cfg.display, "slug": fmt, "has_draw": cfg.has_draw, "outcomes": list(cfg.outcomes),
-        "data_label": LABEL, "model_version": MODEL_VERSION, "generated_at": NOW.isoformat(),
-        "features": list(cfg.features),
-        "summary": {"matches_tracked": int(len(hist)), "predictions_generated": len(ledger) + len(upcoming),
-                    "accuracy": _r(ev["accuracy"]), "holdout_accuracy": _r(test_acc)},
-        "upcoming": upcoming, "results": results, "h2h": h2h, "venues": venues, "form": form,
-        "trend": trend, "players": players, "validation": ev, "ledger": ledger,
+        "format": cfg.display,
+        "slug": slug,
+        "has_draw": cfg.has_draw,
+        "outcomes": list(cfg.outcomes),
+        "data_label": HISTORICAL,
+        "data_source": SOURCE,
+        "model_version": model_version,
+        "generated_at": datetime.now(timezone.utc).isoformat(),
+        "features": evaluation.get("features", []),
+        "summary": {
+            "matches_tracked": int(len(rows)),
+            "predictions_generated": int(evaluation.get("n_evaluated", 0)),
+            "accuracy": validation.get("accuracy"),
+            "holdout_accuracy": validation.get("accuracy"),
+        },
+        "data_sources": {
+            "matches": {"status": HISTORICAL, "source": SOURCE},
+            "results": {"status": HISTORICAL, "source": SOURCE, "note": "Resolved match outcomes only."},
+            "form": {"status": HISTORICAL, "source": SOURCE, "note": "Rolling points use resolved results in this format."},
+            "head_to_head": {"status": HISTORICAL, "source": SOURCE, "note": "Counts include resolved matches only."},
+            "venues": {"status": HISTORICAL if venues else UNAVAILABLE, "source": SOURCE if venues else None,
+                       "note": "Known stadiums with at least five resolved matches; no home/away classification is inferred."},
+            "players": {"status": UNAVAILABLE, "source": None,
+                        "note": "The normalized match table has no player-level scorecards."},
+            "fixtures": {"status": UNAVAILABLE, "source": None,
+                         "note": "No verified upcoming international fixture feed is configured."},
+            "prediction_trend": {"status": UNAVAILABLE, "source": None,
+                                 "note": "No future-match trend is generated without verified fixtures."},
+            "evaluation": {"status": BACKTEST if evaluation_status else UNAVAILABLE,
+                           "source": SOURCE if evaluation_status else None},
+        },
+        "upcoming": [],
+        "results": results,
+        "h2h": h2h,
+        "venues": venues,
+        "form": form,
+        "trend": [],
+        "players": [],
+        "validation": validation,
+        "ledger": [],
     }
 
 
 def main() -> None:
     OUT.mkdir(parents=True, exist_ok=True)
-    all_fmt = {}
-    for fmt in FORMATS:
-        data = build_format(fmt)
-        all_fmt[fmt] = data
-        (OUT / f"{fmt}.json").write_text(json.dumps(data, indent=1, default=str))
-    shared = {
-        "model_registry": [{"format": f.upper(), "version": MODEL_VERSION, "stage": "demo",
-                            "backend": "logistic regression + sigmoid calibration",
-                            "accuracy": d["summary"]["accuracy"], "brier": _r(d["validation"]["brier"]),
-                            "log_loss": _r(d["validation"]["log_loss"]), "data_label": LABEL}
-                           for f, d in all_fmt.items()],
-        "system_health": {"generated_at": NOW.isoformat(), "api": "not deployed (local)",
-                          "mlflow": "not connected", "data_label": LABEL},
-        "data_quality": {"checks": [{"name": "schema", "status": "pass"}, {"name": "result labels", "status": "pass"},
-                                    {"name": "chronological order", "status": "pass"},
-                                    {"name": "real data source", "status": "missing"}], "data_label": LABEL},
-        "drift": {"status": "not monitored (demo data has no live feed)", "data_label": LABEL},
-        "training": {"last_trained": NOW.isoformat(), "status": "demo run", "data_label": LABEL},
+    matches = load_historical_matches(HISTORY_DATA)
+    # Guard the dashboard export against an accidental mixed or domestic input.
+    if not matches["source_type"].eq(SOURCE_TYPE).all():
+        raise ValueError("dashboard analytics export requires Cricsheet HISTORICAL_DATA only")
+
+    evaluation_export = {}
+    try:
+        evaluation_export = json.loads(EVALUATION_EXPORT.read_text(encoding="utf-8"))
+        evaluations = evaluation_export.get("formats", {})
+    except (OSError, json.JSONDecodeError):
+        evaluations = {}
+
+    per_format = {
+        slug: _format_export(slug, matches, evaluations.get(slug, {}))
+        for slug in FORMATS
     }
-    for name, val in shared.items():
-        (OUT / f"{name}.json").write_text(json.dumps(val, indent=1))
-    print("wrote", sorted(p.name for p in OUT.iterdir()))
+    for slug, value in per_format.items():
+        (OUT / f"{slug}.json").write_text(json.dumps(value, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+
+    model_registry = []
+    for slug, value in per_format.items():
+        evaluation = evaluations.get(slug, {})
+        metrics = evaluation.get("metrics", {})
+        model_registry.append({
+            "format": value["format"].upper(),
+            "version": value["model_version"],
+            "stage": "evaluated" if evaluation.get("status") == "EVALUATED" else "pending",
+            "backend": evaluation.get("model_type", "unavailable"),
+            "accuracy": metrics.get("accuracy"),
+            "brier": metrics.get("brier"),
+            "log_loss": metrics.get("log_loss"),
+            "data_label": BACKTEST if evaluation.get("status") == "EVALUATED" else UNAVAILABLE,
+        })
+
+    checks = [
+        {"name": "Cricsheet source rows", "status": "pass"},
+        {"name": "India men's international filter", "status": "pass"},
+        {"name": "IPL/domestic T20 excluded", "status": "pass"},
+        {"name": "player-level data", "status": "unavailable"},
+        {"name": "upcoming fixture feed", "status": "unavailable"},
+    ]
+    shared = {
+        "model_registry": model_registry,
+        "system_health": {
+            "generated_at": datetime.now(timezone.utc).isoformat(),
+            "api": "local endpoint; not deployed",
+            "mlflow": "not connected",
+            "data_label": HISTORICAL,
+        },
+        "data_quality": {"checks": checks, "data_label": HISTORICAL},
+        "drift": {"status": "unavailable (no live feed)", "data_label": UNAVAILABLE},
+        "training": {
+            "last_trained": evaluation_export.get("generated_at") if evaluations else None,
+            "status": "walk-forward evaluation available" if evaluations else "evaluation pending",
+            "data_label": BACKTEST if evaluations else UNAVAILABLE,
+        },
+    }
+    for name, value in shared.items():
+        (OUT / f"{name}.json").write_text(json.dumps(value, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    print("wrote Cricsheet-backed format exports:", ", ".join(per_format))
 
 
 if __name__ == "__main__":

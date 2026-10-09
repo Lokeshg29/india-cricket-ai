@@ -12,7 +12,7 @@ import ModelPerformance from "@/components/cricket/ModelPerformance";
 import DataBadge from "@/components/cricket/DataBadge";
 import { Ledger, Validation } from "@/components/cricket/Panels";
 import { CalibrationChart, FormChart } from "@/components/cricket/Charts";
-import { aggregateDataLabel, allFormats } from "@/lib/cricket";
+import { aggregateDataLabel, allFormats, historicalEvaluation } from "@/lib/cricket";
 
 export default function Home() {
   const formats = allFormats();
@@ -21,7 +21,7 @@ export default function Home() {
     f.results.map((r) => ({ ...r, fmt: f.format })),
   ).sort((a, b) => b.date.localeCompare(a.date)).slice(0, 6);
   const ledger = formats
-    .flatMap((f) => f.ledger.map((row) => ({ ...row, format: f.format })))
+    .flatMap((f) => historicalEvaluation.formats[f.slug]?.ledger ?? [])
     .sort((a, b) => b.date.localeCompare(a.date));
   const dataLabel = aggregateDataLabel(formats);
 
@@ -45,7 +45,7 @@ export default function Home() {
         <SectionHeading
           eyebrow="Schedule"
           title="Upcoming Matches"
-          subtitle="Fixtures and any available estimates come from the labelled data export. Demo entries are not an official schedule."
+          subtitle="No verified upcoming international fixture feed is configured. Fixtures and prediction probabilities remain unavailable until a genuine source is connected."
         />
         <PredictionCards matches={upcoming} />
         <div className="mt-10">
@@ -58,7 +58,7 @@ export default function Home() {
         <SectionHeading
           eyebrow="Predictions"
           title="Prediction History"
-          subtitle="Stored estimates and outcomes. DEMO DATA rows were generated after matches and are not verified pre-match predictions."
+          subtitle="Chronological historical backtest predictions. Source records contain dates, not archived pre-match prediction timestamps."
         />
         <Ledger rows={ledger} hasDraw />
       </Section>
@@ -67,17 +67,17 @@ export default function Home() {
         <SectionHeading
           eyebrow="Analytics"
           title="Team Performance & Format Insights"
-          subtitle="Explore India’s form by format. Use TEST, ODI or T20I above for player, venue and head-to-head detail."
+          subtitle="India form uses resolved Cricsheet international results. Player-level scorecards and upcoming fixtures are unavailable in the current data sources."
         />
         <div className="grid gap-4 lg:grid-cols-3">
           {formats.map((f) => (
             <article key={f.slug} className="glass-card rounded-lg p-4">
               <div className="mb-3 flex items-center justify-between">
                 <h3 className="font-display text-lg font-semibold uppercase">{f.format}</h3>
-                <DataBadge label={f.data_label} />
+                <DataBadge label={f.data_sources.form.status} />
               </div>
               <p className="mb-3 text-xs text-foreground/50">
-                {f.has_draw ? "Outcomes: India / Draw / Opponent" : "Outcomes: India / Opponent"}
+                {f.has_draw ? "Outcomes: India / Draw / Opponent · Cricsheet" : "Outcomes: India / Opponent · Cricsheet"}
               </p>
               <FormChart form={f.form.slice(-12)} />
             </article>
@@ -92,9 +92,9 @@ export default function Home() {
           {formats.map((f) => (
             <div key={f.slug} className="mb-8 space-y-4">
               <h3 className="text-sm font-semibold text-foreground/75">{f.format}</h3>
-              <Validation v={f.validation} hasDraw={f.has_draw} />
-              {f.validation?.calibration?.length ? (
-                <CalibrationChart calibration={f.validation.calibration} />
+              <Validation v={historicalEvaluation.formats[f.slug]?.validation} hasDraw={f.has_draw} />
+              {historicalEvaluation.formats[f.slug]?.validation?.calibration.length ? (
+                <CalibrationChart calibration={historicalEvaluation.formats[f.slug].validation!.calibration} />
               ) : null}
             </div>
           ))}

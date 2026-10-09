@@ -12,7 +12,7 @@ import ModelPerformance from "./ModelPerformance";
 import DataBadge from "./DataBadge";
 import { CalibrationChart, FormChart, TrendChart } from "./Charts";
 import { H2H, Ledger, Players, Validation, Venues } from "./Panels";
-import { type FormatData } from "@/lib/cricket";
+import { historicalEvaluation, type FormatData } from "@/lib/cricket";
 
 export default function FormatPage({ data }: { data: FormatData }) {
   const stats = [
@@ -40,7 +40,7 @@ export default function FormatPage({ data }: { data: FormatData }) {
         <SectionHeading
           eyebrow="Schedule"
           title="Upcoming Matches"
-          subtitle="India, opponent, format, date and venue from the labelled export. Demo entries are not an official schedule."
+          subtitle="No verified upcoming international fixture feed is configured. Predictions remain unavailable until a genuine fixture source is connected."
         />
         <PredictionCards matches={[...data.upcoming].sort((a, b) => a.date.localeCompare(b.date))} />
         <div className="mt-10">
@@ -53,32 +53,32 @@ export default function FormatPage({ data }: { data: FormatData }) {
         <SectionHeading
           eyebrow="Predictions"
           title="Prediction History"
-          subtitle="Stored estimates and outcomes. Demo rows are not verified pre-match predictions."
+          subtitle="Chronological historical backtest predictions. Source records contain dates, not archived pre-match prediction timestamps."
         />
-        <Ledger rows={data.ledger} hasDraw={data.has_draw} />
+        <Ledger rows={historicalEvaluation.formats[data.slug]?.ledger ?? []} hasDraw={data.has_draw} />
       </Section>
 
       <Section id="analytics">
         <SectionHeading
           eyebrow="Analytics"
           title="Team Performance & Format Insights"
-          subtitle="Rolling form, players, head-to-head and venues from the same export. Player names in demo data are placeholders."
+          subtitle="Results, form, head-to-head and venue aggregates use resolved Cricsheet international matches. Player-level scorecards are unavailable in this dataset."
         />
         <div className="space-y-8">
           <div>
-            <h3 className="mb-3 text-sm font-semibold text-foreground/75">India form</h3>
+            <div className="mb-3 flex items-center gap-2"><h3 className="text-sm font-semibold text-foreground/75">India form</h3><DataBadge label={data.data_sources.form.status} /><span className="font-mono text-[10px] text-foreground/40">Cricsheet</span></div>
             <FormChart form={data.form} />
           </div>
           <div>
-            <h3 className="mb-3 text-sm font-semibold text-foreground/75">Player performance</h3>
+            <div className="mb-3 flex items-center gap-2"><h3 className="text-sm font-semibold text-foreground/75">Player performance</h3><DataBadge label={data.data_sources.players.status} /></div>
             <Players rows={data.players} slug={data.slug} />
           </div>
           <div>
-            <h3 className="mb-3 text-sm font-semibold text-foreground/75">Head-to-head</h3>
+            <div className="mb-3 flex items-center gap-2"><h3 className="text-sm font-semibold text-foreground/75">Head-to-head</h3><DataBadge label={data.data_sources.head_to_head.status} /><span className="font-mono text-[10px] text-foreground/40">resolved matches · Cricsheet</span></div>
             <H2H rows={data.h2h} />
           </div>
           <div>
-            <h3 className="mb-3 text-sm font-semibold text-foreground/75">Venue insights</h3>
+            <div className="mb-3 flex items-center gap-2"><h3 className="text-sm font-semibold text-foreground/75">Venue insights</h3><DataBadge label={data.data_sources.venues.status} /><span className="font-mono text-[10px] text-foreground/40">stadium only · Cricsheet</span></div>
             <Venues rows={data.venues} />
           </div>
         </div>
@@ -88,9 +88,9 @@ export default function FormatPage({ data }: { data: FormatData }) {
         </div>
         <div className="mt-12">
           <SectionHeading eyebrow="Model Details" title="Model Evaluation" />
-          <Validation v={data.validation} hasDraw={data.has_draw} />
-          {data.validation?.calibration?.length ? (
-            <div className="mt-4"><CalibrationChart calibration={data.validation.calibration} /></div>
+          <Validation v={historicalEvaluation.formats[data.slug]?.validation} hasDraw={data.has_draw} />
+          {historicalEvaluation.formats[data.slug]?.validation?.calibration.length ? (
+            <div className="mt-4"><CalibrationChart calibration={historicalEvaluation.formats[data.slug].validation!.calibration} /></div>
           ) : null}
         </div>
         {data.trend?.length ? (

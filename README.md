@@ -9,21 +9,30 @@ Adapted from an existing full-stack MLOps sports-prediction platform (original f
 ## Data status (read this first)
 
 The repo includes a Cricsheet-derived historical match dataset for India men's internationals at
-`data/processed/cricket/india_internationals.csv`, with raw source archive and provenance manifest. It is not used by
-the dashboard or current model pipeline. All numbers on the site are still **DEMO DATA**: a seeded synthetic history
-(`src/sports/cricket/demo_data.py`) run through the real feature/model/evaluation code. Fixtures are placeholders,
-players are `Demo Player N`, and the prediction ledger is **not** proof of pre-match prediction
-(`verified_pre_match = false`). Labels used everywhere: `LIVE DATA`, `HISTORICAL DATA`, `DEMO DATA`.
-The historical table preserves unresolved limited-overs ties and no-results with explicit statuses and null result
-labels. It is not a compatible input to the current feature builder yet: venue/home-away enrichment and an explicit
-target/feature adapter are future work. Rebuild it from `data/raw/cricsheet/india_male_json.zip` with
-`python scripts/ingest_cricsheet.py`. See `data/raw/cricsheet/README.md` and `docs/PROJECT_LEARNING.md` for provenance
-and schema details. No API keys are needed to run locally.
+`data/processed/cricket/india_internationals.csv`, with raw source archive and provenance manifest. Results, form,
+resolved head-to-head and recorded-stadium aggregates are exported from this real dataset and labelled
+**HISTORICAL DATA**. Test draws are preserved; unresolved limited-overs ties and no-results do not count as wins.
+Player scorecards and upcoming fixtures remain unavailable because the normalized input has no reliable player data
+or verified future schedule. Model Performance and Prediction History use **HISTORICAL BACKTEST** records, not
+archived pre-match calls. `POST /cricket/predict` can return **MODEL PREDICTION** when a trained artifact and known
+history exist, but the dashboard calls it only for future fixtures marked by a verified fixture-feed source. No such
+feed is configured yet.
+
+The history preserves unresolved limited-overs ties and no-results with explicit statuses and null result labels.
+Rebuild the normalized input with `python scripts/ingest_cricsheet.py`, train/evaluate models with
+`python scripts/train_cricket_models.py`, and refresh historical analytics with `python scripts/export_cricket_data.py`.
+Trained `.joblib` artifacts are local and git-ignored; the small dashboard metrics export and complete per-format
+evaluation ledgers are stored separately.
+See `data/raw/cricsheet/README.md` and `docs/PROJECT_LEARNING.md` for provenance, features and limitations.
 
 ## Run
 
 ```bash
-python scripts/export_cricket_data.py   # regenerates dashboard/data/cricket/*.json
+python scripts/ingest_cricsheet.py
+python scripts/train_cricket_models.py
+python scripts/export_cricket_data.py
+uvicorn src.serving.app:app --host 127.0.0.1 --port 8000
+# In dashboard/.env.local (server-only): CRICKET_API_URL=http://127.0.0.1:8000
 cd dashboard && npm install && npm run dev
 ```
 
@@ -31,10 +40,10 @@ Routes: `/` (all formats), `/test`, `/odi`, `/t20i`, `/admin` (read-only). Forma
 
 ## ML
 
-`src/sports/cricket/`: `config.py` (per-format settings; Test is 3-way with draw, ODI/T20I 2-way), `features.py`
-(leak-free Elo, form, head-to-head, venue, toss, format-specific stats), `models.py` (logistic regression with sigmoid
-calibration; XGBoost optional), `evaluation.py` (walk-forward accuracy, Brier, log loss, confusion matrix, calibration).
-Explainability is a logistic-coefficient surrogate, **not SHAP** yet.
+`src/sports/cricket/`: `features.py` keeps the demo adapter and builds pre-match Cricsheet Elo, form, head-to-head and innings aggregates;
+`models.py` uses per-format logistic regression with sigmoid calibration; `evaluation.py` creates chronological
+walk-forward metrics; `service.py` trains artifacts and supports `/cricket/predict`. SHAP explains the calibrated
+model output when available. Exact kickoff-time proof is unavailable because the source contains match dates only.
 
 Tests: `python -m pytest tests/test_cricket.py`.
 
@@ -42,5 +51,5 @@ Historical data validation: `python -m pytest tests/test_cricket_data.py`.
 
 ## Inherited football-era code
 
-`src/ingestion`, `src/models/layer2_simulation`, `scripts/*` (except `export_cricket_data.py`), the Airflow DAG,
+`src/ingestion`, `src/models/layer2_simulation`, unrelated `scripts/*`, the Airflow DAG,
 CI workflow and Supabase schema still describe the football World Cup pipeline and have **not** been ported to cricket.

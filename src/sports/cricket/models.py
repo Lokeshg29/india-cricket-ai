@@ -22,14 +22,15 @@ def _base(backend: str):
 
 
 class CricketModel:
-    def __init__(self, fmt: str, backend: str = "logreg"):
+    def __init__(self, fmt: str, backend: str = "logreg", feature_names: tuple[str, ...] | None = None):
         self.cfg = get_format(fmt)
         self.backend = backend
+        self.feature_names = tuple(feature_names or self.cfg.features)
         self.classes_: list[str] = []
         self.model = None
 
     def fit(self, feats: pd.DataFrame) -> "CricketModel":
-        X = feats[list(self.cfg.features)].to_numpy(float)
+        X = feats[list(self.feature_names)].to_numpy(float)
         y = feats["result"].to_numpy()
         self.classes_ = sorted(set(y))
         counts = pd.Series(y).value_counts()
@@ -46,7 +47,7 @@ class CricketModel:
         return self
 
     def predict_proba(self, feats: pd.DataFrame) -> pd.DataFrame:
-        X = feats[list(self.cfg.features)].to_numpy(float)
+        X = feats[list(self.feature_names)].to_numpy(float)
         p = self.model.predict_proba(X)
         classes = self.classes_ if self.backend == "xgboost" else list(self.model.classes_)
         out = pd.DataFrame(p, columns=classes)
@@ -55,3 +56,52 @@ class CricketModel:
                 out[c] = 0.0
         out = out[list(self.cfg.outcomes)]
         return out.div(out.sum(axis=1), axis=0)  # ODI/T20I never carry a draw column
+
+    def explain(self, row: pd.DataFrame, background: pd.DataFrame, max_factors: int = 5) -> dict:
+        """Explain calibrated output probabilities with SHAP when available.
+
+        Contributions are changes from the SHAP background expectation for
+        the predicted class, in probability units. Failure to explain never
+        blocks an otherwise valid prediction.
+        """
+        try:
+            import shap
+
+            names = list(self.feature_names)
+            background_values = background[names].to_numpy(float)
+            row_values = row[names].to_numpy(float)
+
+            def predict(values):
+                frame = pd.DataFrame(values, columns=names)
+                return self.predict_proba(frame).to_numpy(float)
+
+            explainer = shap.PermutationExplainer(
+                predict, background_values, feature_names=names,
+            )
+            explanation = explainer(row_values, max_evals=2 * len(names) + 1)
+            probabilities = predict(row_values)[0]
+            class_index = int(np.argmax(probabilities))
+            contributions = np.asarray(explanation.values)[0, :, class_index]
+            ranked = sorted(
+                ((names[i], float(value)) for i, value in enumerate(contributions)),
+                key=lambda item: abs(item[1]), reverse=True,
+            )
+            factors = [
+                {"feature": name, "contribution": value}
+                for name, value in ranked[:max_factors]
+            ]
+            return {
+                "status": "available",
+                "predicted_class": self.cfg.outcomes[class_index],
+                "base_value": float(np.asarray(explanation.base_values)[0, class_index]),
+                "positive_factors": [factor for factor in factors if factor["contribution"] > 0],
+                "negative_factors": [factor for factor in factors if factor["contribution"] < 0],
+                "method": "SHAP permutation explanation of calibrated class probability",
+            }
+        except Exception as exc:
+            return {
+                "status": "unavailable",
+                "reason": f"SHAP explanation unavailable ({type(exc).__name__})",
+                "positive_factors": [],
+                "negative_factors": [],
+            }

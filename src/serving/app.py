@@ -162,6 +162,12 @@ class PredictRequest(BaseModel):
     as_of: date | None = None
 
 
+class CricketPredictRequest(BaseModel):
+    format: str
+    opponent: str
+    as_of: date | None = None
+
+
 class OutcomeProbs(BaseModel):
     home_win: float
     draw: float
@@ -207,6 +213,24 @@ def predict(req: PredictRequest, state: ModelState = Depends(get_model_state)):
         model=OutcomeProbs(home_win=p_win, draw=p_draw, away_win=p_loss),
         baseline=OutcomeProbs(home_win=b_win, draw=b_draw, away_win=b_loss),
     )
+
+
+@app.post("/cricket/predict")
+def predict_cricket(req: CricketPredictRequest, request: Request):
+    """Cricsheet-trained cricket inference; no schedule/live-data lookup."""
+    service = getattr(request.app.state, "cricket_prediction_service", None)
+    if service is None:
+        try:
+            from src.sports.cricket.service import CricketPredictionService
+
+            service = CricketPredictionService()
+        except FileNotFoundError as exc:
+            return {"status": "unavailable", "reason": str(exc), "data_label": "MODEL PREDICTION"}
+        request.app.state.cricket_prediction_service = service
+    try:
+        return service.predict_fixture(req.format, req.opponent, req.as_of)
+    except (ValueError, FileNotFoundError) as exc:
+        return {"status": "unavailable", "reason": str(exc), "data_label": "MODEL PREDICTION"}
 
 
 @app.post("/explain")

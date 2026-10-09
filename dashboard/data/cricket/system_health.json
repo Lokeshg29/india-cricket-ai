@@ -1,6 +1,6 @@
 {
- "generated_at": "2026-10-01T11:55:50.852290+00:00",
- "api": "not deployed (local)",
- "mlflow": "not connected",
- "data_label": "DEMO DATA"
+  "generated_at": "2026-10-09T20:23:29.613948+00:00",
+  "api": "local endpoint; not deployed",
+  "mlflow": "not connected",
+  "data_label": "HISTORICAL DATA"
 }

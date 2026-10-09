@@ -1,0 +1,4256 @@
+{
+  "format": "T20I",
+  "slug": "t20i",
+  "status": "EVALUATED",
+  "data_label": "HISTORICAL BACKTEST",
+  "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+  "model_type": "StandardScaler + LogisticRegression + sigmoid calibration",
+  "feature_version": "cricsheet-pre-match-v1",
+  "n_evaluated": 209,
+  "training_data_range": {
+    "from": "2006-12-01",
+    "to": "2026-07-26"
+  },
+  "metrics": {
+    "accuracy": 0.722488038277512,
+    "precision": 0.736318407960199,
+    "recall": 0.9673202614379085,
+    "f1": 0.8361581920903954,
+    "macro_f1": 0.4649540960451977,
+    "log_loss": 0.6156491024484437,
+    "brier": 0.42353179374592764
+  },
+  "confusion_matrix": {
+    "labels": [
+      "india",
+      "opponent"
+    ],
+    "matrix": {
+      "india": {
+        "india": 148,
+        "opponent": 5
+      },
+      "opponent": {
+        "india": 53,
+        "opponent": 3
+      }
+    }
+  },
+  "calibration": [
+    {
+      "bin": "0.4-0.6",
+      "n": 58,
+      "mean_confidence": 0.5479926887567925,
+      "accuracy": 0.7241379310344828
+    },
+    {
+      "bin": "0.6-0.8",
+      "n": 151,
+      "mean_confidence": 0.6887253556322822,
+      "accuracy": 0.7218543046357616
+    }
+  ],
+  "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+  "ledger": [
+    {
+      "match_id": "966745",
+      "format": "T20I",
+      "date": "2016-02-24",
+      "opponent": "Bangladesh",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2016-02-14",
+      "training_matches": 60,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.51188130795905,
+        "opponent": 0.4881186920409501
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "966751",
+      "format": "T20I",
+      "date": "2016-02-27",
+      "opponent": "Pakistan",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2016-02-14",
+      "training_matches": 60,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.5440490717524608,
+        "opponent": 0.4559509282475393
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "966757",
+      "format": "T20I",
+      "date": "2016-03-01",
+      "opponent": "Sri Lanka",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2016-02-14",
+      "training_matches": 60,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.5614593110026457,
+        "opponent": 0.4385406889973544
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "966761",
+      "format": "T20I",
+      "date": "2016-03-03",
+      "opponent": "United Arab Emirates",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2016-02-14",
+      "training_matches": 60,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.6191470712912012,
+        "opponent": 0.3808529287087988
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "966765",
+      "format": "T20I",
+      "date": "2016-03-06",
+      "opponent": "Bangladesh",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2016-02-14",
+      "training_matches": 60,
+      "predicted_class": "opponent",
+      "probabilities": {
+        "india": 0.49462231943085994,
+        "opponent": 0.50537768056914
+      },
+      "actual_result": "india",
+      "model_correct": false,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "951329",
+      "format": "T20I",
+      "date": "2016-03-15",
+      "opponent": "New Zealand",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2016-02-14",
+      "training_matches": 60,
+      "predicted_class": "opponent",
+      "probabilities": {
+        "india": 0.4784588785288826,
+        "opponent": 0.5215411214711175
+      },
+      "actual_result": "opponent",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "951341",
+      "format": "T20I",
+      "date": "2016-03-19",
+      "opponent": "Pakistan",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2016-02-14",
+      "training_matches": 60,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.5580709626140404,
+        "opponent": 0.4419290373859595
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "951353",
+      "format": "T20I",
+      "date": "2016-03-23",
+      "opponent": "Bangladesh",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2016-02-14",
+      "training_matches": 60,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.5504168546199532,
+        "opponent": 0.4495831453800468
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "951363",
+      "format": "T20I",
+      "date": "2016-03-27",
+      "opponent": "Australia",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2016-02-14",
+      "training_matches": 60,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.5986755552541214,
+        "opponent": 0.4013244447458786
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "951371",
+      "format": "T20I",
+      "date": "2016-03-31",
+      "opponent": "West Indies",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2016-02-14",
+      "training_matches": 60,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.5412143231552796,
+        "opponent": 0.4587856768447203
+      },
+      "actual_result": "opponent",
+      "model_correct": false,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1007655",
+      "format": "T20I",
+      "date": "2016-06-18",
+      "opponent": "Zimbabwe",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2016-02-14",
+      "training_matches": 60,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.520422659818761,
+        "opponent": 0.47957734018123893
+      },
+      "actual_result": "opponent",
+      "model_correct": false,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1007657",
+      "format": "T20I",
+      "date": "2016-06-20",
+      "opponent": "Zimbabwe",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2016-02-14",
+      "training_matches": 60,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.527252610538414,
+        "opponent": 0.47274738946158595
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1007659",
+      "format": "T20I",
+      "date": "2016-06-22",
+      "opponent": "Zimbabwe",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2016-02-14",
+      "training_matches": 60,
+      "predicted_class": "opponent",
+      "probabilities": {
+        "india": 0.4824087566403828,
+        "opponent": 0.5175912433596171
+      },
+      "actual_result": "india",
+      "model_correct": false,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1041615",
+      "format": "T20I",
+      "date": "2016-08-27",
+      "opponent": "West Indies",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2016-02-14",
+      "training_matches": 60,
+      "predicted_class": "opponent",
+      "probabilities": {
+        "india": 0.46906163066912,
+        "opponent": 0.53093836933088
+      },
+      "actual_result": "opponent",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1034825",
+      "format": "T20I",
+      "date": "2017-01-26",
+      "opponent": "England",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2016-02-14",
+      "training_matches": 60,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.5289097382472092,
+        "opponent": 0.4710902617527908
+      },
+      "actual_result": "opponent",
+      "model_correct": false,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1034827",
+      "format": "T20I",
+      "date": "2017-01-29",
+      "opponent": "England",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2016-02-14",
+      "training_matches": 60,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.5174156656000584,
+        "opponent": 0.4825843343999417
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1034829",
+      "format": "T20I",
+      "date": "2017-02-01",
+      "opponent": "England",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2016-02-14",
+      "training_matches": 60,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.5390197749775013,
+        "opponent": 0.4609802250224988
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1098211",
+      "format": "T20I",
+      "date": "2017-07-09",
+      "opponent": "West Indies",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2016-02-14",
+      "training_matches": 60,
+      "predicted_class": "opponent",
+      "probabilities": {
+        "india": 0.48599321157815895,
+        "opponent": 0.5140067884218411
+      },
+      "actual_result": "opponent",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1109610",
+      "format": "T20I",
+      "date": "2017-09-06",
+      "opponent": "Sri Lanka",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2016-02-14",
+      "training_matches": 60,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.512827370766544,
+        "opponent": 0.487172629233456
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1119501",
+      "format": "T20I",
+      "date": "2017-10-07",
+      "opponent": "Australia",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2016-02-14",
+      "training_matches": 60,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.5508101438154221,
+        "opponent": 0.4491898561845779
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1119502",
+      "format": "T20I",
+      "date": "2017-10-10",
+      "opponent": "Australia",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2017-10-07",
+      "training_matches": 80,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.7319389680716559,
+        "opponent": 0.2680610319283441
+      },
+      "actual_result": "opponent",
+      "model_correct": false,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1120093",
+      "format": "T20I",
+      "date": "2017-11-01",
+      "opponent": "New Zealand",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2017-10-07",
+      "training_matches": 80,
+      "predicted_class": "opponent",
+      "probabilities": {
+        "india": 0.48912140806744614,
+        "opponent": 0.5108785919325539
+      },
+      "actual_result": "india",
+      "model_correct": false,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1120094",
+      "format": "T20I",
+      "date": "2017-11-04",
+      "opponent": "New Zealand",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2017-10-07",
+      "training_matches": 80,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.524809756643723,
+        "opponent": 0.4751902433562771
+      },
+      "actual_result": "opponent",
+      "model_correct": false,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1120095",
+      "format": "T20I",
+      "date": "2017-11-07",
+      "opponent": "New Zealand",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2017-10-07",
+      "training_matches": 80,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.5763768008851199,
+        "opponent": 0.42362319911488006
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1122729",
+      "format": "T20I",
+      "date": "2017-12-20",
+      "opponent": "Sri Lanka",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2017-10-07",
+      "training_matches": 80,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.6607404151431392,
+        "opponent": 0.33925958485686086
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1122730",
+      "format": "T20I",
+      "date": "2017-12-22",
+      "opponent": "Sri Lanka",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2017-10-07",
+      "training_matches": 80,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.697153672978716,
+        "opponent": 0.302846327021284
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1122731",
+      "format": "T20I",
+      "date": "2017-12-24",
+      "opponent": "Sri Lanka",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2017-10-07",
+      "training_matches": 80,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.7198652469605751,
+        "opponent": 0.28013475303942487
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1122285",
+      "format": "T20I",
+      "date": "2018-02-18",
+      "opponent": "South Africa",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2017-10-07",
+      "training_matches": 80,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.5767761897970913,
+        "opponent": 0.42322381020290867
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1122286",
+      "format": "T20I",
+      "date": "2018-02-21",
+      "opponent": "South Africa",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2017-10-07",
+      "training_matches": 80,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.5971859326552726,
+        "opponent": 0.40281406734472736
+      },
+      "actual_result": "opponent",
+      "model_correct": false,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1122287",
+      "format": "T20I",
+      "date": "2018-02-24",
+      "opponent": "South Africa",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2017-10-07",
+      "training_matches": 80,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.6529924069050951,
+        "opponent": 0.347007593094905
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1133817",
+      "format": "T20I",
+      "date": "2018-03-06",
+      "opponent": "Sri Lanka",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2017-10-07",
+      "training_matches": 80,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.742241914296863,
+        "opponent": 0.25775808570313696
+      },
+      "actual_result": "opponent",
+      "model_correct": false,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1133818",
+      "format": "T20I",
+      "date": "2018-03-08",
+      "opponent": "Bangladesh",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2017-10-07",
+      "training_matches": 80,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.5669788698730814,
+        "opponent": 0.4330211301269185
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1133820",
+      "format": "T20I",
+      "date": "2018-03-12",
+      "opponent": "Sri Lanka",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2017-10-07",
+      "training_matches": 80,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.7778116950198933,
+        "opponent": 0.2221883049801067
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1133821",
+      "format": "T20I",
+      "date": "2018-03-14",
+      "opponent": "Bangladesh",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2017-10-07",
+      "training_matches": 80,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.586550732978833,
+        "opponent": 0.4134492670211671
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1133823",
+      "format": "T20I",
+      "date": "2018-03-18",
+      "opponent": "Bangladesh",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2017-10-07",
+      "training_matches": 80,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.5775646171790577,
+        "opponent": 0.42243538282094234
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1140992",
+      "format": "T20I",
+      "date": "2018-06-27",
+      "opponent": "Ireland",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2017-10-07",
+      "training_matches": 80,
+      "predicted_class": "opponent",
+      "probabilities": {
+        "india": 0.4665702638038625,
+        "opponent": 0.5334297361961374
+      },
+      "actual_result": "india",
+      "model_correct": false,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1140993",
+      "format": "T20I",
+      "date": "2018-06-29",
+      "opponent": "Ireland",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2017-10-07",
+      "training_matches": 80,
+      "predicted_class": "opponent",
+      "probabilities": {
+        "india": 0.4614876474340737,
+        "opponent": 0.5385123525659262
+      },
+      "actual_result": "india",
+      "model_correct": false,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1119543",
+      "format": "T20I",
+      "date": "2018-07-03",
+      "opponent": "England",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2017-10-07",
+      "training_matches": 80,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.6379444315226296,
+        "opponent": 0.36205556847737047
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1119544",
+      "format": "T20I",
+      "date": "2018-07-06",
+      "opponent": "England",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2017-10-07",
+      "training_matches": 80,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.6364663817960675,
+        "opponent": 0.36353361820393243
+      },
+      "actual_result": "opponent",
+      "model_correct": false,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1119545",
+      "format": "T20I",
+      "date": "2018-07-08",
+      "opponent": "England",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2017-10-07",
+      "training_matches": 80,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.7125003060162651,
+        "opponent": 0.2874996939837349
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1157759",
+      "format": "T20I",
+      "date": "2018-11-04",
+      "opponent": "West Indies",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2018-07-08",
+      "training_matches": 100,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.6857440269179177,
+        "opponent": 0.31425597308208236
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1157760",
+      "format": "T20I",
+      "date": "2018-11-06",
+      "opponent": "West Indies",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2018-07-08",
+      "training_matches": 100,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.6855635893430253,
+        "opponent": 0.3144364106569747
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1157761",
+      "format": "T20I",
+      "date": "2018-11-11",
+      "opponent": "West Indies",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2018-07-08",
+      "training_matches": 100,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.683511709798605,
+        "opponent": 0.3164882902013951
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1144990",
+      "format": "T20I",
+      "date": "2018-11-21",
+      "opponent": "Australia",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2018-07-08",
+      "training_matches": 100,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.6662134165511202,
+        "opponent": 0.3337865834488798
+      },
+      "actual_result": "opponent",
+      "model_correct": false,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1144992",
+      "format": "T20I",
+      "date": "2018-11-25",
+      "opponent": "Australia",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2018-07-08",
+      "training_matches": 100,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.6272085364258088,
+        "opponent": 0.3727914635741912
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1153696",
+      "format": "T20I",
+      "date": "2019-02-06",
+      "opponent": "New Zealand",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2018-07-08",
+      "training_matches": 100,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.6460068697980402,
+        "opponent": 0.3539931302019597
+      },
+      "actual_result": "opponent",
+      "model_correct": false,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1153697",
+      "format": "T20I",
+      "date": "2019-02-08",
+      "opponent": "New Zealand",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2018-07-08",
+      "training_matches": 100,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.6375666072226338,
+        "opponent": 0.36243339277736625
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1153698",
+      "format": "T20I",
+      "date": "2019-02-10",
+      "opponent": "New Zealand",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2018-07-08",
+      "training_matches": 100,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.6368810928752402,
+        "opponent": 0.36311890712475986
+      },
+      "actual_result": "opponent",
+      "model_correct": false,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1168247",
+      "format": "T20I",
+      "date": "2019-02-24",
+      "opponent": "Australia",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2018-07-08",
+      "training_matches": 100,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.6141345907362057,
+        "opponent": 0.3858654092637943
+      },
+      "actual_result": "opponent",
+      "model_correct": false,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1168248",
+      "format": "T20I",
+      "date": "2019-02-27",
+      "opponent": "Australia",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2018-07-08",
+      "training_matches": 100,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.6113363956463216,
+        "opponent": 0.3886636043536784
+      },
+      "actual_result": "opponent",
+      "model_correct": false,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1188621",
+      "format": "T20I",
+      "date": "2019-08-03",
+      "opponent": "West Indies",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2018-07-08",
+      "training_matches": 100,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.6497125165790117,
+        "opponent": 0.3502874834209882
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1188622",
+      "format": "T20I",
+      "date": "2019-08-04",
+      "opponent": "West Indies",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2018-07-08",
+      "training_matches": 100,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.6511318281533186,
+        "opponent": 0.34886817184668145
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1188623",
+      "format": "T20I",
+      "date": "2019-08-06",
+      "opponent": "West Indies",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2018-07-08",
+      "training_matches": 100,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.6537902453726848,
+        "opponent": 0.34620975462731524
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1187005",
+      "format": "T20I",
+      "date": "2019-09-18",
+      "opponent": "South Africa",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2018-07-08",
+      "training_matches": 100,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.6267109916280863,
+        "opponent": 0.37328900837191364
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1187006",
+      "format": "T20I",
+      "date": "2019-09-22",
+      "opponent": "South Africa",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2018-07-08",
+      "training_matches": 100,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.6449050677178166,
+        "opponent": 0.3550949322821833
+      },
+      "actual_result": "opponent",
+      "model_correct": false,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1187013",
+      "format": "T20I",
+      "date": "2019-11-03",
+      "opponent": "Bangladesh",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2018-07-08",
+      "training_matches": 100,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.6396839015330299,
+        "opponent": 0.36031609846697005
+      },
+      "actual_result": "opponent",
+      "model_correct": false,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1187014",
+      "format": "T20I",
+      "date": "2019-11-07",
+      "opponent": "Bangladesh",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2018-07-08",
+      "training_matches": 100,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.6290678877842298,
+        "opponent": 0.3709321122157701
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1187015",
+      "format": "T20I",
+      "date": "2019-11-10",
+      "opponent": "Bangladesh",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2018-07-08",
+      "training_matches": 100,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.6319976299585521,
+        "opponent": 0.36800237004144787
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1187018",
+      "format": "T20I",
+      "date": "2019-12-06",
+      "opponent": "West Indies",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2018-07-08",
+      "training_matches": 100,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.6641798646389769,
+        "opponent": 0.335820135361023
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1187019",
+      "format": "T20I",
+      "date": "2019-12-08",
+      "opponent": "West Indies",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2018-07-08",
+      "training_matches": 100,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.661767181231203,
+        "opponent": 0.3382328187687969
+      },
+      "actual_result": "opponent",
+      "model_correct": false,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1187020",
+      "format": "T20I",
+      "date": "2019-12-11",
+      "opponent": "West Indies",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2019-12-08",
+      "training_matches": 120,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.5950042620442771,
+        "opponent": 0.4049957379557229
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1202243",
+      "format": "T20I",
+      "date": "2020-01-07",
+      "opponent": "Sri Lanka",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2019-12-08",
+      "training_matches": 120,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.5775077125023806,
+        "opponent": 0.42249228749761936
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1202244",
+      "format": "T20I",
+      "date": "2020-01-10",
+      "opponent": "Sri Lanka",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2019-12-08",
+      "training_matches": 120,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.5778069023371949,
+        "opponent": 0.42219309766280516
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1187677",
+      "format": "T20I",
+      "date": "2020-01-24",
+      "opponent": "New Zealand",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2019-12-08",
+      "training_matches": 120,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.5806334293427211,
+        "opponent": 0.41936657065727895
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1187678",
+      "format": "T20I",
+      "date": "2020-01-26",
+      "opponent": "New Zealand",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2019-12-08",
+      "training_matches": 120,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.5745739399428343,
+        "opponent": 0.4254260600571656
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1187679",
+      "format": "T20I",
+      "date": "2020-01-29",
+      "opponent": "New Zealand",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2019-12-08",
+      "training_matches": 120,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.5835674779795003,
+        "opponent": 0.4164325220204997
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1187680",
+      "format": "T20I",
+      "date": "2020-01-31",
+      "opponent": "New Zealand",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2019-12-08",
+      "training_matches": 120,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.580781353901838,
+        "opponent": 0.41921864609816195
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1187681",
+      "format": "T20I",
+      "date": "2020-02-02",
+      "opponent": "New Zealand",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2019-12-08",
+      "training_matches": 120,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.5603137680386354,
+        "opponent": 0.43968623196136464
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1223952",
+      "format": "T20I",
+      "date": "2020-12-04",
+      "opponent": "Australia",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2019-12-08",
+      "training_matches": 120,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.5431568766646632,
+        "opponent": 0.4568431233353369
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1223953",
+      "format": "T20I",
+      "date": "2020-12-06",
+      "opponent": "Australia",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2019-12-08",
+      "training_matches": 120,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.5235657761308441,
+        "opponent": 0.4764342238691559
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1223954",
+      "format": "T20I",
+      "date": "2020-12-08",
+      "opponent": "Australia",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2019-12-08",
+      "training_matches": 120,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.5252549149878992,
+        "opponent": 0.4747450850121007
+      },
+      "actual_result": "opponent",
+      "model_correct": false,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1243388",
+      "format": "T20I",
+      "date": "2021-03-12",
+      "opponent": "England",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2019-12-08",
+      "training_matches": 120,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.5557937690105328,
+        "opponent": 0.44420623098946727
+      },
+      "actual_result": "opponent",
+      "model_correct": false,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1243389",
+      "format": "T20I",
+      "date": "2021-03-14",
+      "opponent": "England",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2019-12-08",
+      "training_matches": 120,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.5369996824124285,
+        "opponent": 0.4630003175875716
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1243390",
+      "format": "T20I",
+      "date": "2021-03-16",
+      "opponent": "England",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2019-12-08",
+      "training_matches": 120,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.5327589850308544,
+        "opponent": 0.46724101496914566
+      },
+      "actual_result": "opponent",
+      "model_correct": false,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1243391",
+      "format": "T20I",
+      "date": "2021-03-18",
+      "opponent": "England",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2019-12-08",
+      "training_matches": 120,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.521352805076287,
+        "opponent": 0.478647194923713
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1243392",
+      "format": "T20I",
+      "date": "2021-03-20",
+      "opponent": "England",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2019-12-08",
+      "training_matches": 120,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.5053624556528634,
+        "opponent": 0.49463754434713664
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1262758",
+      "format": "T20I",
+      "date": "2021-07-25",
+      "opponent": "Sri Lanka",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2019-12-08",
+      "training_matches": 120,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.5351105551887443,
+        "opponent": 0.4648894448112557
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1262759",
+      "format": "T20I",
+      "date": "2021-07-28",
+      "opponent": "Sri Lanka",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2019-12-08",
+      "training_matches": 120,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.5309799974063275,
+        "opponent": 0.46902000259367255
+      },
+      "actual_result": "opponent",
+      "model_correct": false,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1262760",
+      "format": "T20I",
+      "date": "2021-07-29",
+      "opponent": "Sri Lanka",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2019-12-08",
+      "training_matches": 120,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.5168773348855491,
+        "opponent": 0.4831226651144509
+      },
+      "actual_result": "opponent",
+      "model_correct": false,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1273727",
+      "format": "T20I",
+      "date": "2021-10-24",
+      "opponent": "Pakistan",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2019-12-08",
+      "training_matches": 120,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.6071898464754064,
+        "opponent": 0.3928101535245936
+      },
+      "actual_result": "opponent",
+      "model_correct": false,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1273739",
+      "format": "T20I",
+      "date": "2021-10-31",
+      "opponent": "New Zealand",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2021-10-24",
+      "training_matches": 140,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.570966909649928,
+        "opponent": 0.42903309035007203
+      },
+      "actual_result": "opponent",
+      "model_correct": false,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1273748",
+      "format": "T20I",
+      "date": "2021-11-05",
+      "opponent": "Scotland",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2021-10-24",
+      "training_matches": 140,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.6447106973149893,
+        "opponent": 0.3552893026850108
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1273753",
+      "format": "T20I",
+      "date": "2021-11-08",
+      "opponent": "Namibia",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2021-10-24",
+      "training_matches": 140,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.6347588712076303,
+        "opponent": 0.36524112879236964
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1278671",
+      "format": "T20I",
+      "date": "2021-11-17",
+      "opponent": "New Zealand",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2021-10-24",
+      "training_matches": 140,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.5414506016430923,
+        "opponent": 0.4585493983569077
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1278672",
+      "format": "T20I",
+      "date": "2021-11-19",
+      "opponent": "New Zealand",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2021-10-24",
+      "training_matches": 140,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.5508240688373535,
+        "opponent": 0.4491759311626466
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1278673",
+      "format": "T20I",
+      "date": "2021-11-21",
+      "opponent": "New Zealand",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2021-10-24",
+      "training_matches": 140,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.5479563706668743,
+        "opponent": 0.45204362933312564
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1278679",
+      "format": "T20I",
+      "date": "2022-02-16",
+      "opponent": "West Indies",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2021-10-24",
+      "training_matches": 140,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.6172373090281341,
+        "opponent": 0.3827626909718658
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1278680",
+      "format": "T20I",
+      "date": "2022-02-18",
+      "opponent": "West Indies",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2021-10-24",
+      "training_matches": 140,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.5768192898505774,
+        "opponent": 0.42318071014942255
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1278681",
+      "format": "T20I",
+      "date": "2022-02-20",
+      "opponent": "West Indies",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2021-10-24",
+      "training_matches": 140,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.626352248108795,
+        "opponent": 0.3736477518912051
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1278684",
+      "format": "T20I",
+      "date": "2022-02-24",
+      "opponent": "Sri Lanka",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2021-10-24",
+      "training_matches": 140,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.5321402087722066,
+        "opponent": 0.4678597912277935
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1278685",
+      "format": "T20I",
+      "date": "2022-02-26",
+      "opponent": "Sri Lanka",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2021-10-24",
+      "training_matches": 140,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.5432930215227522,
+        "opponent": 0.4567069784772479
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1278686",
+      "format": "T20I",
+      "date": "2022-02-27",
+      "opponent": "Sri Lanka",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2021-10-24",
+      "training_matches": 140,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.5587770740996812,
+        "opponent": 0.4412229259003187
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1278687",
+      "format": "T20I",
+      "date": "2022-06-09",
+      "opponent": "South Africa",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2021-10-24",
+      "training_matches": 140,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.7014261668854638,
+        "opponent": 0.2985738331145363
+      },
+      "actual_result": "opponent",
+      "model_correct": false,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1278688",
+      "format": "T20I",
+      "date": "2022-06-12",
+      "opponent": "South Africa",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2021-10-24",
+      "training_matches": 140,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.6797699867233575,
+        "opponent": 0.3202300132766424
+      },
+      "actual_result": "opponent",
+      "model_correct": false,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1278689",
+      "format": "T20I",
+      "date": "2022-06-14",
+      "opponent": "South Africa",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2021-10-24",
+      "training_matches": 140,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.64731520702484,
+        "opponent": 0.35268479297516003
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1278690",
+      "format": "T20I",
+      "date": "2022-06-17",
+      "opponent": "South Africa",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2021-10-24",
+      "training_matches": 140,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.6177253719290013,
+        "opponent": 0.3822746280709987
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1303307",
+      "format": "T20I",
+      "date": "2022-06-26",
+      "opponent": "Ireland",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2021-10-24",
+      "training_matches": 140,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.6958768382656929,
+        "opponent": 0.30412316173430715
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1303308",
+      "format": "T20I",
+      "date": "2022-06-28",
+      "opponent": "Ireland",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2021-10-24",
+      "training_matches": 140,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.7039498717844754,
+        "opponent": 0.29605012821552457
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1276904",
+      "format": "T20I",
+      "date": "2022-07-07",
+      "opponent": "England",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2021-10-24",
+      "training_matches": 140,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.5954378142618123,
+        "opponent": 0.40456218573818764
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1276905",
+      "format": "T20I",
+      "date": "2022-07-09",
+      "opponent": "England",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2021-10-24",
+      "training_matches": 140,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.567564456072458,
+        "opponent": 0.432435543927542
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1276906",
+      "format": "T20I",
+      "date": "2022-07-10",
+      "opponent": "England",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2022-07-09",
+      "training_matches": 160,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.7779527632137443,
+        "opponent": 0.2220472367862557
+      },
+      "actual_result": "opponent",
+      "model_correct": false,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1317903",
+      "format": "T20I",
+      "date": "2022-07-29",
+      "opponent": "West Indies",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2022-07-09",
+      "training_matches": 160,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.7397457566581104,
+        "opponent": 0.2602542433418896
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1317904",
+      "format": "T20I",
+      "date": "2022-08-01",
+      "opponent": "West Indies",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2022-07-09",
+      "training_matches": 160,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.7706301294465312,
+        "opponent": 0.22936987055346883
+      },
+      "actual_result": "opponent",
+      "model_correct": false,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1317905",
+      "format": "T20I",
+      "date": "2022-08-02",
+      "opponent": "West Indies",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2022-07-09",
+      "training_matches": 160,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.7881954449309965,
+        "opponent": 0.21180455506900353
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1317906",
+      "format": "T20I",
+      "date": "2022-08-06",
+      "opponent": "West Indies",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2022-07-09",
+      "training_matches": 160,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.753634936651273,
+        "opponent": 0.246365063348727
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1317907",
+      "format": "T20I",
+      "date": "2022-08-07",
+      "opponent": "West Indies",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2022-07-09",
+      "training_matches": 160,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.7494931919594671,
+        "opponent": 0.2505068080405329
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1327270",
+      "format": "T20I",
+      "date": "2022-08-28",
+      "opponent": "Pakistan",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2022-07-09",
+      "training_matches": 160,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.6796617456754482,
+        "opponent": 0.3203382543245517
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1327272",
+      "format": "T20I",
+      "date": "2022-08-31",
+      "opponent": "Hong Kong",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2022-07-09",
+      "training_matches": 160,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.7763264088482487,
+        "opponent": 0.22367359115175142
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1327276",
+      "format": "T20I",
+      "date": "2022-09-04",
+      "opponent": "Pakistan",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2022-07-09",
+      "training_matches": 160,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.6762751340328975,
+        "opponent": 0.3237248659671024
+      },
+      "actual_result": "opponent",
+      "model_correct": false,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1327277",
+      "format": "T20I",
+      "date": "2022-09-06",
+      "opponent": "Sri Lanka",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2022-07-09",
+      "training_matches": 160,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.7504753278129566,
+        "opponent": 0.24952467218704344
+      },
+      "actual_result": "opponent",
+      "model_correct": false,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1327503",
+      "format": "T20I",
+      "date": "2022-09-20",
+      "opponent": "Australia",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2022-07-09",
+      "training_matches": 160,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.7813189735091636,
+        "opponent": 0.21868102649083646
+      },
+      "actual_result": "opponent",
+      "model_correct": false,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1327504",
+      "format": "T20I",
+      "date": "2022-09-23",
+      "opponent": "Australia",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2022-07-09",
+      "training_matches": 160,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.7910232520583653,
+        "opponent": 0.2089767479416347
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1327505",
+      "format": "T20I",
+      "date": "2022-09-25",
+      "opponent": "Australia",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2022-07-09",
+      "training_matches": 160,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.7741472144563059,
+        "opponent": 0.22585278554369412
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1327506",
+      "format": "T20I",
+      "date": "2022-09-28",
+      "opponent": "South Africa",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2022-07-09",
+      "training_matches": 160,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.7386283169322284,
+        "opponent": 0.2613716830677716
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1327507",
+      "format": "T20I",
+      "date": "2022-10-02",
+      "opponent": "South Africa",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2022-07-09",
+      "training_matches": 160,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.7517389209819454,
+        "opponent": 0.2482610790180547
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1327508",
+      "format": "T20I",
+      "date": "2022-10-04",
+      "opponent": "South Africa",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2022-07-09",
+      "training_matches": 160,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.7215076497753413,
+        "opponent": 0.27849235022465874
+      },
+      "actual_result": "opponent",
+      "model_correct": false,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1298150",
+      "format": "T20I",
+      "date": "2022-10-23",
+      "opponent": "Pakistan",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2022-07-09",
+      "training_matches": 160,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.6369946785874412,
+        "opponent": 0.3630053214125588
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1298157",
+      "format": "T20I",
+      "date": "2022-10-27",
+      "opponent": "Netherlands",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2022-07-09",
+      "training_matches": 160,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.7359375596392171,
+        "opponent": 0.2640624403607828
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1298164",
+      "format": "T20I",
+      "date": "2022-10-30",
+      "opponent": "South Africa",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2022-07-09",
+      "training_matches": 160,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.7336756522737059,
+        "opponent": 0.26632434772629415
+      },
+      "actual_result": "opponent",
+      "model_correct": false,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1298169",
+      "format": "T20I",
+      "date": "2022-11-02",
+      "opponent": "Bangladesh",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2022-07-09",
+      "training_matches": 160,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.6143855977157132,
+        "opponent": 0.38561440228428684
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1298176",
+      "format": "T20I",
+      "date": "2022-11-06",
+      "opponent": "Zimbabwe",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2022-11-02",
+      "training_matches": 180,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.6680747289688423,
+        "opponent": 0.33192527103115765
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1298178",
+      "format": "T20I",
+      "date": "2022-11-10",
+      "opponent": "England",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2022-11-02",
+      "training_matches": 180,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.6625197631527183,
+        "opponent": 0.33748023684728173
+      },
+      "actual_result": "opponent",
+      "model_correct": false,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1322276",
+      "format": "T20I",
+      "date": "2022-11-20",
+      "opponent": "New Zealand",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2022-11-02",
+      "training_matches": 180,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.6631898202949646,
+        "opponent": 0.33681017970503535
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1348640",
+      "format": "T20I",
+      "date": "2023-01-03",
+      "opponent": "Sri Lanka",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2022-11-02",
+      "training_matches": 180,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.673181293851381,
+        "opponent": 0.32681870614861896
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1348641",
+      "format": "T20I",
+      "date": "2023-01-05",
+      "opponent": "Sri Lanka",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2022-11-02",
+      "training_matches": 180,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.6696269388817901,
+        "opponent": 0.3303730611182098
+      },
+      "actual_result": "opponent",
+      "model_correct": false,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1348642",
+      "format": "T20I",
+      "date": "2023-01-07",
+      "opponent": "Sri Lanka",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2022-11-02",
+      "training_matches": 180,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.6639198066310201,
+        "opponent": 0.33608019336897993
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1348649",
+      "format": "T20I",
+      "date": "2023-01-27",
+      "opponent": "New Zealand",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2022-11-02",
+      "training_matches": 180,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.6689662142781914,
+        "opponent": 0.3310337857218086
+      },
+      "actual_result": "opponent",
+      "model_correct": false,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1348650",
+      "format": "T20I",
+      "date": "2023-01-29",
+      "opponent": "New Zealand",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2022-11-02",
+      "training_matches": 180,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.6798563764687285,
+        "opponent": 0.3201436235312714
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1348651",
+      "format": "T20I",
+      "date": "2023-02-01",
+      "opponent": "New Zealand",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2022-11-02",
+      "training_matches": 180,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.6771689613994075,
+        "opponent": 0.32283103860059253
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1381217",
+      "format": "T20I",
+      "date": "2023-08-03",
+      "opponent": "West Indies",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2022-11-02",
+      "training_matches": 180,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.6574907600739149,
+        "opponent": 0.3425092399260851
+      },
+      "actual_result": "opponent",
+      "model_correct": false,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1381218",
+      "format": "T20I",
+      "date": "2023-08-06",
+      "opponent": "West Indies",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2022-11-02",
+      "training_matches": 180,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.6656642419530373,
+        "opponent": 0.33433575804696275
+      },
+      "actual_result": "opponent",
+      "model_correct": false,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1381219",
+      "format": "T20I",
+      "date": "2023-08-08",
+      "opponent": "West Indies",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2022-11-02",
+      "training_matches": 180,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.6591903824090122,
+        "opponent": 0.3408096175909878
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1381220",
+      "format": "T20I",
+      "date": "2023-08-12",
+      "opponent": "West Indies",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2022-11-02",
+      "training_matches": 180,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.6581300250738668,
+        "opponent": 0.3418699749261332
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1381221",
+      "format": "T20I",
+      "date": "2023-08-13",
+      "opponent": "West Indies",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2022-11-02",
+      "training_matches": 180,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.6342026291769413,
+        "opponent": 0.3657973708230588
+      },
+      "actual_result": "opponent",
+      "model_correct": false,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1384634",
+      "format": "T20I",
+      "date": "2023-08-18",
+      "opponent": "Ireland",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2022-11-02",
+      "training_matches": 180,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.6528671213423582,
+        "opponent": 0.3471328786576417
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1384637",
+      "format": "T20I",
+      "date": "2023-08-20",
+      "opponent": "Ireland",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2022-11-02",
+      "training_matches": 180,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.6558333898346181,
+        "opponent": 0.3441666101653819
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1399113",
+      "format": "T20I",
+      "date": "2023-10-03",
+      "opponent": "Nepal",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2022-11-02",
+      "training_matches": 180,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.6728800154299396,
+        "opponent": 0.32711998457006053
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1399117",
+      "format": "T20I",
+      "date": "2023-10-06",
+      "opponent": "Bangladesh",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2022-11-02",
+      "training_matches": 180,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.6307414719255187,
+        "opponent": 0.36925852807448134
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1389391",
+      "format": "T20I",
+      "date": "2023-11-23",
+      "opponent": "Australia",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2022-11-02",
+      "training_matches": 180,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.6371542070075337,
+        "opponent": 0.3628457929924664
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1389392",
+      "format": "T20I",
+      "date": "2023-11-26",
+      "opponent": "Australia",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2022-11-02",
+      "training_matches": 180,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.631250501032561,
+        "opponent": 0.36874949896743897
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1389393",
+      "format": "T20I",
+      "date": "2023-11-28",
+      "opponent": "Australia",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2023-11-26",
+      "training_matches": 200,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.6498076221500111,
+        "opponent": 0.3501923778499889
+      },
+      "actual_result": "opponent",
+      "model_correct": false,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1389394",
+      "format": "T20I",
+      "date": "2023-12-01",
+      "opponent": "Australia",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2023-11-26",
+      "training_matches": 200,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.6557524118003547,
+        "opponent": 0.34424758819964524
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1389395",
+      "format": "T20I",
+      "date": "2023-12-03",
+      "opponent": "Australia",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2023-11-26",
+      "training_matches": 200,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.6580400668336986,
+        "opponent": 0.3419599331663014
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1387598",
+      "format": "T20I",
+      "date": "2023-12-12",
+      "opponent": "South Africa",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2023-11-26",
+      "training_matches": 200,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.6825707560418378,
+        "opponent": 0.31742924395816213
+      },
+      "actual_result": "opponent",
+      "model_correct": false,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1387599",
+      "format": "T20I",
+      "date": "2023-12-14",
+      "opponent": "South Africa",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2023-11-26",
+      "training_matches": 200,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.68428402679135,
+        "opponent": 0.3157159732086501
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1415708",
+      "format": "T20I",
+      "date": "2024-06-05",
+      "opponent": "Ireland",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2023-11-26",
+      "training_matches": 200,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.6741686754693775,
+        "opponent": 0.3258313245306224
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1415719",
+      "format": "T20I",
+      "date": "2024-06-09",
+      "opponent": "Pakistan",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2023-11-26",
+      "training_matches": 200,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.6507661292190403,
+        "opponent": 0.3492338707809597
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1415725",
+      "format": "T20I",
+      "date": "2024-06-12",
+      "opponent": "United States of America",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2023-11-26",
+      "training_matches": 200,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.6243266909059504,
+        "opponent": 0.3756733090940496
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1415747",
+      "format": "T20I",
+      "date": "2024-06-22",
+      "opponent": "Bangladesh",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2023-11-26",
+      "training_matches": 200,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.6812347284537779,
+        "opponent": 0.3187652715462222
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1415751",
+      "format": "T20I",
+      "date": "2024-06-24",
+      "opponent": "Australia",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2023-11-26",
+      "training_matches": 200,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.676181684739246,
+        "opponent": 0.32381831526075405
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1415754",
+      "format": "T20I",
+      "date": "2024-06-27",
+      "opponent": "England",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2023-11-26",
+      "training_matches": 200,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.6792310439563094,
+        "opponent": 0.3207689560436906
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1415755",
+      "format": "T20I",
+      "date": "2024-06-29",
+      "opponent": "South Africa",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2023-11-26",
+      "training_matches": 200,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.6767199634494361,
+        "opponent": 0.32328003655056387
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1420223",
+      "format": "T20I",
+      "date": "2024-07-06",
+      "opponent": "Zimbabwe",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2023-11-26",
+      "training_matches": 200,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.6636384636591578,
+        "opponent": 0.33636153634084215
+      },
+      "actual_result": "opponent",
+      "model_correct": false,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1420224",
+      "format": "T20I",
+      "date": "2024-07-07",
+      "opponent": "Zimbabwe",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2023-11-26",
+      "training_matches": 200,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.6470481517507262,
+        "opponent": 0.3529518482492739
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1420225",
+      "format": "T20I",
+      "date": "2024-07-10",
+      "opponent": "Zimbabwe",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2023-11-26",
+      "training_matches": 200,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.6159759655154249,
+        "opponent": 0.3840240344845751
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1420226",
+      "format": "T20I",
+      "date": "2024-07-13",
+      "opponent": "Zimbabwe",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2023-11-26",
+      "training_matches": 200,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.6234551934255581,
+        "opponent": 0.3765448065744419
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1420227",
+      "format": "T20I",
+      "date": "2024-07-14",
+      "opponent": "Zimbabwe",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2023-11-26",
+      "training_matches": 200,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.6084425388073531,
+        "opponent": 0.3915574611926469
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1442987",
+      "format": "T20I",
+      "date": "2024-07-27",
+      "opponent": "Sri Lanka",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2023-11-26",
+      "training_matches": 200,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.608202674139308,
+        "opponent": 0.3917973258606921
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1442988",
+      "format": "T20I",
+      "date": "2024-07-28",
+      "opponent": "Sri Lanka",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2023-11-26",
+      "training_matches": 200,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.6156330906795754,
+        "opponent": 0.38436690932042467
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1442989",
+      "format": "T20I",
+      "date": "2024-07-30",
+      "opponent": "Sri Lanka",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2023-11-26",
+      "training_matches": 200,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.6212900602541905,
+        "opponent": 0.3787099397458096
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1439893",
+      "format": "T20I",
+      "date": "2024-10-06",
+      "opponent": "Bangladesh",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2024-07-30",
+      "training_matches": 220,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.6807356921337533,
+        "opponent": 0.3192643078662467
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1439894",
+      "format": "T20I",
+      "date": "2024-10-09",
+      "opponent": "Bangladesh",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2024-07-30",
+      "training_matches": 220,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.6859480897995996,
+        "opponent": 0.3140519102004003
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1439895",
+      "format": "T20I",
+      "date": "2024-10-12",
+      "opponent": "Bangladesh",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2024-07-30",
+      "training_matches": 220,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.6875275221230911,
+        "opponent": 0.31247247787690885
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1449301",
+      "format": "T20I",
+      "date": "2024-11-08",
+      "opponent": "South Africa",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2024-07-30",
+      "training_matches": 220,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.7342405462677039,
+        "opponent": 0.26575945373229615
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1449302",
+      "format": "T20I",
+      "date": "2024-11-10",
+      "opponent": "South Africa",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2024-07-30",
+      "training_matches": 220,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.7287374554755797,
+        "opponent": 0.2712625445244204
+      },
+      "actual_result": "opponent",
+      "model_correct": false,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1449303",
+      "format": "T20I",
+      "date": "2024-11-13",
+      "opponent": "South Africa",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2024-07-30",
+      "training_matches": 220,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.7386310322224361,
+        "opponent": 0.261368967777564
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1449304",
+      "format": "T20I",
+      "date": "2024-11-15",
+      "opponent": "South Africa",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2024-07-30",
+      "training_matches": 220,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.7320844750664685,
+        "opponent": 0.26791552493353155
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1439899",
+      "format": "T20I",
+      "date": "2025-01-22",
+      "opponent": "England",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2024-07-30",
+      "training_matches": 220,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.7285204636791306,
+        "opponent": 0.2714795363208695
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1439900",
+      "format": "T20I",
+      "date": "2025-01-25",
+      "opponent": "England",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2024-07-30",
+      "training_matches": 220,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.7337277211928456,
+        "opponent": 0.2662722788071545
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1439901",
+      "format": "T20I",
+      "date": "2025-01-28",
+      "opponent": "England",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2024-07-30",
+      "training_matches": 220,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.7249019178425129,
+        "opponent": 0.27509808215748716
+      },
+      "actual_result": "opponent",
+      "model_correct": false,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1439902",
+      "format": "T20I",
+      "date": "2025-01-31",
+      "opponent": "England",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2024-07-30",
+      "training_matches": 220,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.7368553921917819,
+        "opponent": 0.2631446078082182
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1439903",
+      "format": "T20I",
+      "date": "2025-02-02",
+      "opponent": "England",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2024-07-30",
+      "training_matches": 220,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.7311167761327995,
+        "opponent": 0.26888322386720054
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1496921",
+      "format": "T20I",
+      "date": "2025-09-10",
+      "opponent": "United Arab Emirates",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2024-07-30",
+      "training_matches": 220,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.7603196988871862,
+        "opponent": 0.23968030111281383
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1496925",
+      "format": "T20I",
+      "date": "2025-09-14",
+      "opponent": "Pakistan",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2024-07-30",
+      "training_matches": 220,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.6943764232187876,
+        "opponent": 0.3056235767812124
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1496931",
+      "format": "T20I",
+      "date": "2025-09-19",
+      "opponent": "Oman",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2024-07-30",
+      "training_matches": 220,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.7413403281324279,
+        "opponent": 0.25865967186757216
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1496933",
+      "format": "T20I",
+      "date": "2025-09-21",
+      "opponent": "Pakistan",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2024-07-30",
+      "training_matches": 220,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.696625700325356,
+        "opponent": 0.303374299674644
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1496935",
+      "format": "T20I",
+      "date": "2025-09-24",
+      "opponent": "Bangladesh",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2024-07-30",
+      "training_matches": 220,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.6866158821251938,
+        "opponent": 0.3133841178748063
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1496937",
+      "format": "T20I",
+      "date": "2025-09-26",
+      "opponent": "Sri Lanka",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2024-07-30",
+      "training_matches": 220,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.7038290015816895,
+        "opponent": 0.2961709984183105
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1496938",
+      "format": "T20I",
+      "date": "2025-09-28",
+      "opponent": "Pakistan",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2024-07-30",
+      "training_matches": 220,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.6842659306216881,
+        "opponent": 0.3157340693783119
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1478908",
+      "format": "T20I",
+      "date": "2025-10-31",
+      "opponent": "Australia",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2024-07-30",
+      "training_matches": 220,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.7155245950986688,
+        "opponent": 0.28447540490133116
+      },
+      "actual_result": "opponent",
+      "model_correct": false,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1478909",
+      "format": "T20I",
+      "date": "2025-11-02",
+      "opponent": "Australia",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2025-10-31",
+      "training_matches": 240,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.7281964410582061,
+        "opponent": 0.27180355894179387
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1478910",
+      "format": "T20I",
+      "date": "2025-11-06",
+      "opponent": "Australia",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2025-10-31",
+      "training_matches": 240,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.72442966424897,
+        "opponent": 0.27557033575103
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1479576",
+      "format": "T20I",
+      "date": "2025-12-09",
+      "opponent": "South Africa",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2025-10-31",
+      "training_matches": 240,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.7399851389495448,
+        "opponent": 0.2600148610504552
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1479577",
+      "format": "T20I",
+      "date": "2025-12-11",
+      "opponent": "South Africa",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2025-10-31",
+      "training_matches": 240,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.721696672543113,
+        "opponent": 0.2783033274568871
+      },
+      "actual_result": "opponent",
+      "model_correct": false,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1479578",
+      "format": "T20I",
+      "date": "2025-12-14",
+      "opponent": "South Africa",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2025-10-31",
+      "training_matches": 240,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.7277789714254064,
+        "opponent": 0.2722210285745937
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1479580",
+      "format": "T20I",
+      "date": "2025-12-19",
+      "opponent": "South Africa",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2025-10-31",
+      "training_matches": 240,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.7266668940019274,
+        "opponent": 0.27333310599807253
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1490234",
+      "format": "T20I",
+      "date": "2026-01-21",
+      "opponent": "New Zealand",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2025-10-31",
+      "training_matches": 240,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.7097504082386058,
+        "opponent": 0.29024959176139425
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1490235",
+      "format": "T20I",
+      "date": "2026-01-23",
+      "opponent": "New Zealand",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2025-10-31",
+      "training_matches": 240,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.7185801045054981,
+        "opponent": 0.28141989549450197
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1490236",
+      "format": "T20I",
+      "date": "2026-01-25",
+      "opponent": "New Zealand",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2025-10-31",
+      "training_matches": 240,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.7240104435149934,
+        "opponent": 0.2759895564850066
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1490237",
+      "format": "T20I",
+      "date": "2026-01-28",
+      "opponent": "New Zealand",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2025-10-31",
+      "training_matches": 240,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.7150195416718648,
+        "opponent": 0.2849804583281353
+      },
+      "actual_result": "opponent",
+      "model_correct": false,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1490238",
+      "format": "T20I",
+      "date": "2026-01-31",
+      "opponent": "New Zealand",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2025-10-31",
+      "training_matches": 240,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.7214467741389834,
+        "opponent": 0.27855322586101655
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1512721",
+      "format": "T20I",
+      "date": "2026-02-07",
+      "opponent": "United States of America",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2025-10-31",
+      "training_matches": 240,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.6950447613759883,
+        "opponent": 0.3049552386240118
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1512736",
+      "format": "T20I",
+      "date": "2026-02-12",
+      "opponent": "Namibia",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2025-10-31",
+      "training_matches": 240,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.7252778687566992,
+        "opponent": 0.27472213124330086
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1512745",
+      "format": "T20I",
+      "date": "2026-02-15",
+      "opponent": "Pakistan",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2025-10-31",
+      "training_matches": 240,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.7052634464406292,
+        "opponent": 0.2947365535593709
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1512754",
+      "format": "T20I",
+      "date": "2026-02-18",
+      "opponent": "Netherlands",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2025-10-31",
+      "training_matches": 240,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.7180994995530732,
+        "opponent": 0.28190050044692677
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1512761",
+      "format": "T20I",
+      "date": "2026-02-22",
+      "opponent": "South Africa",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2025-10-31",
+      "training_matches": 240,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.7358284356876436,
+        "opponent": 0.2641715643123565
+      },
+      "actual_result": "opponent",
+      "model_correct": false,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1512766",
+      "format": "T20I",
+      "date": "2026-02-26",
+      "opponent": "Zimbabwe",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2025-10-31",
+      "training_matches": 240,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.7108157936647959,
+        "opponent": 0.28918420633520414
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1512770",
+      "format": "T20I",
+      "date": "2026-03-01",
+      "opponent": "West Indies",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2025-10-31",
+      "training_matches": 240,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.7192131857707361,
+        "opponent": 0.2807868142292638
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1512772",
+      "format": "T20I",
+      "date": "2026-03-05",
+      "opponent": "England",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2025-10-31",
+      "training_matches": 240,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.7195184005449744,
+        "opponent": 0.2804815994550256
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1512773",
+      "format": "T20I",
+      "date": "2026-03-08",
+      "opponent": "New Zealand",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2025-10-31",
+      "training_matches": 240,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.7427031057171262,
+        "opponent": 0.2572968942828739
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1528548",
+      "format": "T20I",
+      "date": "2026-06-26",
+      "opponent": "Ireland",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2026-03-08",
+      "training_matches": 260,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.7220753300293737,
+        "opponent": 0.2779246699706263
+      },
+      "actual_result": "opponent",
+      "model_correct": false,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1528549",
+      "format": "T20I",
+      "date": "2026-06-28",
+      "opponent": "Ireland",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2026-03-08",
+      "training_matches": 260,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.7180889595043386,
+        "opponent": 0.2819110404956614
+      },
+      "actual_result": "opponent",
+      "model_correct": false,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1496575",
+      "format": "T20I",
+      "date": "2026-07-04",
+      "opponent": "England",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2026-03-08",
+      "training_matches": 260,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.7416456872355792,
+        "opponent": 0.2583543127644208
+      },
+      "actual_result": "opponent",
+      "model_correct": false,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1496576",
+      "format": "T20I",
+      "date": "2026-07-07",
+      "opponent": "England",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2026-03-08",
+      "training_matches": 260,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.7512661741227826,
+        "opponent": 0.24873382587721735
+      },
+      "actual_result": "opponent",
+      "model_correct": false,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1496577",
+      "format": "T20I",
+      "date": "2026-07-09",
+      "opponent": "England",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2026-03-08",
+      "training_matches": 260,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.7360352583560644,
+        "opponent": 0.2639647416439355
+      },
+      "actual_result": "opponent",
+      "model_correct": false,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1496578",
+      "format": "T20I",
+      "date": "2026-07-11",
+      "opponent": "England",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2026-03-08",
+      "training_matches": 260,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.7572867273555016,
+        "opponent": 0.2427132726444984
+      },
+      "actual_result": "opponent",
+      "model_correct": false,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1530060",
+      "format": "T20I",
+      "date": "2026-07-23",
+      "opponent": "Zimbabwe",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2026-03-08",
+      "training_matches": 260,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.7353115733476494,
+        "opponent": 0.26468842665235065
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1530061",
+      "format": "T20I",
+      "date": "2026-07-25",
+      "opponent": "Zimbabwe",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2026-03-08",
+      "training_matches": 260,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.7306623466066364,
+        "opponent": 0.26933765339336363
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    },
+    {
+      "match_id": "1530062",
+      "format": "T20I",
+      "date": "2026-07-26",
+      "opponent": "Zimbabwe",
+      "prediction_timestamp": null,
+      "evaluation_timestamp": "2026-10-07T11:26:56.001249+00:00",
+      "model_version": "cricket-history-logreg-sigmoid-v1-t20i",
+      "training_cutoff_date": "2026-03-08",
+      "training_matches": 260,
+      "predicted_class": "india",
+      "probabilities": {
+        "india": 0.7172503309403752,
+        "opponent": 0.2827496690596249
+      },
+      "actual_result": "india",
+      "model_correct": true,
+      "verified_pre_match": false,
+      "data_label": "HISTORICAL BACKTEST"
+    }
+  ],
+  "features": [
+    "india_elo_pre",
+    "opponent_elo_pre",
+    "elo_diff",
+    "india_recent_win_rate",
+    "h2h_india_win_rate",
+    "h2h_matches_before",
+    "india_run_rate",
+    "opponent_run_rate",
+    "india_batting_average",
+    "opponent_batting_average",
+    "india_bowling_economy",
+    "opponent_bowling_economy",
+    "india_wickets_lost",
+    "opponent_wickets_lost",
+    "india_bowling_wickets",
+    "opponent_bowling_wickets"
+  ],
+  "evaluation_method": "Expanding walk-forward; min_train=60; step=20; no shuffling.",
+  "training_matches": 269
+}

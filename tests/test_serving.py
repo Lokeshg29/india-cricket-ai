@@ -1,8 +1,10 @@
 from datetime import date
 
+import pytest
 from fastapi.testclient import TestClient
 
 from src.serving.app import app, get_model_state
+from src.sports.cricket.service import CricketPredictionService
 
 
 class FakeEnsemble:
@@ -35,6 +37,23 @@ class FakeState:
 
     def champion_probabilities(self, refresh=False):
         return {"as_of": self.today.isoformat(), "model_source": self.model_source, "probabilities": {"France": 0.4}}
+
+
+class FakeCricketPredictionService:
+    def predict_fixture(self, fmt, opponent, as_of):
+        probabilities = {"india": 0.4, "draw": 0.25, "opponent": 0.35} if fmt == "test" else {"india": 0.58, "opponent": 0.42}
+        return {
+            "format": fmt.upper(),
+            "opponent": opponent,
+            "match_date": as_of.isoformat(),
+            "prediction": max(probabilities, key=probabilities.get),
+            "probabilities": probabilities,
+            "model_version": f"test-{fmt}-v1",
+            "prediction_timestamp": "2026-10-10T00:00:00+00:00",
+            "data_label": "MODEL PREDICTION",
+            "status": "available",
+            "explanation": {"status": "unavailable", "positive_factors": [], "negative_factors": []},
+        }
 
 
 app.dependency_overrides[get_model_state] = lambda: FakeState()
@@ -125,3 +144,57 @@ def test_metrics_summary_counts_predictions():
     assert after["predictions_total"] >= 1
     # FakeEnsemble.match_probs -> p_win (home_win) is the argmax outcome.
     assert after["predictions_by_outcome"].get("home_win", 0) >= 1
+
+
+@pytest.mark.parametrize("fmt", ["odi", "t20i"])
+def test_cricket_predict_endpoint_returns_limited_overs_probabilities(fmt, monkeypatch):
+    monkeypatch.setattr(app.state, "cricket_prediction_service", FakeCricketPredictionService(), raising=False)
+
+    response = client.post("/cricket/predict", json={
+        "format": fmt,
+        "opponent": "Australia",
+        "as_of": "2027-01-01",
+    })
+
+    assert response.status_code == 200
+    body = response.json()
+    assert body["status"] == "available"
+    assert body["format"] == fmt.upper()
+    assert body["data_label"] == "MODEL PREDICTION"
+    assert set(body["probabilities"]) == {"india", "opponent"}
+    assert all(0 <= value <= 1 for value in body["probabilities"].values())
+    assert sum(body["probabilities"].values()) == pytest.approx(1.0)
+
+
+def test_cricket_predict_endpoint_includes_test_draw_probability(monkeypatch):
+    monkeypatch.setattr(app.state, "cricket_prediction_service", FakeCricketPredictionService(), raising=False)
+
+    response = client.post("/cricket/predict", json={
+        "format": "test",
+        "opponent": "Australia",
+        "as_of": "2027-01-01",
+    })
+
+    assert response.status_code == 200
+    body = response.json()
+    assert body["status"] == "available"
+    assert set(body["probabilities"]) == {"india", "draw", "opponent"}
+    assert all(0 <= value <= 1 for value in body["probabilities"].values())
+    assert sum(body["probabilities"].values()) == pytest.approx(1.0)
+    assert body["probabilities"]["draw"] > 0
+
+
+def test_cricket_predict_endpoint_reports_missing_model_artifact(tmp_path, monkeypatch):
+    service = CricketPredictionService(artifact_dir=tmp_path)
+    monkeypatch.setattr(app.state, "cricket_prediction_service", service, raising=False)
+
+    response = client.post("/cricket/predict", json={
+        "format": "odi",
+        "opponent": "Australia",
+        "as_of": "2027-01-01",
+    })
+
+    assert response.status_code == 200
+    body = response.json()
+    assert body["status"] == "unavailable"
+    assert "train the ODI model first" in body["reason"]
