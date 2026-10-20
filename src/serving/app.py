@@ -14,6 +14,8 @@ import os
 import sys
 import time
 import uuid
+import hashlib
+import math
 from contextlib import asynccontextmanager
 from datetime import date, datetime, timezone
 from pathlib import Path
@@ -29,6 +31,7 @@ from fastapi.middleware.cors import CORSMiddleware  # noqa: E402
 from pydantic import BaseModel  # noqa: E402
 
 from src.serving import metrics  # noqa: E402
+from src.ingestion import supabase_store  # noqa: E402
 
 # Dashboard origins allowed to call this API directly from the browser (the
 # Live Inference Console). Portfolio project, so no auth/rate-limiting is
@@ -231,6 +234,78 @@ def predict_cricket(req: CricketPredictRequest, request: Request):
         return service.predict_fixture(req.format, req.opponent, req.as_of)
     except (ValueError, FileNotFoundError) as exc:
         return {"status": "unavailable", "reason": str(exc), "data_label": "MODEL PREDICTION"}
+
+
+@app.get("/cricket/fixtures")
+def cricket_fixtures():
+    """Return verified future India men's fixtures, or an explicit empty state."""
+    from src.sports.cricket.fixtures import get_fixture_feed
+
+    return get_fixture_feed()
+
+
+@app.get("/cricket/predictions/history")
+def cricket_prediction_history(limit: int = 100):
+    """Return persisted, timestamped prediction events when Supabase exists."""
+    records, storage_ready = supabase_store.fetch_cricket_prediction_events(limit)
+    return {
+        "status": "available" if records else ("empty" if storage_ready else "unavailable"),
+        "data_label": "MODEL PREDICTION" if records else "UNAVAILABLE",
+        "records": records,
+        "reason": None if records else ("No saved prediction events yet." if storage_ready else "Prediction history storage is unavailable or not configured."),
+    }
+
+
+@app.post("/cricket/fixtures/{fixture_id}/predict")
+def predict_verified_cricket_fixture(fixture_id: str):
+    """Predict and append history only after a provider returns a valid fixture."""
+    from src.sports.cricket.fixtures import get_fixture_feed
+    from src.sports.cricket.service import CricketPredictionService
+
+    feed = get_fixture_feed()
+    if feed.get("status") != "available":
+        return {"status": "unavailable", "reason": feed.get("reason", "No verified fixture feed is available."), "data_label": "MODEL PREDICTION"}
+    fixture = next((row for row in feed.get("fixtures", []) if row.get("match_id") == fixture_id), None)
+    if not fixture or fixture.get("status") != "scheduled" or fixture.get("fixture_source") != "VERIFIED_FIXTURE_REGISTRY":
+        raise HTTPException(status_code=404, detail="Verified upcoming fixture not found")
+    try:
+        kickoff = datetime.fromisoformat(fixture["start_time"].replace("Z", "+00:00"))
+        if kickoff.tzinfo is None or kickoff <= datetime.now(timezone.utc):
+            raise ValueError("Fixture is not in the future")
+        result = CricketPredictionService().predict_fixture(
+            fixture["format"], fixture["opponent"], kickoff.date()
+        )
+    except FileNotFoundError as exc:
+        return {"status": "unavailable", "reason": str(exc), "data_label": "MODEL PREDICTION"}
+    except ValueError as exc:
+        return {"status": "unavailable", "reason": str(exc), "data_label": "MODEL PREDICTION"}
+
+    probabilities = result.get("probabilities")
+    labels = {"india", "draw", "opponent"} if fixture["format"] == "TEST" else {"india", "opponent"}
+    if not isinstance(probabilities, dict) or set(probabilities) != labels:
+        return {"status": "unavailable", "reason": "Model outcome classes do not match the fixture format.", "data_label": "MODEL PREDICTION"}
+    values = list(probabilities.values())
+    if any(not isinstance(value, (int, float)) or not math.isfinite(value) or value < 0 or value > 1 for value in values) or abs(sum(values) - 1) > 1e-6:
+        return {"status": "unavailable", "reason": "Model probabilities failed validation.", "data_label": "MODEL PREDICTION"}
+
+    predicted_at = result["prediction_timestamp"]
+    # A fixture/model pair is one logical prediction-history event. Repeated
+    # page loads may re-score it, but the unique event key prevents duplicate rows.
+    event_key = hashlib.sha256(f"{fixture_id}:{result['model_version']}".encode()).hexdigest()
+    persistent = supabase_store.insert_cricket_prediction_event({
+        "event_key": event_key,
+        "provider_fixture_id": fixture_id,
+        "teams": fixture["teams"],
+        "format": fixture["format"],
+        "scheduled_start": fixture["start_time"],
+        "predicted_at": predicted_at,
+        "model_version": result["model_version"],
+        "predicted_class": result["prediction"],
+        "probabilities": probabilities,
+        "data_source": fixture["data_source"],
+        "match_status": "scheduled",
+    })
+    return {**result, "history_status": "stored" if persistent else "unavailable"}
 
 
 @app.post("/explain")

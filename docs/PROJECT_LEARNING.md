@@ -96,11 +96,11 @@ The CSV is match-level rather than player-level, so it cannot support honest pla
 
 ### 2. How the frontend calls a prediction API
 
-The dashboard renders its existing upcoming-match cards from format JSON exports. A card is eligible for inference only when the fixture has a future date, a real data label and `fixture_source: OFFICIAL_FIXTURE_FEED`. The browser sends only the format and match ID to the dashboard's same-origin `/api/cricket/predict` route. That server route looks the ID up in the exported fixture list; it does not trust an opponent or probability posted by the browser. It then sends the verified opponent and date to the FastAPI `/cricket/predict` service using the server-only `CRICKET_API_URL` environment variable.
+The dashboard renders its existing upcoming-match cards from the server-side fixture registry. A card is eligible for inference only when the fixture has a future date, a fresh verification timestamp and `fixture_source: VERIFIED_FIXTURE_REGISTRY`. The browser sends only the format and match ID to the dashboard's same-origin `/api/cricket/predict` route. That server route looks the ID up in the validated registry response; it does not trust an opponent or probability posted by the browser. It then asks FastAPI to run the existing format-specific model.
 
-FastAPI must have the appropriate trained format artifact and enough prior history. The route checks that returned probabilities are finite, in range, add to one, and include the draw class for Test. Only then does the card display probabilities and the `MODEL PREDICTION` label. No backend credentials are bundled into browser code. This repository currently has no official upcoming-fixture provider and its schedule export is empty, so the UI makes no prediction request and explains that the schedule and estimates are unavailable. Setting `CRICKET_API_URL` alone does not create fixtures.
+FastAPI must have the appropriate trained format artifact and enough prior history. The route checks that returned probabilities are finite, in range, add to one, and include the draw class for Test. Only then does the card display probabilities and the `MODEL PREDICTION` label. No backend credentials are bundled into browser code. The checked-in registry is currently empty, so the UI makes no prediction request and explains that the schedule and estimates are unavailable. `CRICKET_API_URL` connects the dashboard to FastAPI; it does not create fixtures.
 
-To use a locally running API, train artifacts, start `uvicorn src.serving.app:app --host 127.0.0.1 --port 8000`, and put `CRICKET_API_URL=http://127.0.0.1:8000` in the dashboard's ignored `.env.local`. When a verified fixture feed is added, its exporter must mark each actual future fixture with `fixture_source: OFFICIAL_FIXTURE_FEED` and a historical/live source label before inference can run.
+To use a locally running API, train artifacts, start `uvicorn src.serving.app:app --host 127.0.0.1 --port 8000`, and put `CRICKET_API_URL=http://127.0.0.1:8000` in the dashboard's ignored `.env.local`. A manually verified future fixture must be entered in the registry before inference can run.
 
 ### 3. How to read data labels
 
@@ -123,3 +123,84 @@ A prediction model answers a question about a match after it receives inputs suc
 - **Not live:** no live fixture, toss, score, roster or result integration. The local inference endpoint needs trained artifacts.
 - **Data limitations:** venue country is empty; home advantage cannot be assigned safely. The India-only archive lacks each opponent's broader results. Batter strike rate, boundaries and over-phase stats are absent from normalized summaries. Match dates cannot order kickoff times within the same day, so same-day rows share pre-day feature state.
 - **Recommended Phase 4:** add a documented and permitted fixture/results source with opponent-wide history and venue-country validation; record genuine timestamped pre-match calls; then add home/away and opponent-form features, compare against baselines, and monitor calibration before automating predictions.
+
+## Phase 4: verified fixtures and prediction history
+
+### Provider investigation and current decision
+
+The fixture API is a separate source from the Cricsheet training archive. I reviewed the providers named in the project brief: [Big Balls Cricket API](https://bigballsdata.com/cricket-api), its [OpenAPI contract](https://bigballsdata.com/openapi.json), and [Cricket Data API pricing](https://cricketdata.org/pricing/), [fixture window documentation](https://cricketdata.org/cricket-score-cricscore-ecricscore-api/) and [CricAPI's documented match detail fields](https://cricketdata.org/how-to-use-fantasy-cricket-api.aspx).
+
+Both services require account registration and a secret API key. The current Big Balls pricing and rate-limit pages document 100 requests/minute and 250 requests/day on Free (500/day with GitHub connected); successful and client-error responses expose quota headers, and 429 responses include `Retry-After`. The current Cricket Data pricing page documents 100 API hits/day on Lifetime Free and says hit tracking is included in responses. These are documented plan limits, not this project's observed account quotas: no provider is selected or authenticated, so no authenticated request or quota response has been observed. However, Big Balls' published match-list contract has a stable ID, participant names, UTC kickoff and status but does not include a match format field on the match object. Its coverage pages describe Test, ODI and T20I categories, but the individual fixture row schema does not establish which category a given future row belongs to. Guessing from the tour name can put an ODI into the Test model.
+
+CricAPI's free plan documents 100 hits/day and upcoming matches around one or two weeks ahead (its simplified score feed specifically covers the next seven days). The documented detail shape includes match type, status, teams, venue and a GMT datetime, but this appears in Fantasy scorecard documentation; the pricing page labels Fantasy API as Trial Mode on the free tier and paid access beyond that. Its generic fixture-list page displays formats, but its linked API reference doesn't expose enough response-schema detail to confirm those same fields on the free list endpoint. Both providers have documentation gaps for this use case. No key was configured here, and no live request was made. That means neither the provider's operational status nor actual India coverage was tested. The project therefore implements a provider-neutral contract and returns `UNAVAILABLE` until a provider can prove format metadata on the free match list and its terms fit the intended deployment. No substitute fixtures are generated.
+
+The remaining integration details also matter before choosing a provider. Big Balls documents `limit`/`offset` pagination, an `x-api-key` or Bearer authorization header, a common response envelope and 429 rate-limit headers including `Retry-After`; its free plan should be rechecked when an account is configured. Its cricket match endpoint exposes UTC kickoff/status but its cricket match-list contract documents no display venue field, so venue might also require a detail call. Cricket Data examples put the key in the `apikey` query parameter and use an `offset` for generic matches; its score fixture feed reports recent and next-week matches. The terms limit materials to personal, non-commercial use without prior consent and prohibit removing source/credit identifiers. Its API is described as manually maintained and a few minutes behind. That account/license caveat is material for a public student project, so check whether the deployment is strictly personal/non-commercial or request permission. Neither provider's error behavior, pagination, cache terms or source freshness have been verified with a live key in this repository.
+
+### Provider adapter, validation and the dashboard path
+
+`src/sports/cricket/fixtures.py` defines the small provider interface and an explicit unavailable implementation. Its normalizer requires a stable ID, cricket sport, men's international classification, one of Test/ODI/T20I, exactly two team names including senior India, a supported status, and a timezone-aware future start. It normalizes instants to UTC, rejects duplicate IDs, and excludes live/completed/postponed/cancelled rows from the upcoming list. A future provider adapter must map its documented response into this strict internal contract before the UI or model can use it.
+
+FastAPI's `GET /cricket/fixtures` exposes that status without including credentials. The Next.js server helper `dashboard/src/lib/server-fixtures.ts` calls it with a timeout and no browser-visible key; the homepage and format pages receive only validated fixtures. The existing prediction proxy now looks up the submitted ID in that server-fetched fixture set and checks its future scheduled time before calling `POST /cricket/predict`. The browser cannot choose an opponent or schedule. Current provider status is unavailable, so the existing empty schedule message remains. `CRICKET_API_URL` is server-side configuration; do not rename it to a `NEXT_PUBLIC_` variable or send provider keys from React.
+
+The schedule is cached server-side for at least one hour in the Next data cache and in the FastAPI process. This keeps page refreshes from repeatedly polling a configured upstream; adapters can ask the cache to wait longer using a returned retry interval such as `Retry-After`. One hourly refresh is at most 24 scheduled calls per day, below the documented 100/day and 250/day free plans, leaving room for other API calls. A multi-worker deployment must also use shared cache storage or coordinate polling across workers; the in-process cache alone is per worker. No provider quota response can be displayed or checked until a provider/key is actually configured. Prediction history remains separately loaded and is never populated from the historical backtest ledger.
+
+### Prediction events and actual results are different data
+
+The existing Supabase/Postgres convention is optional and server-only. `supabase/schema.sql` adds `cricket_prediction_events` as an append-only table with a unique event key. It stores provider fixture ID, teams, format, scheduled kickoff, prediction time, model version, predicted class, probabilities and source name. A Test event must retain India/draw/opponent probabilities; an ODI or T20I event accepts India/opponent only. Repeating one event key does not overwrite the earlier prediction.
+
+`actual_outcome` and `result_verified_at` are separate nullable fields. The storage helper `attach_verified_cricket_result` rejects results unless a provider status is `finished`; it never copies a prediction into the actual-result field. `GET /cricket/predictions/history` returns saved events, and the dashboard's Stored Prediction History panel renders actual result as “Not verified yet” until that field is filled. Historical walk-forward evaluation remains under a distinct Historical Backtest Ledger heading, because those rows are not timestamped calls made before a real scheduled match.
+
+Supabase remains optional for existing project functions, but these persisted events require the new table migration. Run the contents of `supabase/schema.sql` in the project's Supabase SQL Editor after configuring `SUPABASE_URL` and a server-only `SUPABASE_KEY`. If storage is not configured, the API reports unavailable and does not claim the event was persisted. A completed-match result poller is intentionally not active while the selected fixture provider is unresolved; the result helper is guarded, but it is not yet fed by an external result source.
+
+### Tests and setup
+
+`tests/test_cricket_fixtures.py` tests the internal normalized schema with local records for each format, invalid metadata, duplicates and filtering completed fixtures. `tests/test_cricket_prediction_history.py` mocks Supabase operations to test append/duplicate behavior, Test draw versus limited-overs classes, and the separate verified-result update. `tests/test_serving.py` continues to cover the trained prediction API. These tests do not contact a provider and consume no quota. Until a permitted provider adapter is completed, timeout/authentication/rate-limit behavior at a provider boundary has no live implementation to test; the dashboard and upstream request wrappers return unavailable on timeout or service errors.
+
+Local setup from the repository root:
+
+```powershell
+.venv\Scripts\Activate.ps1
+python -m pytest tests/test_cricket_fixtures.py tests/test_cricket_prediction_history.py tests/test_serving.py -q
+Set-Location dashboard
+npm run lint
+npm run build -- --webpack
+```
+
+For a local dashboard-to-FastAPI connection, put `CRICKET_API_URL=http://127.0.0.1:8000` in `dashboard/.env.local`, start the API with `uvicorn src.serving.app:app --host 127.0.0.1 --port 8000`, and start the dashboard with `npm run dev` from `dashboard`. This connection alone still cannot produce upcoming fixtures; a verified adapter and its key must be configured server-side first.
+
+## Phase 4 alternative: manual verified fixture registry
+
+The third-party fixture integrations are deferred. The project now reads the version-controlled `data/cricket/verified_fixtures.json` file through `src/sports/cricket/fixtures.py`; it does not call a fixture vendor. The registry currently contains seven New Zealand tour fixtures announced by the BCCI for the India senior men's team: five ODIs and two Tests. Their dates, IST start times, formats, opponents and venues come from the [BCCI announcement](https://www.bcci.tv/news/article/indias-odi-and-test-squads-for-new-zealand-tour-announced), published October 16, 2026. The IDs are stable registry-local identifiers; they are not BCCI or provider match IDs. Do not add sample or guessed matches as if they were real. Remove these entries when they become past, stale or no longer verifiable.
+
+The registry is JSON with a schema version, a configurable freshness window in days, and fixture records. Schema-only example (the values below are placeholders, not a match):
+
+```json
+{
+  "schema_version": 1,
+  "verification_max_age_days": 7,
+  "fixtures": [
+    {
+      "id": "<stable registry-local ID; not a provider match ID>",
+      "teams": ["India", "<verified senior international opponent>"],
+      "format": "<TEST | ODI | T20I>",
+      "scheduled_start": "<ISO-8601 timestamp with timezone>",
+      "source_url": "<authoritative fixture source URL>",
+      "verified_at": "<ISO-8601 verification timestamp with timezone>",
+      "verification_status": "verified",
+      "gender": "men",
+      "competition_type": "international",
+      "team_level": "senior",
+      "status": "scheduled",
+      "venue": "<optional verified venue>"
+    }
+  ]
+}
+```
+
+To add a match, check an authoritative schedule page, confirm it is an India men's senior international and that its exact format, participants, start time and timezone are explicit, then use a stable internal ID and record the source URL and current UTC verification time. Add the record with all required explicit classification fields. Do not infer gender, level or format from a tour title. Update changed fixtures from a fresh source check; remove cancelled, completed, past, stale, or no-longer-verifiable records. The default freshness window is seven days and can be changed in the registry file. The API rejects entries missing required metadata, with duplicate IDs, invalid timestamps, past kickoff, unknown format/status, or verification older than that window. Invalid entries are excluded and logged by array position without printing their full contents.
+
+`CRICKET_FIXTURE_REGISTRY_PATH` can point the Python service at an alternate registry file for local use; otherwise the repository registry is used. `GET /cricket/fixtures` returns only normalized eligible records with the `VERIFIED FIXTURE` label, source URL and verification time. The dashboard's server-side proxy checks the marker, required metadata and future timestamp; no credential or external fixture call is involved. Its existing cache plus the FastAPI process cache prevent a registry reread on every browser request.
+
+For an eligible fixture, the existing FastAPI prediction route invokes the trained model for that format. It returns unavailable when the artifact is missing or probabilities fail validation. A deterministic event key based on fixture ID and model version prevents repeated page loads from creating duplicate history entries for that fixture/model. The recorded prediction time and model version remain prediction metadata. Historical Cricsheet match data and walk-forward backtest rows remain separate, while `actual_outcome` is only populated by the separate verified-result path after a completed result is independently confirmed. A prediction is never a result.
+
+This manual registry does not discover schedule changes, fetch results, or make data live. A maintainer must revisit the source at least within the configured freshness window. If the checked-in entries expire or are not updated, validation drops them and the dashboard returns to its unavailable state. The registry is not a guarantee that model artifacts or opponent history can support a prediction.

@@ -5,6 +5,7 @@ import Flag from "../Flag";
 import DataBadge from "./DataBadge";
 import { pct, type Upcoming } from "@/lib/cricket";
 import { DISCLAIMER } from "@/lib/site";
+import { formatUtcDateTime } from "@/lib/datetime";
 
 const FEATURE_LABEL: Record<string, string> = {
   elo_diff: "Team strength", form_diff: "Recent form", h2h_win_rate: "Head-to-head",
@@ -31,10 +32,13 @@ type ModelPrediction = {
 };
 
 function isEligibleFixture(match: Upcoming) {
-  return match.fixture_source === "OFFICIAL_FIXTURE_FEED"
-    && (match.data_label === "HISTORICAL DATA" || match.data_label === "LIVE DATA")
-    && Number.isFinite(Date.parse(`${match.date}T00:00:00Z`))
-    && Date.parse(`${match.date}T00:00:00Z`) > Date.now();
+  return match.fixture_source === "VERIFIED_FIXTURE_REGISTRY"
+    && match.data_label === "VERIFIED FIXTURE"
+    && match.status === "scheduled"
+    && typeof match.start_time === "string"
+    && /(Z|[+-]\d{2}:\d{2})$/.test(match.start_time)
+    && Number.isFinite(Date.parse(match.start_time))
+    && Date.parse(match.start_time) > Date.now();
 }
 
 function toPredictionPayload(value: unknown, hasDraw: boolean): ModelPrediction | null {
@@ -133,7 +137,8 @@ export default function PredictionCards({ matches }: { matches: Upcoming[] }) {
               <span className="flex items-center gap-2"><Flag team={m.opponent} /> {m.opponent}</span>
             </div>
             <div className="mt-3 flex flex-wrap gap-x-3 gap-y-1 font-mono text-[11px] text-foreground/50">
-              <span>{m.date}</span><span>{m.venue}</span><span className="capitalize">{m.venue_type}</span>
+              <span>{m.start_time ? formatUtcDateTime(m.start_time) : m.date}</span><span>{m.venue}</span>
+              {m.data_source && <span>Source: {m.data_source}</span>}
             </div>
             <div className="font-mono mt-4 flex items-center gap-2 border-t border-card-border pt-3 text-[10px] uppercase tracking-[0.12em] text-foreground/55">
               <span className={`h-1.5 w-1.5 rounded-full ${status === "Prediction available" ? "bg-accent-red" : "bg-foreground/25"}`} />

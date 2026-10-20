@@ -9,6 +9,7 @@ Configure via .env: SUPABASE_URL, SUPABASE_KEY (the project's
 service_role key -- this only ever runs server-side, never in a browser).
 """
 
+import math
 import os
 from functools import lru_cache
 
@@ -127,6 +128,91 @@ def fetch_match_predictions() -> list[dict]:
     except Exception as exc:
         print(f"[supabase_store] fetch match_predictions failed (non-fatal): {exc}")
         return []
+
+
+def insert_cricket_prediction_event(event: dict) -> bool:
+    """Append one verified-fixture prediction event without replacing history.
+
+    `event_key` is an idempotency key supplied by the caller for one model
+    inference event. A repeated insert is treated as a duplicate; other
+    storage errors fail closed and never get logged with request credentials.
+    """
+    client = _client()
+    if client is None:
+        return False
+    required = {
+        "event_key", "provider_fixture_id", "teams", "format", "scheduled_start",
+        "predicted_at", "model_version", "predicted_class", "probabilities", "data_source",
+    }
+    if not required.issubset(event):
+        raise ValueError("prediction event is missing required fields")
+    if event["format"] not in {"TEST", "ODI", "T20I"}:
+        raise ValueError("unsupported cricket format")
+    labels = {"india", "opponent", "draw"} if event["format"] == "TEST" else {"india", "opponent"}
+    probabilities = event["probabilities"]
+    if not isinstance(probabilities, dict) or set(probabilities) != labels:
+        raise ValueError("prediction classes do not match the cricket format")
+    values = list(probabilities.values())
+    if any(not isinstance(value, (int, float)) or not math.isfinite(value) or value < 0 or value > 1 for value in values):
+        raise ValueError("prediction probabilities must be finite values from zero to one")
+    if abs(sum(values) - 1.0) > 1e-6:
+        raise ValueError("prediction probabilities must sum to one")
+    if event["predicted_class"] not in labels:
+        raise ValueError("unsupported predicted class")
+    try:
+        client.table("cricket_prediction_events").insert(event).execute()
+        return True
+    except Exception as exc:
+        # PostgREST reports unique violations on duplicate event keys. Do not
+        # log the exception text: upstream client errors can echo request data.
+        if "duplicate key" in str(exc).casefold() or "23505" in str(exc):
+            return False
+        return False
+
+
+def fetch_cricket_prediction_events(limit: int = 100) -> tuple[list[dict], bool]:
+    client = _client()
+    if client is None:
+        return [], False
+    try:
+        response = (
+            client.table("cricket_prediction_events")
+            .select("*")
+            .order("predicted_at", desc=True)
+            .limit(max(1, min(int(limit), 500)))
+            .execute()
+        )
+        return response.data or [], True
+    except Exception:
+        return [], False
+
+
+def attach_verified_cricket_result(
+    fixture_id: str, outcome: str, *, format: str, provider_status: str, result_verified_at: str
+) -> int:
+    """Attach an actual outcome only for a provider-confirmed finished match."""
+    labels = {"india", "opponent", "draw"} if format == "TEST" else {"india", "opponent"}
+    if format not in {"TEST", "ODI", "T20I"} or provider_status != "finished" or outcome not in labels:
+        raise ValueError("actual result requires a verified finished fixture")
+    client = _client()
+    if client is None:
+        return 0
+    try:
+        response = (
+            client.table("cricket_prediction_events")
+            .update({
+                "actual_outcome": outcome,
+                "match_status": "finished",
+                "result_verified_at": result_verified_at,
+            })
+            .eq("provider_fixture_id", fixture_id)
+            .eq("format", format)
+            .is_("actual_outcome", "null")
+            .execute()
+        )
+        return len(response.data or [])
+    except Exception:
+        return 0
 
 
 def upsert_tournament_predictions(prediction_date, team_probs: dict[str, float], model_version: str) -> int:

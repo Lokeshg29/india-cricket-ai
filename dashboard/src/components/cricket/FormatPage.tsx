@@ -13,8 +13,19 @@ import DataBadge from "./DataBadge";
 import { CalibrationChart, FormChart, TrendChart } from "./Charts";
 import { H2H, Ledger, Players, Validation, Venues } from "./Panels";
 import { historicalEvaluation, type FormatData } from "@/lib/cricket";
+import StoredPredictionHistory from "./StoredPredictionHistory";
 
-export default function FormatPage({ data }: { data: FormatData }) {
+export default function FormatPage({
+  data,
+  fixtureStatus,
+  fixtureSource,
+  fixtureReason,
+}: {
+  data: FormatData;
+  fixtureStatus: "available" | "unavailable";
+  fixtureSource: string | null;
+  fixtureReason: string | null;
+}) {
   const stats = [
     { label: "Upcoming matches", value: String(data.upcoming.length) },
     { label: "Recent results", value: String(data.results.length) },
@@ -40,7 +51,9 @@ export default function FormatPage({ data }: { data: FormatData }) {
         <SectionHeading
           eyebrow="Schedule"
           title="Upcoming Matches"
-          subtitle="No verified upcoming international fixture feed is configured. Predictions remain unavailable until a genuine fixture source is connected."
+          subtitle={fixtureStatus === "available"
+            ? `Verified schedule source: ${fixtureSource}. Model probabilities are estimates, not guarantees.`
+            : fixtureReason ?? "No verified upcoming international fixture feed is configured."}
         />
         <PredictionCards matches={[...data.upcoming].sort((a, b) => a.date.localeCompare(b.date))} />
         <div className="mt-10">
@@ -53,8 +66,10 @@ export default function FormatPage({ data }: { data: FormatData }) {
         <SectionHeading
           eyebrow="Predictions"
           title="Prediction History"
-          subtitle="Chronological historical backtest predictions. Source records contain dates, not archived pre-match prediction timestamps."
+          subtitle="Timestamped model estimates are separate from verified match results."
         />
+        <StoredPredictionHistory />
+        <SectionHeading eyebrow="Evaluation" title="Historical Backtest Ledger" subtitle="Chronological holdout predictions from Cricsheet; these are not archived pre-match calls." />
         <Ledger rows={historicalEvaluation.formats[data.slug]?.ledger ?? []} hasDraw={data.has_draw} />
       </Section>
 

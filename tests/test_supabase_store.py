@@ -50,3 +50,24 @@ def test_is_reachable_false_when_query_raises(monkeypatch):
 
     monkeypatch.setattr(supabase_store, "_client", lambda: FakeClient())
     assert supabase_store.is_reachable() is False
+
+
+def test_fetch_match_predictions_returns_existing_append_only_rows(monkeypatch):
+    rows = [{"home_team": "India", "away_team": "Australia"}]
+
+    class FakeQuery:
+        def select(self, *_args):
+            return self
+
+        def order(self, *_args):
+            return self
+
+        def execute(self):
+            return type("Response", (), {"data": rows})()
+
+    class FakeClient:
+        def table(self, _name):
+            return FakeQuery()
+
+    monkeypatch.setattr(supabase_store, "_client", lambda: FakeClient())
+    assert supabase_store.fetch_match_predictions() == rows

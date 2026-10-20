@@ -8,15 +8,20 @@ import ResultCards from "@/components/ResultCards";
 import MethodologySection from "@/components/MethodologySection";
 import TechStack from "@/components/TechStack";
 import PredictionCards from "@/components/cricket/PredictionCards";
+import StoredPredictionHistory from "@/components/cricket/StoredPredictionHistory";
 import ModelPerformance from "@/components/cricket/ModelPerformance";
 import DataBadge from "@/components/cricket/DataBadge";
 import { Ledger, Validation } from "@/components/cricket/Panels";
 import { CalibrationChart, FormChart } from "@/components/cricket/Charts";
 import { aggregateDataLabel, allFormats, historicalEvaluation } from "@/lib/cricket";
+import { getFixtureFeed } from "@/lib/server-fixtures";
 
-export default function Home() {
+export const dynamic = "force-dynamic";
+
+export default async function Home() {
   const formats = allFormats();
-  const upcoming = formats.flatMap((f) => f.upcoming).sort((a, b) => a.date.localeCompare(b.date));
+  const fixtureFeed = await getFixtureFeed();
+  const upcoming = fixtureFeed.fixtures.sort((a, b) => (a.start_time ?? a.date).localeCompare(b.start_time ?? b.date));
   const results = formats.flatMap((f) =>
     f.results.map((r) => ({ ...r, fmt: f.format })),
   ).sort((a, b) => b.date.localeCompare(a.date)).slice(0, 6);
@@ -45,7 +50,9 @@ export default function Home() {
         <SectionHeading
           eyebrow="Schedule"
           title="Upcoming Matches"
-          subtitle="No verified upcoming international fixture feed is configured. Fixtures and prediction probabilities remain unavailable until a genuine source is connected."
+          subtitle={fixtureFeed.status === "available"
+            ? `Verified schedule source: ${fixtureFeed.source}. Model probabilities are estimates, not guarantees.`
+            : fixtureFeed.reason ?? "No verified upcoming international fixture feed is configured."}
         />
         <PredictionCards matches={upcoming} />
         <div className="mt-10">
@@ -58,9 +65,13 @@ export default function Home() {
         <SectionHeading
           eyebrow="Predictions"
           title="Prediction History"
-          subtitle="Chronological historical backtest predictions. Source records contain dates, not archived pre-match prediction timestamps."
+          subtitle="Timestamped model estimates are stored separately from match results. Actual outcomes appear only after a provider verifies a completed match."
         />
-        <Ledger rows={ledger} hasDraw />
+        <StoredPredictionHistory />
+        <div className="mt-8">
+          <SectionHeading eyebrow="Evaluation" title="Historical Backtest Ledger" subtitle="Chronological holdout predictions from Cricsheet. These are not archived pre-match calls." />
+          <Ledger rows={ledger} hasDraw />
+        </div>
       </Section>
 
       <Section id="analytics">

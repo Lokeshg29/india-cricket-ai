@@ -53,3 +53,28 @@ create index if not exists idx_tournament_predictions_team
     on tournament_predictions (team);
 create index if not exists idx_tournament_predictions_date
     on tournament_predictions (prediction_date);
+
+-- Cricket pre-match predictions are append-only events. A verified actual
+-- result is a separate nullable field and can only be attached to a finished
+-- fixture; predicted_class is never copied into actual_outcome.
+create table if not exists cricket_prediction_events (
+    id bigserial primary key,
+    event_key text not null unique,
+    provider_fixture_id text not null,
+    teams jsonb not null,
+    format text not null check (format in ('TEST', 'ODI', 'T20I')),
+    scheduled_start timestamptz not null,
+    predicted_at timestamptz not null,
+    model_version text not null,
+    predicted_class text not null check (predicted_class in ('india', 'opponent', 'draw')),
+    probabilities jsonb not null,
+    data_source text not null,
+    match_status text not null default 'scheduled',
+    actual_outcome text check (actual_outcome in ('india', 'opponent', 'draw')),
+    result_verified_at timestamptz,
+    inserted_at timestamptz not null default now(),
+    check (predicted_class <> 'draw' or format = 'TEST'),
+    check (actual_outcome <> 'draw' or format = 'TEST')
+);
+create index if not exists idx_cricket_prediction_events_fixture
+    on cricket_prediction_events (provider_fixture_id, predicted_at desc);

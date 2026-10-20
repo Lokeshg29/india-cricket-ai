@@ -1,14 +1,5 @@
-import testData from "../../../../../data/cricket/test.json";
-import odiData from "../../../../../data/cricket/odi.json";
-import t20iData from "../../../../../data/cricket/t20i.json";
 import type { DataLabel, Upcoming } from "@/lib/cricket";
-
-type FormatExport = { upcoming: Upcoming[] };
-const schedules: Record<string, FormatExport> = {
-  test: testData as unknown as FormatExport,
-  odi: odiData as unknown as FormatExport,
-  t20i: t20iData as unknown as FormatExport,
-};
+import { getFixtureFeed } from "@/lib/server-fixtures";
 
 const unavailable = (reason: string, status: number) =>
   Response.json({ status: "unavailable", reason, data_label: "MODEL PREDICTION" satisfies DataLabel }, { status });
@@ -23,14 +14,20 @@ export async function POST(request: Request) {
 
   const format = typeof body.format === "string" ? body.format.toLowerCase() : "";
   const matchId = typeof body.match_id === "string" ? body.match_id : "";
-  const fixtures = schedules[format]?.upcoming ?? [];
+  if (!["test", "odi", "t20i"].includes(format) || !matchId) {
+    return unavailable("Invalid prediction request.", 400);
+  }
+  const feed = await getFixtureFeed();
+  const fixtures: Upcoming[] = feed.fixtures;
   const fixture = fixtures.find((match) => match.match_id === matchId);
   if (!fixture
-    || fixture.fixture_source !== "OFFICIAL_FIXTURE_FEED"
-    || !["LIVE DATA", "HISTORICAL DATA"].includes(fixture.data_label)) {
+    || fixture.format.toLowerCase() !== format
+    || fixture.fixture_source !== "VERIFIED_FIXTURE_REGISTRY"
+    || fixture.data_label !== "VERIFIED FIXTURE") {
     return unavailable("Prediction requires a verified upcoming fixture from a configured source.", 404);
   }
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(fixture.date) || fixture.date <= new Date().toISOString().slice(0, 10)) {
+  if (!fixture.start_time || !/(Z|[+-]\d{2}:\d{2})$/.test(fixture.start_time)
+    || !Number.isFinite(Date.parse(fixture.start_time)) || Date.parse(fixture.start_time) <= Date.now()) {
     return unavailable("Prediction requires a future fixture date.", 400);
   }
 
@@ -38,13 +35,12 @@ export async function POST(request: Request) {
   if (!apiBase) return unavailable("Cricket prediction service is not configured.", 503);
 
   try {
-    const endpoint = new URL("/cricket/predict", apiBase);
+    const endpoint = new URL(`/cricket/fixtures/${encodeURIComponent(matchId)}/predict`, apiBase);
     const upstream = await fetch(endpoint, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ format, opponent: fixture.opponent, as_of: fixture.date }),
       cache: "no-store",
-      signal: AbortSignal.timeout(8000),
+      // First-time model explanations can take longer than fixture/history reads.
+      signal: AbortSignal.timeout(30000),
     });
     if (!upstream.ok) return unavailable("Cricket prediction service is unavailable.", 503);
 

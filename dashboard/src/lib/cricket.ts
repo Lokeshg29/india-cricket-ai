@@ -11,7 +11,7 @@ import historicalEvaluationRaw from "../../data/cricket/historical_evaluation.js
 // Every exported file carries a data_label so the UI can't present demo
 // numbers as real. LIVE DATA / HISTORICAL DATA are only used once a real
 // ingestion source is wired in (see src/sports/cricket/demo_data.py).
-export type DataLabel = "LIVE DATA" | "HISTORICAL DATA" | "HISTORICAL BACKTEST" | "MODEL PREDICTION" | "DEMO DATA" | "UNAVAILABLE";
+export type DataLabel = "LIVE DATA" | "VERIFIED FIXTURE" | "HISTORICAL DATA" | "HISTORICAL BACKTEST" | "MODEL PREDICTION" | "DEMO DATA" | "UNAVAILABLE";
 export type AnalyticsSources = Record<string, { status: DataLabel; source: string | null; note?: string }>;
 export type Outcome = "india" | "opponent" | "draw";
 
@@ -27,8 +27,13 @@ export type Upcoming = {
   explanation: { feature: string; contribution: number }[];
   explanation_method: string;
   data_label: DataLabel;
-  fixture_source?: "OFFICIAL_FIXTURE_FEED" | null;
+  fixture_source?: "VERIFIED_FIXTURE_REGISTRY" | null;
   prediction_status?: "available" | "unavailable";
+  start_time?: string;
+  status?: "scheduled" | "live" | "finished" | "postponed" | "cancelled";
+  data_source?: string;
+  source_url?: string;
+  verified_at?: string;
 };
 
 export type LedgerRow = {
