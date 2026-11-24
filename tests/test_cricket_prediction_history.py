@@ -1,14 +1,9 @@
 import pytest
 from datetime import datetime, timezone
 
-from fastapi.testclient import TestClient
-
 from src.ingestion import supabase_store
 from src.serving import app
 from src.sports.cricket.fixtures import normalize_fixture, UnavailableFixtureProvider
-
-
-client = TestClient(app.app)
 
 
 def prediction_event(**changes):
@@ -46,8 +41,8 @@ def test_prediction_event_append_and_duplicate_prevention(monkeypatch):
 
     monkeypatch.setattr(supabase_store, "_client", lambda: Client())
     event = prediction_event()
-    assert supabase_store.insert_cricket_prediction_event(event) is True
-    assert supabase_store.insert_cricket_prediction_event(event) is False
+    assert supabase_store.insert_cricket_prediction_event(event) == "stored"
+    assert supabase_store.insert_cricket_prediction_event(event) == "duplicate"
     assert len(inserts) == 2
     assert inserts[0]["predicted_class"] == "draw"
 
@@ -69,7 +64,57 @@ def test_history_supports_odi_t20i_prediction_classes(monkeypatch, changes):
             return Query()
 
     monkeypatch.setattr(supabase_store, "_client", lambda: Client())
-    assert supabase_store.insert_cricket_prediction_event(prediction_event(**changes)) is True
+    assert supabase_store.insert_cricket_prediction_event(prediction_event(**changes)) == "stored"
+
+
+def test_prediction_event_database_failure_is_reported_and_logged_safely(monkeypatch, caplog):
+    class Query:
+        def insert(self, _payload):
+            return self
+
+        def execute(self):
+            raise RuntimeError("database unavailable; secret sentinel")
+
+    class Client:
+        def table(self, _table):
+            return Query()
+
+    monkeypatch.setattr(supabase_store, "_client", lambda: Client())
+    assert supabase_store.insert_cricket_prediction_event(prediction_event()) == "unavailable"
+    assert "RuntimeError" in caplog.text
+    assert "secret sentinel" not in caplog.text
+
+
+def test_history_query_orders_newest_prediction_first_and_api_returns_it(monkeypatch):
+    latest = prediction_event(predicted_at="2026-11-02T12:00:00Z")
+    older = prediction_event(predicted_at="2026-10-20T12:00:00Z")
+    order_calls = []
+
+    class Query:
+        def select(self, _columns):
+            return self
+
+        def order(self, column, desc=False):
+            order_calls.append((column, desc))
+            return self
+
+        def limit(self, _count):
+            return self
+
+        def execute(self):
+            return type("Result", (), {"data": [latest, older]})()
+
+    class Client:
+        def table(self, _table):
+            return Query()
+
+    monkeypatch.setattr(supabase_store, "_client", lambda: Client())
+    response = app.cricket_prediction_history()
+    assert response["status"] == "available"
+    assert [row["predicted_at"] for row in response["records"]] == [
+        "2026-11-02T12:00:00Z", "2026-10-20T12:00:00Z",
+    ]
+    assert order_calls == [("predicted_at", True)]
 
 
 def test_actual_outcome_only_attaches_after_verified_finished_status(monkeypatch):
@@ -112,7 +157,7 @@ def test_actual_outcome_only_attaches_after_verified_finished_status(monkeypatch
 def test_verified_fixture_prediction_is_stored_as_an_append_only_event(monkeypatch):
     fixture = normalize_fixture({
         "id": "registry-odi-1", "gender": "men", "competition_type": "international", "team_level": "senior",
-        "format": "ODI", "teams": ["India", "Australia"], "scheduled_start": "2026-11-01T10:00:00Z",
+        "format": "ODI", "teams": ["India", "Australia"], "scheduled_start": "2027-11-01T10:00:00Z",
         "status": "scheduled", "source_url": "https://example.test/fixture", "verified_at": "2026-10-18T10:00:00Z",
         "verification_status": "verified", "venue": "Sydney",
     }, now=datetime(2026, 10, 18, 12, tzinfo=timezone.utc))
@@ -129,21 +174,20 @@ def test_verified_fixture_prediction_is_stored_as_an_append_only_event(monkeypat
 
     monkeypatch.setattr("src.sports.cricket.service.CricketPredictionService", FakePredictionService)
     inserted = []
-    monkeypatch.setattr(supabase_store, "insert_cricket_prediction_event", lambda event: inserted.append(event) or True)
+    monkeypatch.setattr(supabase_store, "insert_cricket_prediction_event", lambda event: inserted.append(event) or "stored")
 
-    response = client.post("/cricket/fixtures/registry-odi-1/predict")
-    assert response.status_code == 200
-    assert response.json()["history_status"] == "stored"
-    assert response.json()["probabilities"] == {"india": 0.6, "opponent": 0.4}
+    response = app.predict_verified_cricket_fixture("registry-odi-1")
+    assert response["history_status"] == "stored"
+    assert response["probabilities"] == {"india": 0.6, "opponent": 0.4}
     assert inserted[0]["provider_fixture_id"] == "registry-odi-1"
-    assert inserted[0]["event_key"] == __import__("hashlib").sha256(b"registry-odi-1:odi-v1").hexdigest()
+    assert inserted[0]["event_key"] == __import__("hashlib").sha256(b"registry-odi-1:odi-v1:2026-10-11").hexdigest()
     assert "actual_outcome" not in inserted[0]
 
 
 def test_repeated_fixture_prediction_uses_idempotent_history_key(monkeypatch):
     fixture = normalize_fixture({
         "id": "registry-t20i-1", "gender": "men", "competition_type": "international", "team_level": "senior",
-        "format": "T20I", "teams": ["India", "Australia"], "scheduled_start": "2026-11-01T10:00:00Z",
+        "format": "T20I", "teams": ["India", "Australia"], "scheduled_start": "2027-11-01T10:00:00Z",
         "status": "scheduled", "source_url": "https://example.test/fixture", "verified_at": "2026-10-18T10:00:00Z",
         "verification_status": "verified",
     }, now=datetime(2026, 10, 18, 12, tzinfo=timezone.utc))
@@ -157,15 +201,42 @@ def test_repeated_fixture_prediction_uses_idempotent_history_key(monkeypatch):
     keys = []
     def insert_once(event):
         keys.append(event["event_key"])
-        return len(keys) == 1
+        return "stored" if len(keys) == 1 else "duplicate"
 
     monkeypatch.setattr(supabase_store, "insert_cricket_prediction_event", insert_once)
-    first = client.post("/cricket/fixtures/registry-t20i-1/predict")
-    second = client.post("/cricket/fixtures/registry-t20i-1/predict")
-    assert first.status_code == second.status_code == 200
-    assert first.json()["history_status"] == "stored"
-    assert second.json()["history_status"] == "unavailable"
+    first = app.predict_verified_cricket_fixture("registry-t20i-1")
+    second = app.predict_verified_cricket_fixture("registry-t20i-1")
+    assert first["history_status"] == "stored"
+    assert second["history_status"] == "already_recorded"
     assert len(keys) == 2 and keys[0] == keys[1]
+
+
+def test_new_daily_prediction_gets_a_new_history_event_key(monkeypatch):
+    fixture = normalize_fixture({
+        "id": "registry-daily-1", "gender": "men", "competition_type": "international", "team_level": "senior",
+        "format": "ODI", "teams": ["India", "New Zealand"], "scheduled_start": "2027-11-04T07:30:00+05:30",
+        "status": "scheduled", "source_url": "https://example.test/fixture", "verified_at": "2026-10-18T10:00:00Z",
+        "verification_status": "verified",
+    }, now=datetime(2026, 10, 18, 12, tzinfo=timezone.utc))
+    monkeypatch.setattr("src.sports.cricket.fixtures.get_fixture_feed", lambda: {"status": "available", "fixtures": [fixture]})
+
+    class FakePredictionService:
+        calls = 0
+
+        def predict_fixture(self, *_args):
+            type(self).calls += 1
+            day = "2026-11-01" if type(self).calls == 1 else "2026-11-02"
+            return {"status": "available", "format": "ODI", "prediction": "india", "probabilities": {"india": .6, "opponent": .4}, "prediction_timestamp": f"{day}T12:00:00+00:00", "model_version": "odi-v1", "data_label": "MODEL PREDICTION"}
+
+    monkeypatch.setattr("src.sports.cricket.service.CricketPredictionService", FakePredictionService)
+    inserted = []
+    monkeypatch.setattr(supabase_store, "insert_cricket_prediction_event", lambda event: inserted.append(event) or "stored")
+    first = app.predict_verified_cricket_fixture("registry-daily-1")
+    second = app.predict_verified_cricket_fixture("registry-daily-1")
+    assert first["history_status"] == second["history_status"] == "stored"
+    assert inserted[0]["event_key"] != inserted[1]["event_key"]
+    assert inserted[0]["predicted_at"] == "2026-11-01T12:00:00+00:00"
+    assert inserted[1]["predicted_at"] == "2026-11-02T12:00:00+00:00"
 
 
 def test_test_fixture_prediction_preserves_draw_class(monkeypatch):
@@ -183,10 +254,9 @@ def test_test_fixture_prediction_preserves_draw_class(monkeypatch):
             return {"status": "available", "format": "TEST", "prediction": "draw", "probabilities": {"india": .3, "draw": .4, "opponent": .3}, "prediction_timestamp": "2026-10-18T12:00:00+00:00", "model_version": "test-v1", "data_label": "MODEL PREDICTION"}
 
     monkeypatch.setattr("src.sports.cricket.service.CricketPredictionService", FakeTestService)
-    monkeypatch.setattr(supabase_store, "insert_cricket_prediction_event", lambda _event: True)
-    response = client.post("/cricket/fixtures/mock-registry-test/predict")
-    assert response.status_code == 200
-    assert response.json()["probabilities"] == {"india": .3, "draw": .4, "opponent": .3}
+    monkeypatch.setattr(supabase_store, "insert_cricket_prediction_event", lambda _event: "stored")
+    response = app.predict_verified_cricket_fixture("mock-registry-test")
+    assert response["probabilities"] == {"india": .3, "draw": .4, "opponent": .3}
 
 
 def test_prediction_is_unavailable_when_format_model_artifact_is_missing(monkeypatch):
@@ -203,10 +273,9 @@ def test_prediction_is_unavailable_when_format_model_artifact_is_missing(monkeyp
             raise FileNotFoundError("test model artifact unavailable")
 
     monkeypatch.setattr("src.sports.cricket.service.CricketPredictionService", MissingModel)
-    response = client.post("/cricket/fixtures/registry-test-1/predict")
-    assert response.status_code == 200
-    assert response.json()["status"] == "unavailable"
-    assert "probabilities" not in response.json()
+    response = app.predict_verified_cricket_fixture("registry-test-1")
+    assert response["status"] == "unavailable"
+    assert "probabilities" not in response
 
 
 def test_prediction_is_available_but_history_failure_is_not_claimed_as_saved(monkeypatch):
@@ -223,20 +292,18 @@ def test_prediction_is_available_but_history_failure_is_not_claimed_as_saved(mon
             return {"status": "available", "format": "ODI", "prediction": "india", "probabilities": {"india": .6, "opponent": .4}, "prediction_timestamp": "2026-10-18T12:00:00+00:00", "model_version": "odi-v1", "data_label": "MODEL PREDICTION"}
 
     monkeypatch.setattr("src.sports.cricket.service.CricketPredictionService", FakeOdiService)
-    monkeypatch.setattr(supabase_store, "insert_cricket_prediction_event", lambda _event: False)
-    response = client.post("/cricket/fixtures/mock-storage-failure/predict")
-    assert response.status_code == 200
-    assert response.json()["status"] == "available"
-    assert response.json()["history_status"] == "unavailable"
-    assert response.json()["data_label"] == "MODEL PREDICTION"
+    monkeypatch.setattr(supabase_store, "insert_cricket_prediction_event", lambda _event: "unavailable")
+    response = app.predict_verified_cricket_fixture("mock-storage-failure")
+    assert response["status"] == "available"
+    assert response["history_status"] == "unavailable"
+    assert response["data_label"] == "MODEL PREDICTION"
 
 
 def test_fixture_prediction_is_unavailable_without_fixture_provider(monkeypatch):
     monkeypatch.setattr("src.sports.cricket.fixtures.get_fixture_feed", lambda: UnavailableFixtureProvider().upcoming())
-    response = client.post("/cricket/fixtures/not-a-real-fixture/predict")
-    assert response.status_code == 200
-    assert response.json()["status"] == "unavailable"
-    assert "probabilities" not in response.json()
+    response = app.predict_verified_cricket_fixture("not-a-real-fixture")
+    assert response["status"] == "unavailable"
+    assert "probabilities" not in response
 
 
 def test_fixture_api_returns_validated_registry_metadata(monkeypatch):
@@ -249,9 +316,7 @@ def test_fixture_api_returns_validated_registry_metadata(monkeypatch):
     monkeypatch.setattr("src.sports.cricket.fixtures.get_fixture_feed", lambda: {
         "status": "available", "source": "Verified fixture registry", "fixtures": [fixture],
     })
-    response = client.get("/cricket/fixtures")
-    assert response.status_code == 200
-    payload = response.json()
+    payload = app.cricket_fixtures()
     assert payload["status"] == "available"
     assert payload["fixtures"][0]["data_label"] == "VERIFIED FIXTURE"
     assert payload["fixtures"][0]["verification_status"] == "verified"
@@ -262,18 +327,16 @@ def test_fixture_and_history_routes_have_truthful_unavailable_states(monkeypatch
     secret = "fixture-secret-sentinel"
     monkeypatch.setenv("CRICKET_FIXTURE_API_KEY", secret)
     monkeypatch.setattr("src.sports.cricket.fixtures.get_fixture_feed", lambda: UnavailableFixtureProvider().upcoming())
-    fixtures = client.get("/cricket/fixtures")
-    assert fixtures.status_code == 200
-    assert fixtures.json()["status"] == "unavailable"
-    assert fixtures.json()["fixtures"] == []
-    assert secret not in fixtures.text
+    fixtures = app.cricket_fixtures()
+    assert fixtures["status"] == "unavailable"
+    assert fixtures["fixtures"] == []
+    assert secret not in str(fixtures)
 
     monkeypatch.setattr(supabase_store, "fetch_cricket_prediction_events", lambda _limit: ([], False))
     monkeypatch.setattr(supabase_store, "SUPABASE_URL", None)
     monkeypatch.setattr(supabase_store, "SUPABASE_KEY", None)
-    history = client.get("/cricket/predictions/history")
-    assert history.status_code == 200
-    assert history.json()["status"] == "unavailable"
-    assert history.json()["records"] == []
-    assert "key" not in history.text.casefold()
+    history = app.cricket_prediction_history()
+    assert history["status"] == "unavailable"
+    assert history["records"] == []
+    assert "key" not in str(history).casefold()
     assert secret not in caplog.text

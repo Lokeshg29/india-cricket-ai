@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import DataBadge from "./DataBadge";
 import { pct } from "@/lib/cricket";
-import { formatUtcDateTime } from "@/lib/datetime";
+import { formatIstDateTime } from "@/lib/datetime";
 
 type PredictionEvent = {
   provider_fixture_id: string;
@@ -81,8 +81,8 @@ export default function StoredPredictionHistory() {
             <DataBadge label="MODEL PREDICTION" />
           </div>
           <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 font-mono text-[11px] text-foreground/50">
-            <span>Scheduled {formatUtcDateTime(event.scheduled_start)}</span>
-            <span>Predicted {formatUtcDateTime(event.predicted_at)}</span>
+            <span>Scheduled {formatIstDateTime(event.scheduled_start)}</span>
+            <span>Predicted {formatIstDateTime(event.predicted_at)}</span>
             <span>Source {event.data_source}</span>
             <span>Model {event.model_version}</span>
           </div>

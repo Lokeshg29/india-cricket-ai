@@ -5,7 +5,7 @@ import Flag from "../Flag";
 import DataBadge from "./DataBadge";
 import { pct, type Upcoming } from "@/lib/cricket";
 import { DISCLAIMER } from "@/lib/site";
-import { formatUtcDateTime } from "@/lib/datetime";
+import { formatIstDateTime } from "@/lib/datetime";
 
 const FEATURE_LABEL: Record<string, string> = {
   elo_diff: "Team strength", form_diff: "Recent form", h2h_win_rate: "Head-to-head",
@@ -137,7 +137,7 @@ export default function PredictionCards({ matches }: { matches: Upcoming[] }) {
               <span className="flex items-center gap-2"><Flag team={m.opponent} /> {m.opponent}</span>
             </div>
             <div className="mt-3 flex flex-wrap gap-x-3 gap-y-1 font-mono text-[11px] text-foreground/50">
-              <span>{m.start_time ? formatUtcDateTime(m.start_time) : m.date}</span><span>{m.venue}</span>
+              <span>{m.start_time ? formatIstDateTime(m.start_time) : m.date}</span><span>{m.venue}</span>
               {m.data_source && <span>Source: {m.data_source}</span>}
             </div>
             <div className="font-mono mt-4 flex items-center gap-2 border-t border-card-border pt-3 text-[10px] uppercase tracking-[0.12em] text-foreground/55">

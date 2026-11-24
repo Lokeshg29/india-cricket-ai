@@ -1,4 +1,5 @@
 import DataBadge from "./DataBadge";
+import { formatIstDateTime } from "@/lib/datetime";
 import Flag from "../Flag";
 import { metricOrPending, pct, resultLabel, type FormatData, type HistoricalFormatEvaluation } from "@/lib/cricket";
 
@@ -178,7 +179,7 @@ export function Ledger({ rows, hasDraw }: { rows: FormatData["ledger"]; hasDraw:
               <summary className="cursor-pointer text-xs text-foreground/50 transition-colors hover:text-foreground">Model details</summary>
               <dl className="mt-2 space-y-1 text-[11px] text-foreground/60">
                 <div className="flex justify-between gap-3"><dt>Model version</dt><dd className="break-all text-right">{r.model_version}</dd></div>
-                <div className="flex justify-between gap-3"><dt>Prediction timestamp</dt><dd className="text-right">{r.prediction_timestamp ?? "Unavailable (source has date only)"}</dd></div>
+                <div className="flex justify-between gap-3"><dt>Prediction timestamp</dt><dd className="text-right">{r.prediction_timestamp ? formatIstDateTime(r.prediction_timestamp) : "Unavailable (source has date only)"}</dd></div>
                 {r.evaluation_timestamp && <div className="flex justify-between gap-3"><dt>Evaluation run</dt><dd className="text-right">{r.evaluation_timestamp}</dd></div>}
                 <div className="flex justify-between gap-3"><dt>Pre-match verified</dt><dd>{r.verified_pre_match ? "Yes" : "No"}</dd></div>
               </dl>

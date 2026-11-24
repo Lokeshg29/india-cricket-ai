@@ -10,11 +10,13 @@ service_role key -- this only ever runs server-side, never in a browser).
 """
 
 import math
+import logging
 import os
 from functools import lru_cache
 
 SUPABASE_URL = os.environ.get("SUPABASE_URL")
 SUPABASE_KEY = os.environ.get("SUPABASE_KEY")
+logger = logging.getLogger(__name__)
 
 
 @lru_cache(maxsize=1)
@@ -130,16 +132,16 @@ def fetch_match_predictions() -> list[dict]:
         return []
 
 
-def insert_cricket_prediction_event(event: dict) -> bool:
+def insert_cricket_prediction_event(event: dict) -> str:
     """Append one verified-fixture prediction event without replacing history.
 
     `event_key` is an idempotency key supplied by the caller for one model
-    inference event. A repeated insert is treated as a duplicate; other
-    storage errors fail closed and never get logged with request credentials.
+    inference snapshot. Returns `stored`, `duplicate`, or `unavailable` so a
+    repeated insert is distinguishable from a database failure.
     """
     client = _client()
     if client is None:
-        return False
+        return "unavailable"
     required = {
         "event_key", "provider_fixture_id", "teams", "format", "scheduled_start",
         "predicted_at", "model_version", "predicted_class", "probabilities", "data_source",
@@ -161,13 +163,14 @@ def insert_cricket_prediction_event(event: dict) -> bool:
         raise ValueError("unsupported predicted class")
     try:
         client.table("cricket_prediction_events").insert(event).execute()
-        return True
+        return "stored"
     except Exception as exc:
         # PostgREST reports unique violations on duplicate event keys. Do not
         # log the exception text: upstream client errors can echo request data.
         if "duplicate key" in str(exc).casefold() or "23505" in str(exc):
-            return False
-        return False
+            return "duplicate"
+        logger.error("Supabase cricket prediction insert failed (%s)", type(exc).__name__)
+        return "unavailable"
 
 
 def fetch_cricket_prediction_events(limit: int = 100) -> tuple[list[dict], bool]:

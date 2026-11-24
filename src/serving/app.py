@@ -289,10 +289,17 @@ def predict_verified_cricket_fixture(fixture_id: str):
         return {"status": "unavailable", "reason": "Model probabilities failed validation.", "data_label": "MODEL PREDICTION"}
 
     predicted_at = result["prediction_timestamp"]
-    # A fixture/model pair is one logical prediction-history event. Repeated
-    # page loads may re-score it, but the unique event key prevents duplicate rows.
-    event_key = hashlib.sha256(f"{fixture_id}:{result['model_version']}".encode()).hexdigest()
-    persistent = supabase_store.insert_cricket_prediction_event({
+    # Keep one history snapshot per fixture/model/UTC day. Repeated page loads
+    # on the same day stay idempotent, while a later day's prediction can be
+    # recorded without colliding with the first-ever prediction for the fixture.
+    prediction_time = datetime.fromisoformat(predicted_at.replace("Z", "+00:00"))
+    if prediction_time.tzinfo is None:
+        return {"status": "unavailable", "reason": "Prediction timestamp is missing a timezone.", "data_label": "MODEL PREDICTION"}
+    prediction_day = prediction_time.astimezone(timezone.utc).date().isoformat()
+    event_key = hashlib.sha256(
+        f"{fixture_id}:{result['model_version']}:{prediction_day}".encode()
+    ).hexdigest()
+    persistence_status = supabase_store.insert_cricket_prediction_event({
         "event_key": event_key,
         "provider_fixture_id": fixture_id,
         "teams": fixture["teams"],
@@ -305,7 +312,14 @@ def predict_verified_cricket_fixture(fixture_id: str):
         "data_source": fixture["data_source"],
         "match_status": "scheduled",
     })
-    return {**result, "history_status": "stored" if persistent else "unavailable"}
+    return {
+        **result,
+        "history_status": {
+            "stored": "stored",
+            "duplicate": "already_recorded",
+            "unavailable": "unavailable",
+        }.get(persistence_status, "unavailable"),
+    }
 
 
 @app.post("/explain")

@@ -5,6 +5,11 @@ import { allFormats, dataQuality, drift, metricOrPending, modelRegistry, pct, sy
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import { PRODUCT_NAME } from "@/lib/site";
+import { getFixtureFeed } from "@/lib/server-fixtures";
+import { getAdminDataQuality, statusGeneratedAt } from "@/lib/admin-status";
+import { formatIstDateTime } from "@/lib/datetime";
+
+export const dynamic = "force-dynamic";
 
 const Card = ({ title, children }: { title: string; children: React.ReactNode }) => (
   <div className="glass-card rounded-lg p-4">
@@ -13,8 +18,11 @@ const Card = ({ title, children }: { title: string; children: React.ReactNode })
   </div>
 );
 
-export default function AdminPage() {
+export default async function AdminPage() {
   const formats = allFormats();
+  const fixtureFeed = await getFixtureFeed();
+  const currentDataQuality = getAdminDataQuality(dataQuality, fixtureFeed);
+  const generatedAt = statusGeneratedAt();
   return (
     <main className="relative">
       <Nav />
@@ -38,19 +46,19 @@ export default function AdminPage() {
               {Object.entries(systemHealth).filter(([k]) => k !== "generated_at" && k !== "data_label").map(([k, v]) => (
                 <li key={k} className="flex justify-between"><span>{k}</span><span>{v}</span></li>
               ))}
-              <li className="flex justify-between"><span>generated_at</span><span>{systemHealth.generated_at.slice(0, 19)}Z</span></li>
+              <li className="flex justify-between"><span>generated_at</span><span>{generatedAt}</span></li>
             </ul>
           </Card>
           <Card title="Data quality">
             <ul className="font-mono space-y-1 text-sm text-foreground/75">
-              {dataQuality.checks.map((c) => (
+              {currentDataQuality.checks.map((c) => (
                 <li key={c.name} className="flex justify-between">
                   <span>{c.name}</span>
                   <span className={c.status === "pass" ? "text-accent" : "text-saffron"}>{c.status}</span>
                 </li>
               ))}
             </ul>
-            <div className="mt-3"><DataBadge label={dataQuality.data_label} /></div>
+            <div className="mt-3"><DataBadge label={currentDataQuality.data_label} /></div>
           </Card>
         </div>
       </section>
@@ -69,7 +77,7 @@ export default function AdminPage() {
                   <div className="flex justify-between"><dt>backend</dt><dd className="text-right text-xs">{reg?.backend}</dd></div>
                   <div className="flex justify-between"><dt>accuracy</dt><dd>{metricOrPending(f.validation?.accuracy, (n) => pct(n))}</dd></div>
                   <div className="flex justify-between"><dt>predictions</dt><dd>{f.summary.predictions_generated}</dd></div>
-                  <div className="flex justify-between"><dt>latest prediction</dt><dd>{latest?.prediction_timestamp?.slice(0, 10) ?? "Unavailable (date-only source)"}</dd></div>
+                  <div className="flex justify-between"><dt>latest prediction</dt><dd>{latest?.prediction_timestamp ? formatIstDateTime(latest.prediction_timestamp) : "Unavailable (date-only source)"}</dd></div>
                 </dl>
                 <div className="mt-3"><DataBadge label={f.data_label} /></div>
               </Card>

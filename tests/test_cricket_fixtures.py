@@ -15,6 +15,7 @@ from src.sports.cricket.fixtures import (
 
 
 NOW = datetime(2026, 10, 18, 12, tzinfo=timezone.utc)
+REGISTRY_CHECK_NOW = datetime(2026, 11, 25, 0, tzinfo=timezone.utc)
 
 
 @pytest.fixture
@@ -96,6 +97,40 @@ def test_registry_excludes_invalid_records_but_keeps_valid_verified_fixture(regi
     response = VerifiedFixtureRegistry(registry, now_fn=lambda: NOW).upcoming()
     assert response["status"] == "available"
     assert [row["match_id"] for row in response["fixtures"]] == ["valid-1"]
+
+
+def test_registry_excludes_past_and_stale_entries(registry_dir):
+    registry = registry_dir / "registry.json"
+    registry.write_text(json.dumps({
+        "schema_version": 1,
+        "verification_max_age_days": 7,
+        "fixtures": [
+            fixture(id="past-fixture", scheduled_start="2026-10-18T11:00:00Z"),
+            fixture(id="stale-fixture", verified_at="2026-10-01T10:00:00Z"),
+            fixture(id="upcoming-fixture"),
+        ],
+    }))
+
+    response = VerifiedFixtureRegistry(registry, now_fn=lambda: NOW).upcoming()
+
+    assert response["status"] == "available"
+    assert [row["match_id"] for row in response["fixtures"]] == ["upcoming-fixture"]
+
+
+def test_checked_in_registry_has_only_the_current_bcci_verified_test():
+    registry = Path(__file__).resolve().parents[1] / "data" / "cricket" / "verified_fixtures.json"
+    response = VerifiedFixtureRegistry(registry, now_fn=lambda: REGISTRY_CHECK_NOW).upcoming()
+
+    assert response["status"] == "available"
+    assert len(response["fixtures"]) == 1
+    test_match = response["fixtures"][0]
+    assert test_match["match_id"] == "registry-india-new-zealand-test-2026-11-27-2"
+    assert test_match["teams"] == ["India", "New Zealand"]
+    assert test_match["format"] == "TEST"
+    assert test_match["start_time"] == "2026-11-26T22:00:00+00:00"
+    assert test_match["venue"] == "Hagley Oval, Christchurch"
+    assert test_match["source_url"] == "https://www.bcci.tv/matches/242119/new-zealand-vs-india"
+    assert test_match["verification_status"] == "verified"
 
 
 def test_unavailable_provider_keeps_empty_state():
