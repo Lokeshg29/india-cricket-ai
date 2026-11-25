@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useRef, useState } from "react";
 import Flag from "../Flag";
 import DataBadge from "./DataBadge";
 import { pct, type Upcoming } from "@/lib/cricket";
@@ -29,6 +29,12 @@ type ModelPrediction = {
   model_version: string;
   explanation: { feature: string; contribution: number }[];
   explanation_method: string;
+};
+
+type FixturePredictionState = {
+  status: "loading" | "available" | "unavailable";
+  prediction?: ModelPrediction;
+  reason?: string;
 };
 
 function isEligibleFixture(match: Upcoming) {
@@ -90,29 +96,50 @@ function Bar({ label, p, tone }: { label: string; p: number; tone: "accent" | "r
 }
 
 export default function PredictionCards({ matches }: { matches: Upcoming[] }) {
-  const [predictions, setPredictions] = useState<Record<string, ModelPrediction>>({});
-  useEffect(() => {
-    const eligible = matches.filter(isEligibleFixture);
-    if (eligible.length === 0) return;
-    const controller = new AbortController();
-    void Promise.all(eligible.map(async (match) => {
-      try {
-        const response = await fetch("/api/cricket/predict", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ format: match.format.toLowerCase(), match_id: match.match_id }),
-          signal: controller.signal,
-        });
-        const prediction = toPredictionPayload(await response.json(), match.format.toLowerCase() === "test");
-        if (prediction && response.ok) {
-          setPredictions((current) => ({ ...current, [match.match_id]: prediction }));
-        }
-      } catch {
-        // Leave this verified fixture visible with prediction unavailable.
-      }
+  const [predictions, setPredictions] = useState<Record<string, FixturePredictionState>>({});
+  const requestsInFlight = useRef(new Set<string>());
+
+  async function getPrediction(match: Upcoming) {
+    if (requestsInFlight.current.has(match.match_id)
+      || predictions[match.match_id]?.status === "available") return;
+
+    requestsInFlight.current.add(match.match_id);
+    setPredictions((current) => ({
+      ...current,
+      [match.match_id]: { status: "loading" },
     }));
-    return () => controller.abort();
-  }, [matches]);
+
+    try {
+      const response = await fetch("/api/cricket/predict", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ format: match.format.toLowerCase(), match_id: match.match_id }),
+      });
+      const payload = await response.json() as { reason?: unknown };
+      const prediction = toPredictionPayload(payload, match.format.toLowerCase() === "test");
+      if (!response.ok || !prediction) {
+        setPredictions((current) => ({
+          ...current,
+          [match.match_id]: {
+            status: "unavailable",
+            reason: typeof payload.reason === "string" ? payload.reason : "Prediction is unavailable right now.",
+          },
+        }));
+        return;
+      }
+      setPredictions((current) => ({
+        ...current,
+        [match.match_id]: { status: "available", prediction },
+      }));
+    } catch {
+      setPredictions((current) => ({
+        ...current,
+        [match.match_id]: { status: "unavailable", reason: "Prediction service could not be reached." },
+      }));
+    } finally {
+      requestsInFlight.current.delete(match.match_id);
+    }
+  }
 
   const list = matches.filter(isEligibleFixture);
   if (list.length === 0) {
@@ -122,9 +149,16 @@ export default function PredictionCards({ matches }: { matches: Upcoming[] }) {
     <div>
       <div className="grid gap-4 lg:grid-cols-2">
         {list.map((m) => {
-          const prediction = predictions[m.match_id];
+          const predictionState = predictions[m.match_id];
+          const prediction = predictionState?.prediction;
           const probability = prediction?.probabilities;
-          const status = probability ? "Prediction available" : "Prediction unavailable";
+          const status = predictionState?.status === "loading"
+            ? "Getting prediction…"
+            : predictionState?.status === "available"
+              ? "Prediction available"
+              : predictionState?.status === "unavailable"
+                ? "Prediction unavailable"
+                : "Prediction not requested";
           return (
           <article key={m.match_id} className="sports-card glass-card rounded-lg p-4 sm:p-5">
             <div className="flex items-center justify-between gap-2">
@@ -140,10 +174,25 @@ export default function PredictionCards({ matches }: { matches: Upcoming[] }) {
               <span>{m.start_time ? formatIstDateTime(m.start_time) : m.date}</span><span>{m.venue}</span>
               {m.data_source && <span>Source: {m.data_source}</span>}
             </div>
+            <button
+              type="button"
+              onClick={() => void getPrediction(m)}
+              disabled={predictionState?.status === "loading" || predictionState?.status === "available"}
+              className="mt-4 rounded border border-accent/50 px-3 py-2 font-mono text-[11px] uppercase tracking-[0.12em] text-accent transition-colors hover:bg-accent/10 disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              {predictionState?.status === "loading"
+                ? "Getting prediction…"
+                : predictionState?.status === "available"
+                  ? "Prediction ready"
+                  : "Get prediction"}
+            </button>
             <div className="font-mono mt-4 flex items-center gap-2 border-t border-card-border pt-3 text-[10px] uppercase tracking-[0.12em] text-foreground/55">
-              <span className={`h-1.5 w-1.5 rounded-full ${status === "Prediction available" ? "bg-accent-red" : "bg-foreground/25"}`} />
+              <span className={`h-1.5 w-1.5 rounded-full ${predictionState?.status === "available" ? "bg-accent-red" : "bg-foreground/25"}`} />
               {status}
             </div>
+            {predictionState?.status === "unavailable" && predictionState.reason && (
+              <p role="status" className="mt-2 text-xs text-foreground/50">{predictionState.reason}</p>
+            )}
             {probability && (
               <div className="mt-4 space-y-3">
                 <Bar label="India" p={probability.india} tone="accent" />
