@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { IBM_Plex_Mono, Space_Grotesk } from "next/font/google";
 import "flag-icons/css/flag-icons.min.css";
 import "./globals.css";
@@ -18,6 +19,13 @@ const plexMono = IBM_Plex_Mono({
   subsets: ["latin"],
 });
 
+const themeInitialization = `try {
+  const storedTheme = window.localStorage.getItem("india-cricket-theme");
+  document.documentElement.dataset.theme = storedTheme === "dark" ? "dark" : "light";
+} catch {
+  document.documentElement.dataset.theme = "light";
+}`;
+
 export const metadata: Metadata = {
   title: "INDIA CRICKET ANALYTICS",
   description:
@@ -33,7 +41,13 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${spaceGrotesk.variable} ${plexMono.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
+      <head>
+        <Script id="india-cricket-theme-init" strategy="beforeInteractive">
+          {themeInitialization}
+        </Script>
+      </head>
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );

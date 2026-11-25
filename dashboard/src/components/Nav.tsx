@@ -1,5 +1,11 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import SportTabs from "./SportTabs";
+import ThemeToggle from "./ThemeToggle";
+import AuthNavControls from "./auth/AuthNavControls";
 import { NAV_BRAND } from "@/lib/site";
 
 const LINKS = [
@@ -8,10 +14,21 @@ const LINKS = [
   { href: "#analytics", label: "Analytics" },
 ];
 
-export default function Nav() {
+export default function Nav({ compact = false }: { compact?: boolean }) {
+  const pathname = usePathname();
+  const [scrolled, setScrolled] = useState(false);
+  const hasHero = pathname === "/" || ["/test", "/odi", "/t20i"].includes(pathname);
+
+  useEffect(() => {
+    const updateScrollState = () => setScrolled(window.scrollY > 12);
+    updateScrollState();
+    window.addEventListener("scroll", updateScrollState, { passive: true });
+    return () => window.removeEventListener("scroll", updateScrollState);
+  }, []);
+
   return (
-    <header className="sticky top-0 z-50 border-b border-card-border bg-background/95">
-      <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-4 py-3 sm:px-6">
+    <header className={`site-nav ${hasHero ? "site-nav--hero" : "site-nav--standalone"} ${scrolled ? "is-scrolled" : ""}`}>
+      <div className="mx-auto flex min-h-[76px] max-w-6xl flex-wrap items-center justify-between gap-3 px-4 py-3 sm:px-6">
         <div className="flex min-w-0 flex-wrap items-center gap-3 sm:gap-5">
           <Link
             href="/"
@@ -19,22 +36,32 @@ export default function Nav() {
           >
             {NAV_BRAND}
           </Link>
-          <SportTabs />
+          {!compact && <SportTabs />}
         </div>
-        <nav className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[11px] uppercase tracking-[0.12em] text-foreground/55">
-          {LINKS.map((l) => (
-            <a key={l.href} href={l.href} className="nav-link transition-colors hover:text-foreground">
-              {l.label}
-            </a>
-          ))}
-          <Link
-            href="/admin"
-            title="Read-only internal dashboard"
-            className="nav-admin rounded border border-foreground/20 px-2.5 py-1 text-foreground/70 transition-colors hover:border-accent-red/60 hover:text-foreground"
-          >
-            Admin
-          </Link>
-        </nav>
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+          <nav aria-label="Main" className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[11px] uppercase tracking-[0.12em] text-secondary">
+            {compact ? (
+              <Link href="/" className="nav-link transition-colors hover:text-foreground">Dashboard</Link>
+            ) : (
+              <>
+                {LINKS.map((l) => (
+                  <a key={l.href} href={l.href} className="nav-link transition-colors hover:text-foreground">
+                    {l.label}
+                  </a>
+                ))}
+                <Link
+                  href="/admin"
+                  title="Read-only internal dashboard"
+                  className="nav-admin rounded border border-card-border px-2.5 py-1 text-foreground/80 transition-colors hover:border-accent-red/60 hover:text-foreground"
+                >
+                  Admin
+                </Link>
+              </>
+            )}
+          </nav>
+          <AuthNavControls />
+          <ThemeToggle />
+        </div>
       </div>
     </header>
   );

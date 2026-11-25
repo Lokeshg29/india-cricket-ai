@@ -81,7 +81,7 @@ function toPredictionPayload(value: unknown, hasDraw: boolean): ModelPrediction 
 }
 
 function Bar({ label, p, tone }: { label: string; p: number; tone: "accent" | "red" | "muted" }) {
-  const bg = tone === "accent" ? "var(--accent)" : tone === "red" ? "var(--accent-red)" : "rgba(255,255,255,0.45)";
+  const bg = tone === "accent" ? "var(--accent)" : tone === "red" ? "var(--accent-red)" : "color-mix(in srgb, var(--foreground) 45%, transparent)";
   return (
     <div>
       <div className="mb-1 flex items-baseline justify-between">
@@ -160,41 +160,75 @@ export default function PredictionCards({ matches }: { matches: Upcoming[] }) {
                 ? "Prediction unavailable"
                 : "Prediction not requested";
           return (
-          <article key={m.match_id} className="sports-card glass-card rounded-lg p-4 sm:p-5">
-            <div className="flex items-center justify-between gap-2">
-              <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-accent">{m.format}</span>
+          <article key={m.match_id} className="fixture-card sports-card glass-card rounded-2xl p-5 sm:p-6">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="rounded-md border border-accent/20 bg-accent/10 px-2.5 py-1 font-mono text-[10px] font-semibold uppercase tracking-[0.14em] text-accent">
+                  {m.format}
+                </span>
+                {m.status && (
+                  <span className="inline-flex items-center gap-1.5 rounded-md border border-card-border bg-background-raised/70 px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.1em] text-secondary">
+                    <span className="h-1.5 w-1.5 rounded-full bg-accent" aria-hidden="true" />
+                    {m.status}
+                  </span>
+                )}
+              </div>
               <DataBadge label={probability ? "MODEL PREDICTION" : m.data_label} />
             </div>
-            <div className="mt-3 flex flex-wrap items-center gap-x-2 gap-y-1 text-lg font-semibold uppercase text-foreground">
-              <span className="flex items-center gap-2"><Flag team="India" /> India</span>
-              <span className="text-xs font-normal text-foreground/40">vs</span>
-              <span className="flex items-center gap-2"><Flag team={m.opponent} /> {m.opponent}</span>
+
+            <div className="mt-7 grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-2 sm:gap-4">
+              <div className="flex min-w-0 items-center gap-2.5 sm:gap-3">
+                <Flag team="India" className="h-5 w-7 shrink-0 sm:h-6 sm:w-8" />
+                <span className="min-w-0 break-words text-base font-semibold leading-tight text-foreground sm:text-xl">India</span>
+              </div>
+              <span className="rounded-full border border-card-border px-2 py-1 font-mono text-[9px] uppercase tracking-[0.12em] text-secondary sm:px-2.5">vs</span>
+              <div className="flex min-w-0 items-center justify-end gap-2.5 text-right sm:gap-3">
+                <span className="min-w-0 break-words text-base font-semibold leading-tight text-foreground sm:text-xl">{m.opponent}</span>
+                <Flag team={m.opponent} className="h-5 w-7 shrink-0 sm:h-6 sm:w-8" />
+              </div>
             </div>
-            <div className="mt-3 flex flex-wrap gap-x-3 gap-y-1 font-mono text-[11px] text-foreground/50">
-              <span>{m.start_time ? formatIstDateTime(m.start_time) : m.date}</span><span>{m.venue}</span>
-              {m.data_source && <span>Source: {m.data_source}</span>}
+
+            <div className="mt-6 grid gap-2.5 sm:grid-cols-2">
+              <div className="fixture-info min-w-0 rounded-xl p-3.5">
+                <div className="font-mono text-[9px] uppercase tracking-[0.14em] text-secondary">Match time</div>
+                <div className="mt-1.5 text-sm font-medium text-foreground sm:text-[15px]">
+                  {m.start_time ? formatIstDateTime(m.start_time) : m.date}
+                </div>
+              </div>
+              <div className="fixture-info min-w-0 rounded-xl p-3.5">
+                <div className="font-mono text-[9px] uppercase tracking-[0.14em] text-secondary">Venue</div>
+                <div className="mt-1.5 break-words text-sm font-medium text-foreground sm:text-[15px]">{m.venue}</div>
+              </div>
             </div>
-            <button
-              type="button"
-              onClick={() => void getPrediction(m)}
-              disabled={predictionState?.status === "loading" || predictionState?.status === "available"}
-              className="mt-4 rounded border border-accent/50 px-3 py-2 font-mono text-[11px] uppercase tracking-[0.12em] text-accent transition-colors hover:bg-accent/10 disabled:cursor-not-allowed disabled:opacity-50"
-            >
-              {predictionState?.status === "loading"
-                ? "Getting prediction…"
-                : predictionState?.status === "available"
-                  ? "Prediction ready"
-                  : "Get prediction"}
-            </button>
-            <div className="font-mono mt-4 flex items-center gap-2 border-t border-card-border pt-3 text-[10px] uppercase tracking-[0.12em] text-foreground/55">
-              <span className={`h-1.5 w-1.5 rounded-full ${predictionState?.status === "available" ? "bg-accent-red" : "bg-foreground/25"}`} />
-              {status}
+
+            <div className="mt-5 flex flex-wrap items-center justify-between gap-3 border-t border-card-border pt-4">
+              <div className="font-mono flex items-center gap-2 text-[10px] uppercase tracking-[0.11em] text-secondary" role="status" aria-live="polite">
+                <span className={`h-1.5 w-1.5 rounded-full ${predictionState?.status === "available" ? "bg-accent-red" : predictionState?.status === "unavailable" ? "bg-saffron" : "bg-foreground/25"}`} />
+                {status}
+              </div>
+              <button
+                type="button"
+                onClick={() => void getPrediction(m)}
+                disabled={predictionState?.status === "loading" || predictionState?.status === "available"}
+                aria-busy={predictionState?.status === "loading"}
+                className="min-h-10 rounded-lg border border-accent/30 bg-accent px-4 py-2 font-mono text-[10px] font-semibold uppercase tracking-[0.12em] text-background shadow-sm transition-colors hover:bg-accent-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:cursor-not-allowed disabled:opacity-55"
+              >
+                {predictionState?.status === "loading"
+                  ? "Getting prediction…"
+                  : predictionState?.status === "available"
+                    ? "Prediction ready"
+                    : "Get prediction"}
+              </button>
             </div>
+
+            {m.data_source && (
+              <p className="mt-3 font-mono text-[10px] text-secondary/80">Source: {m.data_source}</p>
+            )}
             {predictionState?.status === "unavailable" && predictionState.reason && (
-              <p role="status" className="mt-2 text-xs text-foreground/50">{predictionState.reason}</p>
+              <p className="mt-2 text-xs text-foreground/60">{predictionState.reason}</p>
             )}
             {probability && (
-              <div className="mt-4 space-y-3">
+              <div className="mt-5 space-y-3 border-t border-card-border pt-4">
                 <Bar label="India" p={probability.india} tone="accent" />
                 {probability.draw !== undefined && <Bar label="Draw" p={probability.draw} tone="muted" />}
                 <Bar label={m.opponent} p={probability.opponent} tone="red" />
