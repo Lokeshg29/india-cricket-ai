@@ -7,6 +7,8 @@
    (lightness band, chroma floor, CVD separation, contrast: all PASS). */
 :root {
   color-scheme: light;
+  --font-space-grotesk: "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --font-plex-mono: "Cascadia Code", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
   --background: #f4f7fb;
   --background-raised: #eaf0f7;
   --background-deep: #e1e9f2;
